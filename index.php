@@ -230,7 +230,6 @@ switch (strtok($route, '?')) {
             require_once 'src/API/admin.obtenerSorteo.php';
             break;
         }
-        require_once 'src/API/obtenerCompras.php';
         break;
     case '/api/exchange_rate':
         require_once 'src/API/verificar.tasa.php';
