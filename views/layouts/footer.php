@@ -12,7 +12,7 @@
                <h3 class="site-footer__social-title" data-i18n="social_networks">Redes sociales</h3>
                <div class="phone number">
                  <i class="fa-brands fa-instagram"></i>
-                 <a href="https://www.instagram.com/yorsinjose?igsh=MWY4MWQzaW90dWpjMA%3D%3D" data-i18n="follow_instagram">Â¡Siguenos en instagram!</a>
+                 <a href="https://www.instagram.com/yorsinjose?igsh=MWY4MWQzaW90dWpjMA%3D%3D" data-i18n="follow_instagram">¡Siguenos en instagram!</a>
                </div>
              </div>
            </div>
@@ -24,6 +24,10 @@
              <p class="footer-widget__about-text"></p>
              <div class="site-footer__social-box">
                <h3 class="site-footer__social-title" data-i18n="contact">Contacto</h3>
+	     <div class="phone number">
+                 <i class="fa fa-envelope"></i>
+                 <a href="mailto:support@turifadigital.org">support@turifadigital.org</a>
+               </div>
                <div class="phone number">
                  <i class="fa-solid fa-phone-volume"></i>
                  <a href="tel:14074287580" data-i18n="phone_number">+1 4074287580</a>
@@ -53,6 +57,7 @@
                  .phone.number a:visited {
                    color: white;
                    text-decoration: none;
+                   font-size: 17px;
                  }
 
                  .phone.number a:hover {
@@ -72,6 +77,12 @@
                    padding: 0 25px 0px 0px;
                  }
 
+                 i.fa.fa-envelope {
+                   color: var(--zefxa-base);
+                   width: 20px;
+                   padding: 0 25px 0px 0px;
+                 }
+
                  .macfoot.row {
                    display: flex;
                    align-items: center;
@@ -81,7 +92,6 @@
              </div>
            </div>
          </div>
-
        </div>
      </div>
    </div>
@@ -93,7 +103,7 @@
            <div class="site-footer__bottom-inner">
 
              <p class="site-footer__bottom-text">
-               <!-- Copyright Â© 2024 -->
+               <!-- Copyright © 2024 -->
                <a href="#"><!-- Zefxa. --></a>
                <!-- All Rights Reserved. -->
              </p>
@@ -117,15 +127,15 @@
    <div class="mobile-nav__content">
 
      <!-- <div class="mobile-nav__btns"> -->
-     <!--   <a href="/login" class="main-menu__btn thm-btn"  --><!-- data-i18n="login_btn">Iniciar SesiÃ³n</a> -->
+     <!--   <a href="/login" class="main-menu__btn thm-btn"  --><!-- data-i18n="login_btn">Iniciar Sesión</a> -->
      <!--   <div class="custom-language-select" id="custom-language-select-mobile"> -->
      <!--     <div class="custom-language-button"> -->
      <!--       <span class="custom-language-selected">Idioma</span> -->
-     <!--       <span class="custom-language-arrow">â–¼</span> -->
+     <!--       <span class="custom-language-arrow">?</span> -->
      <!--     </div> -->
      <!--     <div class="custom-language-options"> -->
-     <!--       <div class="custom-language-option" data-value="es">EspaÃ±ol</div> -->
-     <!--       <div class="custom-language-option" data-value="en">InglÃ©s</div> -->
+     <!--       <div class="custom-language-option" data-value="es">Español</div> -->
+     <!--       <div class="custom-language-option" data-value="en">Inglés</div> -->
      <!--     </div> -->
      <!--     <input type="hidden" name="language" value="es"> -->
      <!--   </div> -->
@@ -146,22 +156,42 @@
 
      <ul class="mobile-nav__contact list-unstyled">
        <li>
-         <i class="fa fa-envelope"></i>
-         <a href="mailto:needhelp@packageName__.com">turifadigitalx2@gmail.com</a>
+         <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp animated" data-wow-delay="100ms" style="visibility: visible; animation-delay: 100ms; animation-name: fadeInUp;">
+           <div class="footer-widget__column footer-widget__about">
+             <div class="footer-widget__logo">
+             </div>
+             <p class="footer-widget__about-text"></p>
+             <div class="site-footer__social-box">
+               <h3 class="site-footer__social-title" data-i18n="social_networks">Redes sociales</h3>
+               <div class="phone number">
+                 <i class="fa-brands fa-instagram"></i>
+                 <a href="https://www.instagram.com/yorsinjose?igsh=MWY4MWQzaW90dWpjMA%3D%3D" data-i18n="follow_instagram">¡Siguenos en instagram!</a>
+               </div>
+             </div>
+           </div>
+         </div>
        </li>
        <li>
-         <i class="fa fa-phone-alt"></i>
-         <a href="tel:+1 4074287580">+1 4074287580</a>
+         <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp animated" data-wow-delay="100ms" style="visibility: visible; animation-delay: 100ms; animation-name: fadeInUp;">
+           <div class="footer-widget__column footer-widget__about">
+             <div class="footer-widget__logo">
+             </div>
+             <p class="footer-widget__about-text"></p>
+             <div class="site-footer__social-box">
+               <h3 class="site-footer__social-title" data-i18n="contact">Contacto</h3>
+               <div class="phone number">
+                 <i class="fa fa-envelope"></i>
+                 <a href="mailto:support@turifadigital.org">support@turifadigital.org</a>
+               </div>
+	     <div class="phone number">
+                 <i class="fa-solid fa-phone-volume"></i>
+                 <a href="tel:14074287580" data-i18n="phone_number">+1 4074287580</a>
+               </div>
+             </div>
+           </div>
+         </div>
        </li>
      </ul><!-- /.mobile-nav__contact -->
-     <div class="mobile-nav__top">
-       <div class="mobile-nav__social">
-         <a href="https://www.instagram.com/yorsinjose?igsh=MWY4MWQzaW90dWpjMA%3D%3D" class="fab fa-instagram"></a>
-       </div><!-- /.mobile-nav__social -->
-     </div><!-- /.mobile-nav__top -->
-
-
-
    </div>
    <!-- /.mobile-nav__content -->
  </div>
@@ -240,11 +270,7 @@
  <script src="vendor/isotope/isotope.js"></script>
  <script src="vendor/owl-carousel/owl.carousel.min.js"></script>
  <script src="vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
- <script>
-   if (typeof jQuery.ui === 'undefined') {
-     document.write('<script src="vendor/jquery-ui/jquery-ui.js"><\/script>')
-   }
- </script>
+ <script src="vendor/jquery-ui/jquery-ui.js"></script>
  <script src="vendor/nice-select/jquery.nice-select.min.js"></script>
  <script src="vendor/marque/marquee.min.js"></script>
  <script src="vendor/countdown/countdown.min.js"></script>

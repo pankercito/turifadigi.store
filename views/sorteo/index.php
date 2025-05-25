@@ -402,7 +402,7 @@
 
           boletos.forEach(boleto => {
             const nuevoBoleto = document.createElement('div');
-            if (boleto.estado == "reservado") {
+            if (boleto.estado == "reservado" || boleto.estado == "vendido") {
               nuevoBoleto.classList.add('boleto', 'disabled');
               comprados++;
             } else {

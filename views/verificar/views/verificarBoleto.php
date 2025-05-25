@@ -65,7 +65,6 @@
     <div id="boletoContainer"></div>
 </div>
 
-<script src="/assets/js/boletosTicket.js"></script>
 <script>
     document.getElementById('verificarForm').addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -88,9 +87,6 @@
                 method: "POST",
             });
             const data = await response.json();
-
-            // Log para depuración
-            console.log("Respuesta de la API:", data);
 
             // Si no hay datos reales, muestra el boleto de ejemplo y un mensaje
             if (!data.success || !data.data || data.data.length === 0) {
@@ -146,7 +142,8 @@
                     items: {
                         nombre: (boleto.cliente || 'no') + ' ' + (boleto.a_cliente || 'comprado'),
                         telefono: boleto.telefono || 'no comprado',
-                        "Precio": boleto.precio_boleto ? boleto.precio_boleto + '$' : 'no comprado'
+                        "Precio": boleto.precio_boleto ? boleto.precio_boleto + '$' : 'no comprado',
+		    Estado: boleto.estado ? boleto.estado : "no recibido"
                     },
                     fecha_compra: boleto.fecha_compra || 'No disponible',
                     numero: boleto.numero_boleto,

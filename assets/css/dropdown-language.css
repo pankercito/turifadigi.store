@@ -65,7 +65,7 @@
 /* Select de idioma único */
 .custom-language-select {
   position: relative;
-  width: 200px;
+  width: 90px;  
   font-family: Arial, sans-serif;
   z-index: 2000;
 }

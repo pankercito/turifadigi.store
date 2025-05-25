@@ -48,8 +48,7 @@ function renderBoleto(data) {
                 <p class="ticket-number">Nº ${data.numero}</p>
                 <div class="barcode">
                     <img id="barcode_${data.id_boleto}" alt="Código de Barras">
-                    <p class="barcode-text win" data-i18n="ticket_id">ID Boleto:</p>
-                    <p class="barcode-text win">${data.id_boleto}</p>
+                    <p class="barcode-text win"><span data-i18n="ticket_id">ID Boleto:</span> ${data.id_boleto}</p>
                 </div>
             </div>
         </div>

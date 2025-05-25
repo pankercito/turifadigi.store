@@ -20,11 +20,10 @@
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script>
-    if (typeof bootstrap === 'undefined') {
-      document.write('<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">')
-    }
-  </script>
+  <!-- Bootstrap fallback -->
+  <noscript>
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+  </noscript>
 
   <!-- FUNCION DE TICKETS -->
   <script src="assets/js/boletosTicket.js"></script>
@@ -32,22 +31,25 @@
 
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <script>
-    if (typeof FontAwesome === 'undefined') {
-      document.write('<link rel="stylesheet" href="vendor/fontawesome/css/all.min.css">')
-    }
-  </script>
+  <noscript>
+    <link rel="stylesheet" href="vendor/fontawesome/css/all.min.css">
+  </noscript>
+
+  <!-- TOASTYFY -->
+  <script type="text/javascript" src="assets/js/ToastPersonalizado.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/ToastPersonalizado.css">
+
 
   <!-- jQuery UI -->
   <link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet">
 
   <!-- Swiper -->
   <link href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" rel="stylesheet">
-  <script>
-    if (typeof Swiper === 'undefined') {
-      document.write('<link rel="stylesheet" href="vendor/swiper/swiper.min.css">')
-    }
-  </script>
+  <noscript>
+    <link rel="stylesheet" href="vendor/swiper/swiper.min.css">
+  </noscript>
 
   <!-- Recursos locales personalizados -->
   <link rel="stylesheet" href="vendor/animate/animate.min.css" />
@@ -113,19 +115,17 @@
                     $class = $sessionRol != 2 ? 'element' : 'dropdown';
                     ?>
                     <li class="<?php echo $class ?>">
-                      <a href="/" data-i18n="home">Inicio
+                      <a href="/"><span data-i18n="home">Inicio</span>
                         <span class="main-menu-border"></span>
                       </a>
                       <?php
-                      if ($session !== '' && $sessionRol == 2) {
-                        echo '
+                      if (!empty($session) && $sessionRol == 2) : ?>
                         <ul class="dropdown-menu">
                           <li><a href="/compra_verificacion" data-i18n="verify purchases">Verificar compras</a></li>
                           <li><a href="/sorteo_verificacion" data-i18n="verify raffles">Verificar sorteos</a></li>
-                          <!-- <li><a href="/editar_sorteo">Editar sorteo</a></li> -->
                           <li><a href="/crear_sorteo" data-i18n="create raffle">Crear sorteo</a></li>
-                        </ul>';
-                      } ?>
+                        </ul>
+                      <?php endif; ?>
                     </li>
                     <?php
                     if ($session !== '') {
@@ -156,10 +156,49 @@
                         </a>
                       </li>';
                     }
+
                     if ($session === '') {
-                      echo '<a href="/login" class="main-menu__btn thm-btn inic inicMob"   data-i18n="login_btn">Iniciar Sesión</a>';
+                      echo '
+                            <li class="element mb-2 inicMob">
+                              <div class="custom-language-select  " id="custom-language-select">
+                                <div class="custom-language-button">
+                                  <span class="custom-language-selected">Idioma</span>
+                                  <span class="custom-language-arrow"><i class="fa-solid fa-arrow-down"></i></span>
+                                </div>
+                                <div class="custom-language-options">
+                                  <div class="custom-language-option" data-value="es">Esp</div>
+                                  <div class="custom-language-option" data-value="en">Eng</div>
+                                </div>
+                                <input type="hidden" name="language" value="es">
+                              </div>
+                            </li>
+                            <li class="element mb-2 inicMob">
+                              <div class="main-menu__btn-box">
+                                <a href="/login" class="main-menu__btn thm-btn" data-i18n="login_btn">Iniciar Sesion</a>
+                              </div>
+                            </li>
+                            ';
                     } else {
-                      echo '<a href="" class="main-menu__btn thm-btn inic inicMob" onclick=session_destroy()  data-i18n="logout_btn">Cerrar Sesión</a>';
+                      echo '
+                            <li class="element mb-2 inicMob">
+                              <div class="custom-language-select" id="custom-language-select">
+                                <div class="custom-language-button">
+                                  <span class="custom-language-selected">Idioma</span>
+                                  <span class="custom-language-arrow"><i class="fa-solid fa-arrow-down"></i></span>
+                                </div>
+                                <div class="custom-language-options">
+                                  <div class="custom-language-option" data-value="es">Esp</div>
+                                  <div class="custom-language-option" data-value="en">Eng</div>
+                                </div>
+                                <input type="hidden" name="language" value="es">
+                              </div>
+                            </li>
+                            <li class="element mb-2 inicMob">
+                              <div class="main-menu__btn-box">
+                                <a href="/login" class="main-menu__btn thm-btn" onclick=session_destroy() data-i18n="logout_btn">Cerrar Sesion</a>
+                              </div>
+                            </li>
+                            ';
                     } ?>
                   </ul>
 
@@ -168,46 +207,46 @@
               <?php
               if ($session === '') {
                 echo '
-            <div class="main-menu__right">
+                            <div class="main-menu__right">
 
-            
-<div class="custom-language-select  " id="custom-language-select">
-  <div class="custom-language-button">
-    <span class="custom-language-selected">Idioma</span>
-    <span class="custom-language-arrow">▼</span>
-  </div>
-  <div class="custom-language-options">
-    <div class="custom-language-option" data-value="es">Español</div>
-    <div class="custom-language-option" data-value="en">Inglés</div>
-  </div>
-  <input type="hidden" name="language" value="es">
-</div>
+                            
+                <div class="custom-language-select" id="custom-language-select">
+                                <div class="custom-language-button">
+                                  <span class="custom-language-selected">Idioma</span>
+                                  <span class="custom-language-arrow"><i class="fa-solid fa-arrow-down"></i></span>
+                                </div>
+                                <div class="custom-language-options">
+                                  <div class="custom-language-option" data-value="es">Esp</div>
+                                  <div class="custom-language-option" data-value="en">Eng</div>
+                                </div>
+                                <input type="hidden" name="language" value="es">
+                              </div>
 
-            
-            <div class="main-menu__btn-box">
-              <a href="/login" class="main-menu__btn thm-btn" data-i18n="login_btn">Iniciar Sesión</a>
-              </div>
+                            
+                            <div class="main-menu__btn-box">
+                              <a href="/login" class="main-menu__btn thm-btn" data-i18n="login_btn">Iniciar Sesi�n</a>
+                              </div>
 
-              </div>';
+                              </div>';
               } else {
                 echo '<div class="main-menu__right">
-<div class="custom-language-select  " id="custom-language-select">
-  <div class="custom-language-button">
-    <span class="custom-language-selected">Idioma</span>
-    <span class="custom-language-arrow">▼</span>
-  </div>
-  <div class="custom-language-options">
-    <div class="custom-language-option" data-value="es">Español</div>
-    <div class="custom-language-option" data-value="en">Inglés</div>
-  </div>
-  <input type="hidden" name="language" value="es">
-</div>
-           
-              <div class="main-menu__btn-box">
-              <a href="" class="main-menu__btn thm-btn" onclick=session_destroy() data-i18n="logout_btn">Cerrar Sesión</a>
-              </div>
+                    <div class="custom-language-select" id="custom-language-select">
+                                <div class="custom-language-button">
+                                  <span class="custom-language-selected">Idioma</span>
+                                  <span class="custom-language-arrow"><i class="fa-solid fa-arrow-down"></i></span>
+                                </div>
+                                <div class="custom-language-options">
+                                  <div class="custom-language-option" data-value="es">Esp</div>
+                                  <div class="custom-language-option" data-value="en">Eng</div>
+                                </div>
+                                <input type="hidden" name="language" value="es">
+                              </div>
+                              
+                                  <div class="main-menu__btn-box">
+                                  <a href="" class="main-menu__btn thm-btn" onclick=session_destroy() data-i18n="logout_btn">Cerrar Sesi�n</a>
+                                  </div>
 
-              </div>';
+                                  </div>';
               } ?>
             </div>
           </div>
@@ -223,11 +262,11 @@
               if (response.status === 'success') {
                 window.location.href = './';
               } else {
-                alert('Error al cerrar sesión. Inténtalo de nuevo.');
+                alert('Error al cerrar sesi�n. Int�ntalo de nuevo.');
               }
             },
             error: function() {
-              alert('Error en la solicitud. Inténtalo de nuevo.');
+              alert('Error en la solicitud. Int�ntalo de nuevo.');
             }
           });
         }

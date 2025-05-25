@@ -108,9 +108,9 @@ if ($sorteo['success'] && isset($sorteo['data'])) {
 
             <section class="lottery-info mb-4" aria-label="Información básica">
               <p data-i18n="play_supergana">📍 Juega por la lotería de SuperGana</p>
-              <p data-i18n="price_ticket">🎟️ Valor del boleto: <span class="price">$<?php echo htmlspecialchars((string)$precioBoleto); ?></span></p>
-              <p data-i18n="minimum_tickets">🎟️ Compra mínima: <span class="min-tickets"><?php echo htmlspecialchars((string)$boletosMinimos); ?> boletos</span> en adelante</p>
-            </section>
+              <p class="price" style="line-height:1; font-size:1.2em;"><span data-i18n="price_ticket" class="mb-0" style="line-height:1;"> ??? Valor del boleto: </span> $<?php echo htmlspecialchars((string)$precioBoleto); ?></p>
+              <p class="min-tickets"><span data-i18n="minimum_tickets">??? Compra m�nima: </span> <?php echo htmlspecialchars((string)$boletosMinimos); ?></p>
+	  </section>
 
             <section class="prize-list mb-4" aria-label="Lista de premios">
               <?php foreach ($premiosMulti as $premio): ?>

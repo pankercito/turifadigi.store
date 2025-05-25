@@ -1,8 +1,4 @@
 <?php require_once 'views/layouts/header.php'; ?>
-<!-- Agregar CSS de Toastify -->
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-<!-- Agregar CSS personalizado -->
-<link rel="stylesheet" type="text/css" href="assets/css/ToastPersonalizado.css">
 <!-- Agregar Bootstrap Icons -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <!-- Estilos personalizados para los iconos del signup -->
@@ -92,10 +88,7 @@
   }
 </style>
 <!-- Agregar JS de Toastify -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <!-- Agregar JS personalizado -->
-<script type="text/javascript" src="assets/js/ToastPersonalizado.js"></script>
-
 <section class="contact-two">
   <div class="contact-two__img-1 wow fadeInLeft" data-wow-delay="300ms">
     <img src="assets/images/resources/contact-two-img-1.png" alt="" class="float-bob-x">
@@ -136,10 +129,10 @@
               </div>
               <div class="col-xl-6 col-lg-6">
                 <label for="ubicacion_signup" class="form-label" style="font-weight: bold;">
-                  <i class="bi bi-geo-alt-fill icon-signup ubicacion"></i> <span data-i18n="location">UbicaciÃ³n</span> *
+                  <i class="bi bi-geo-alt-fill icon-signup ubicacion"></i> <span data-i18n="location">Ubicación</span> *
                 </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="ubicacion" id="ubicacion_signup" data-i18n-placeholder="enter_location" placeholder="E.J: PaÃ­s, estado, direcciÃ³n" class="input-hover-signup">
+                  <input type="text" name="ubicacion" id="ubicacion_signup" data-i18n-placeholder="enter_location" placeholder="E.J: País, estado, dirección" class="input-hover-signup">
                   <span id="ubicacion_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
@@ -154,10 +147,10 @@
               </div>
               <div class="col-xl-6 col-lg-6">
                 <label for="password_signup" class="form-label" style="font-weight: bold;">
-                  <i class="bi bi-lock-fill icon-signup password"></i> <span data-i18n="password">ContraseÃ±a</span> *
+                  <i class="bi bi-lock-fill icon-signup password"></i> <span data-i18n="password">Contraseña</span> *
                 </label>
                 <div class="contact-two__input-box" style="position: relative;">
-                  <input type="password" name="password" id="password_signup" data-i18n-placeholder="enter_password" placeholder="Cree una contraseÃ±a" class="input-hover-signup" autocomplete="off">
+                  <input type="password" name="password" id="password_signup" data-i18n-placeholder="enter_password" placeholder="Cree una contraseña" class="input-hover-signup" autocomplete="off">
                   <span class="password-toggle" id="password-togle" onclick="togglePasswordVisibilitySignup()">
                     <i class="bi bi-eye-fill" id="icon-eye-signup"></i>
                   </span>
@@ -166,10 +159,10 @@
               </div>
               <div class="col-xl-6 col-lg-6">
                 <label for="telefono_signup" class="form-label" style="font-weight: bold;">
-                  <i class="bi bi-telephone-fill icon-signup telefono"></i> <span data-i18n="phone">TelÃ©fono</span> *
+                  <i class="bi bi-telephone-fill icon-signup telefono"></i> <span data-i18n="phone">Teléfono</span> *
                 </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="telefono" id="telefono_signup" data-i18n-placeholder="enter_phone" placeholder="Ingrese su nÃºmero de telÃ©fono" class="input-hover-signup">
+                  <input type="text" name="telefono" id="telefono_signup" data-i18n-placeholder="enter_phone" placeholder="Ingrese su número de teléfono" class="input-hover-signup">
                   <span id="telefono_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
@@ -184,7 +177,7 @@
           <div class="result"></div>
 
           <a href="/login">
-            <p class="contact-two__left-text" style="margin-top: 20px;" data-i18n="already_have_account">Â¿Ya tiene una cuenta?</p>
+            <p class="contact-two__left-text" style="margin-top: 20px;" data-i18n="already_have_account">¿Ya tiene una cuenta?</p>
           </a>
 
         </div>
@@ -199,7 +192,7 @@
 </style>
 <script>
   // Eliminar todas las validaciones de campos y reglas
-  // Solo dejar el envÃ­o simple del formulario
+  // Solo dejar el envío simple del formulario
 
   const form = document.getElementById('form-registro');
   let isSubmitting = false;
@@ -251,7 +244,7 @@
 
       if (!response.ok) throw data;
 
-      showToast('success', 'Ã‰xito', data.message);
+      showToast('success', 'Éxito', data.message);
 
       Array.from(form.getElementsByTagName('input')).forEach(input => input.disabled = true);
       console.log('Redirigiendo a /login en 2 segundos...');
@@ -270,7 +263,7 @@
       submitButton.disabled = false;
       boton.innerHTML = 'Registrarme';
       boton.disabled = false;
-      console.log('FinalizÃ³ el submit');
+      console.log('Finalizó el submit');
     }
   });
 
@@ -291,7 +284,7 @@
     }
   }
 
-  // Objeto para almacenar el estado de validaciÃ³n de cada campo
+  // Objeto para almacenar el estado de validación de cada campo
   const estadoValidacionCampos = {
     nombre: false,
     apellido: false,
@@ -301,11 +294,11 @@
     telefono: false,
   };
 
-  // FunciÃ³n para verificar el estado general de validaciÃ³n
+  // Función para verificar el estado general de validación
   function verificarEstadoValidacionGeneral() {
     const todosValidos = Object.values(estadoValidacionCampos).every(val => val === true);
-    console.log('Estado de validaciÃ³n de campos:', estadoValidacionCampos);
-    console.log(todosValidos ? 'âœ… Todos los campos son vÃ¡lidos' : 'âŒ Algunos campos no son vÃ¡lidos');
+    console.log('Estado de validación de campos:', estadoValidacionCampos);
+    console.log(todosValidos ? '? Todos los campos son válidos' : '? Algunos campos no son válidos');
     if (todosValidos) {
       boton.disabled = false;
     }
@@ -317,7 +310,7 @@
 
   inputNombre.addEventListener('keyup', function() {
     const valor = this.value;
-    const esValido = /^[A-Za-zÃÃ‰ÃÃ“ÃšÃ¡Ã©Ã­Ã³ÃºÃ‘Ã± ]{3,}$/.test(valor);
+    const esValido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]{3,}$/.test(valor);
     estadoValidacionCampos.nombre = esValido;
 
     if (valor.length === 0) {
@@ -341,7 +334,7 @@
 
   inputApellido.addEventListener('keyup', function() {
     const valor = this.value;
-    const esValido = /^[A-Za-zÃÃ‰ÃÃ“ÃšÃ¡Ã©Ã­Ã³ÃºÃ‘Ã± ]{3,}$/.test(valor);
+    const esValido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]{3,}$/.test(valor);
     estadoValidacionCampos.apellido = esValido;
 
     if (valor.length === 0) {
@@ -365,7 +358,7 @@
 
   inputUbicacion.addEventListener('keyup', function() {
     const valor = this.value;
-    const esValido = /^[A-Za-zÃÃ‰ÃÃ“ÃšÃ¡Ã©Ã­Ã³ÃºÃ‘Ã±0-9 ,.]{3,}$/.test(valor);
+    const esValido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9 ,.]{3,}$/.test(valor);
     estadoValidacionCampos.ubicacion = esValido;
 
     if (valor.length === 0) {
@@ -389,7 +382,7 @@
 
   inputUsuario.addEventListener('keyup', function() {
     const valor = this.value;
-    const esValido = /^[A-Za-zÃÃ‰ÃÃ“ÃšÃ¡Ã©Ã­Ã³ÃºÃ‘Ã±0-9_-]{3,}$/.test(valor);
+    const esValido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9_-]{3,}$/.test(valor);
     estadoValidacionCampos.usuario = esValido;
 
     if (valor.length === 0) {
@@ -463,7 +456,7 @@
     verificarEstadoValidacionGeneral();
   });
 
-  // FunciÃ³n para alternar visibilidad de la contraseÃ±a en el signup
+  // Función para alternar visibilidad de la contraseña en el signup
   function togglePasswordVisibilitySignup() {
     const passwordInput = document.getElementById('password_signup');
     const icon = document.getElementById('icon-eye-signup');
@@ -478,7 +471,7 @@
     }
   }
 
-  // Actualizar mensajes de validaciÃ³n al cambiar el idioma
+  // Actualizar mensajes de validación al cambiar el idioma
   document.addEventListener('DOMContentLoaded', () => {
     if (typeof i18n !== 'undefined') {
       const originalChangeLang = i18n.changeLang.bind(i18n);
@@ -492,7 +485,7 @@
         });
       };
     } else {
-      console.error('i18n no estÃ¡ definido. AsegÃºrate de que el archivo i18n.js estÃ© cargado correctamente.');
+      console.error('i18n no está definido. Asegúrate de que el archivo i18n.js esté cargado correctamente.');
     }
   });
 </script>
