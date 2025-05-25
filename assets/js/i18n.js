@@ -123,7 +123,8 @@ const i18n = {
       // Traducir la página
       this.translatePage();
     } catch (error) {
-      alert(
+      // Después:
+      console.warn(
         "No se encontraron los archivos de traducción. Por favor, verifica que existan es.json y en.json en la carpeta assets/language/"
       );
     }
@@ -138,7 +139,8 @@ const i18n = {
       }
       this.translations = await response.json();
     } catch (error) {
-      alert(
+      // Después:
+      console.warn(
         `Error cargando traducciones para ${lang}. Verifica que el archivo ${lang}.json exista y tenga el formato correcto.`
       );
     }

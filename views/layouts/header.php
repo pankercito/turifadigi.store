@@ -224,7 +224,7 @@
 
                             
                             <div class="main-menu__btn-box">
-                              <a href="/login" class="main-menu__btn thm-btn" data-i18n="login_btn">Iniciar Sesión</a>
+                              <a href="/login" class="main-menu__btn thm-btn" data-i18n="login_btn">Iniciar Sesiï¿½n</a>
                               </div>
 
                               </div>';
@@ -243,7 +243,7 @@
                               </div>
                               
                                   <div class="main-menu__btn-box">
-                                  <a href="" class="main-menu__btn thm-btn" onclick=session_destroy() data-i18n="logout_btn">Cerrar Sesión</a>
+                                  <a href="" class="main-menu__btn thm-btn" onclick=session_destroy() data-i18n="logout_btn">Cerrar Sesiï¿½n</a>
                                   </div>
 
                                   </div>';
@@ -262,11 +262,11 @@
               if (response.status === 'success') {
                 window.location.href = './';
               } else {
-                alert('Error al cerrar sesión. Inténtalo de nuevo.');
+                alert('Error al cerrar sesiï¿½n. Intï¿½ntalo de nuevo.');
               }
             },
             error: function() {
-              alert('Error en la solicitud. Inténtalo de nuevo.');
+              alert('Error en la solicitud. Intï¿½ntalo de nuevo.');
             }
           });
         }
@@ -289,3 +289,17 @@
     <div class="stricky-header stricked-menu main-menu">
       <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
     </div><!-- /.stricky-header -->
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.custom-language-select').forEach(function(selector) {
+          selector.querySelectorAll('.custom-language-option').forEach(function(option) {
+            option.addEventListener('click', function() {
+              var lang = this.getAttribute('data-value');
+              document.cookie = 'language=' + lang + '; path=/; max-age=' + (60 * 60 * 24 * 365);
+              location.reload();
+            });
+          });
+        });
+      });
+    </script>
