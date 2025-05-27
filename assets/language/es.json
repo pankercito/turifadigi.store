@@ -59,15 +59,19 @@
 
   "logout_btn": "Cerrar Sesión",
 
-  "payment_system": "Sistema de Pagos Seguro",
-  "multiple_methods": "Múltiples métodos de pago y transacciones seguras.",
+  
+  "payment_system": "Sistema de",
+  "payment_system2" :"pagos",
+  "payment_system3" :"seguro",
+  "multiple_methods": "Múltiples métodos de pago",
+  "multiple_methods2": "y transacciones seguras.",
   "learn_more": "Conoce más",
   "turifadigital": "TuRifaDigital",
-  "best_option": "Tu mejor opción para rifas",
-  "easy_safe": "Crea y gestiona tus rifas de manera fácil y segura.",
+  "best_option": "Tu mejor opción",
+  "easy_safe": "Increibles premios",
   "start_now": "Comenzar ahora",
-  "manage_raffles": "Gestiona tus Rifas con facilidad",
-  "full_control": "Control total sobre tus sorteos y participantes.",
+  "manage_raffles": "Gestiona tus boletos",
+  "full_control": "Seleccion facil e intuitiva",
   "register_free": "Regístrate gratis",
   "what_is_turifadigital": "¿Qué es TuRifaDigital?",
   "platform_select_pay": "Tu plataforma para seleccionar boletos y pagar",
@@ -306,12 +310,13 @@
 "acciones": "ACCIONES",
 "activo": "ACTIVO",
 "finalizado": "FINALIZADO",
-"desactivado": "DESACTIVADO"
+"desactivado": "DESACTIVADO",
 
 
 
 
-
-
-
+"for_raffles": "para rifas",
+"m_raffle":"facilmente.",
+"easy_an_safe": "y grandes oportunidades.",
+"ur_tickets": "sobre tus boletos."
 }

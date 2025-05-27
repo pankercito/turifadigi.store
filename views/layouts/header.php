@@ -108,6 +108,7 @@
                 <div class="main-menu__main-menu-box">
                   <a href="#" class="mobile-nav__toggler"><i class="fa fa-bars"></i></a>
                   <ul class="main-menu__list">
+                    <img class="inicMob" src="assets/img/webp/TuRifadigi.webp" alt="logo_turifadigital" style="max-width: 100px; height: auto;">
                     <li class="dropdown" style="display: none;"></li>
                     <?php
                     @$session = $_SESSION['usuario'] ?? '';
@@ -224,7 +225,7 @@
 
                             
                             <div class="main-menu__btn-box">
-                              <a href="/login" class="main-menu__btn thm-btn" data-i18n="login_btn">Iniciar Sesión</a>
+                              <a href="/login" class="main-menu__btn thm-btn" data-i18n="login_btn">Iniciar Sesiï¿½n</a>
                               </div>
 
                               </div>';
@@ -243,7 +244,7 @@
                               </div>
                               
                                   <div class="main-menu__btn-box">
-                                  <a href="" class="main-menu__btn thm-btn" onclick=session_destroy() data-i18n="logout_btn">Cerrar Sesión</a>
+                                  <a href="" class="main-menu__btn thm-btn" onclick=session_destroy() data-i18n="logout_btn">Cerrar Sesiï¿½n</a>
                                   </div>
 
                                   </div>';
@@ -262,17 +263,30 @@
               if (response.status === 'success') {
                 window.location.href = './';
               } else {
-                alert('Error al cerrar sesión. Inténtalo de nuevo.');
+                alert('Error al cerrar sesiï¿½n. Intï¿½ntalo de nuevo.');
               }
             },
             error: function() {
-              alert('Error en la solicitud. Inténtalo de nuevo.');
+              alert('Error en la solicitud. Intï¿½ntalo de nuevo.');
             }
           });
         }
       </script>
     </header>
     <style>
+      .mobile-nav__container {
+        border-top: 1px solid rgba(255, 255, 255, 0);
+        border-bottom: 1px solid rgba(255, 255, 255, 0);
+      }
+
+      li.element.mb-2.inicMob {
+        border-bottom: 1px solid #8b451300;
+      }
+
+      img.inicMob {
+        margin: -30px auto 15px;
+      }
+
       .inicMob {
         margin: 20px 0;
         display: none;

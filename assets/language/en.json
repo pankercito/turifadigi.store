@@ -58,15 +58,18 @@
 
   "logout_btn": "Logout",
 
-  "payment_system": "Secure Payment System",
-  "multiple_methods": "Multiple payment methods and secure transactions.",
+  "payment_system": "Secure",
+  "payment_system2" :"payment",
+  "payment_system3" :"system",
+  "multiple_methods": "Multiple payment methods",
+  "multiple_methods2": "and secure transactions.",
   "learn_more": "Learn more",
   "turifadigital": "TuRifaDigital",
-  "best_option": "Your best option for raffles",
-  "easy_safe": "Create and manage your raffles easily and safely.",
+  "best_option": "Your best option",
+  "easy_safe": "Incredible prizes",
   "start_now": "Start now",
-  "manage_raffles": "Manage your Raffles easily",
-  "full_control": "Full control over your raffles and participants.",
+  "manage_raffles": "Manage your tickets",
+  "full_control": "Easy and intuitive selection",
   "register_free": "Register for free",
   "what_is_turifadigital": "What is TuRifaDigital?",
   "platform_select_pay": "Your platform to select tickets and pay",
@@ -308,9 +311,12 @@
 "acciones": "ACTIONS",
 "activo": "ACTIVE",
 "finalizado": "FINISHED",
-"desactivado": "DESACTIVATED"
+"desactivado": "DESACTIVATED",
 
 
+"for_raffles": "for raffles",
 
-
+"m_raffle":"easily.",
+"easy_an_safe": "and great opportunities.",
+"ur_tickets": "of your tickets."
 }

@@ -725,21 +725,13 @@
     let procesandoCompra = false;
 
     btnConfirmar.onclick = async function(e) {
-      Swal.fire({
-        title: i18n.t('processing_purchase'),
-        text: i18n.t('processing_purchase_text'),
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
-
       e.preventDefault();
 
       if (procesandoCompra) return; // Evita doble envío
       procesandoCompra = true;
+      let textoBot = btnConfirmar.innerHTML;
       btnConfirmar.disabled = true;
+      btnConfirmar.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ${i18n.t('processing')}`; // Cambia el texto del botón con spinner
 
       try {
         if (miniregist.value == "0") {
@@ -795,16 +787,7 @@
                 }) => i18n.t(mensaje));
 
               if (camposFaltantes.length > 0) {
-                Swal.close();
-                Swal.fire({
-                  title: i18n.t('incomplete_fields'),
-                  text: i18n.t('incomplete_fields_text') + ':\n' + camposFaltantes.join('\n'),
-                  icon: 'warning',
-                  confirmButtonText: i18n.t('incomplete_fields_confirm'),
-                  customClass: {
-                    confirmButton: 'swal2-confirm'
-                  }
-                });
+                showToast('warning', i18n.t('incomplete_fields'), i18n.t('incomplete_fields_text') + ':\n' + camposFaltantes.join('\n'));
                 return;
               }
 
@@ -826,37 +809,34 @@
                   })
                   .then(response => response.json())
                   .then(async dataCompra => {
-                    Swal.close();
                     if (dataCompra.success) {
                       generarEnlaceWhatsApp({
                         nombre: formData.nombre,
                         telefono: formData.telefono
                       }, boletosCargar);
 
-                      await Swal.fire({
+                      Swal.fire({
                         title: '¡Compra procesada correctamente!',
                         icon: 'success',
                         confirmButtonText: 'OK'
+                      }).then(() => {
+                        window.location.href = '/sorteo';
                       });
-                      window.location.href = '/sorteo';
                     } else {
-                      Swal.fire('Error', dataCompra.error || 'Error al procesar la compra', 'error');
+                      showToast('error', 'Error', dataCompra.error || 'Error al procesar la compra');
                     }
                   })
                   .catch(error => {
-                    Swal.close();
-                    Swal.fire('Error', 'Error al procesar la compra', 'error');
+                    showToast('error', 'Error', 'Error al procesar la compra');
                     console.error('Error al procesar la compra:', error);
                   });
 
               } catch (error) {
-                Swal.close();
                 console.error('Error:', error);
               }
 
             })
             .catch(error => {
-              Swal.close();
               console.error('Error al verificar sesión:', error);
             });
         } else {
@@ -906,30 +886,21 @@
           const camposFaltantes = campos.filter(c => !c.value).map(c => c.label);
 
           /*   if (camposFaltantes.length > 0) {
-                Swal.close();
-                Swal.fire({
-                  title: i18n.t('incomplete_fields'),
-                  text: i18n.t('incomplete_fields_text') + ':\n' + camposFaltantes.join('\n'),
-                  icon: 'warning',
-                  confirmButtonText: i18n.t('incomplete_fields_confirm'),
-                  customClass: {
-                    confirmButton: 'swal2-confirm'
-                  }
-                });
-                return;
-              } */
-
-          if (camposFaltantes.length > 0) {
             Swal.close();
             Swal.fire({
-              title: i18n.t('incomplete_fields'),
-              text: i18n.t('incomplete_fields_text') + ':\n' + camposFaltantes.join('\n'),
-              icon: 'warning',
-              confirmButtonText: i18n.t('incomplete_fields_confirm'),
-              customClass: {
-                confirmButton: 'swal2-confirm'
-              }
+          title: i18n.t('incomplete_fields'),
+          text: i18n.t('incomplete_fields_text') + ':\n' + camposFaltantes.join('\n'),
+          icon: 'warning',
+          confirmButtonText: i18n.t('incomplete_fields_confirm'),
+          customClass: {
+            confirmButton: 'swal2-confirm'
+          }
             });
+            return;
+          } */
+
+          if (camposFaltantes.length > 0) {
+            showToast('warning', i18n.t('incomplete_fields'), i18n.t('incomplete_fields_text') + ':\n' + camposFaltantes.join('\n'));
             return;
           }
 
@@ -952,8 +923,7 @@
             .then(async data => {
 
               if (!data.success) {
-                Swal.close();
-                Swal.fire('Error', "Error: response riffle sinup", 'error');
+                showToast('error', 'Error', "Error: response riffle sinup");
                 return;
               }
 
@@ -1003,52 +973,49 @@
                       })
                       .then(response => response.json())
                       .then(async dataCompra => {
-                        Swal.close();
                         if (dataCompra.success) {
                           generarEnlaceWhatsApp({
                             nombre: formData.nombre,
                             telefono: formData.telefono
                           }, boletosCargar);
 
-                          await Swal.fire({
+                          Swal.fire({
                             title: '¡Compra procesada correctamente!',
+                            text: 'OK',
                             icon: 'success',
                             confirmButtonText: 'OK'
+                          }).then(() => {
+                            window.location.href = '/sorteo';
                           });
-                          window.location.href = '/sorteo';
                         } else {
-                          Swal.fire('Error', dataCompra.error || 'Error al procesar la compra', 'error');
+                          showToast('error', 'Error', dataCompra.error || 'Error al procesar la compra');
                         }
                       })
                       .catch(error => {
-                        Swal.close();
-                        Swal.fire('Error', 'Error al procesar la compra', 'error');
+                        showToast('error', 'Error', 'Error al procesar la compra');
                         console.error('Error al procesar la compra:', error);
                       });
 
                   } catch (error) {
-                    Swal.close();
                     console.error('Error:', error);
                   }
 
                 })
                 .catch(error => {
-                  Swal.close();
                   console.error('Error al verificar sesión:', error);
                 });
 
             })
             .catch(error => {
-              Swal.close();
               console.error('Error al verificar sesión:', error);
             });
         }
       } catch (err) {
-        Swal.close();
-        Swal.fire('Error inesperado', 'Ha ocurrido un error inesperado. Intente de nuevo.', 'error');
+        showToast('error', 'Error inesperado', 'Ha ocurrido un error inesperado. Intente de nuevo.');
         console.error('Error inesperado:', err);
       } finally {
         procesandoCompra = false;
+        btnConfirmar.innerHTML = textoBot;
         btnConfirmar.disabled = false;
       }
     };
@@ -1147,6 +1114,23 @@
 
     inputMapr.textContent = `${valorConvertido} ${moneda}`;
     tasaEx.textContent = `Tasa de cambio: 1 USD = ${tasaCambio} ${moneda}`;
+  }
+
+  function showToast(type, title, message) {
+    switch (type) {
+      case 'success':
+        ToastPersonalizado.exito(title, message, 5000);
+        break;
+      case 'error':
+        ToastPersonalizado.error(title, message, 5000);
+        break;
+      case 'warning':
+        ToastPersonalizado.advertencia(title, message, 5000);
+        break;
+      case 'info':
+        ToastPersonalizado.info(title, message, 5000);
+        break;
+    }
   }
 
   function mostrarDatosDePago(metodo) {
