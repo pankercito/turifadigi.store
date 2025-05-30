@@ -12,17 +12,17 @@
   </h2>
   <div class="form-group-custom">
     <label class="required" data-i18n="comprobante_titular">Titular del pago (Telefono del titular del pago, si es Pago Movil)</label>
-    <input type="text" class="form-control-custom" id="titular" placeholder="Nombre Apellido (o telefono)" data-i18n-placeholder="first_last_name_phone_placeholder">
+    <input type="text" class="form-control-custom" id="titular" placeholder="Nombre Apellido (o telefono)" data-i18n-placeholder="first_last_name_phone_placeholder" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122)">
   </div>
 
   <div class="form-group-custom">
     <label class="required" data-i18n="comprobante_referencia">Referen del pago</label>
-    <input type="text" class="form-control-custom" id="referencia" placeholder="123456">
+    <input type="text" class="form-control-custom" id="referencia" placeholder="123456" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122)">
   </div>
 
   <div class="form-group-custom">
     <label class="required" data-i18n="comprobante_monto">Monto Pagado</label>
-    <input type="text" class="form-control-custom" id="monto_pagado" placeholder="0.00">
+    <input type="text" class="form-control-custom" id="monto_pagado" placeholder="0.00" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46 || event.charCode == 44">
   </div>
 
   <div class="form-group-custom">

@@ -16,44 +16,10 @@ class BoletoModel
     $this->db = new Conexion();
   }
 
-  // public function inicializarBoletos()
-  // {
-  //   try {
-  //     // Verificar si existe una rifa con su configuración asociada
-  //     $sqlRifa = "SELECT *
-  //                FROM rifas r
-  //                INNER JOIN configuracion c ON r.id_configuracion = c.id_configuracion
-  //                WHERE c.estado = 1";
-  //     $resultRifa = $this->db->consultar($sqlRifa, []);
-
-  //     // CREAR RIFA DEBERIA SER OTRA FUNCION BB
-  //     // if (empty($resultRifa)) {
-  //     //   try {
-  //     //       // Primero insertar la configuración necesaria con las columnas correctas
-  //     //       $sqlInsertConfig = "INSERT INTO configuracion (id_configuracion, fecha_inicio, fecha_fin) 
-  //     //                         VALUES (1, CURDATE(), DATE_ADD(CURDATE(), INTERVAL 30 DAY))";
-  //     //       $this->db->ejecutar($sqlInsertConfig, []);
-
-  //     //       // Luego insertar la rifa con la configuración asociada
-  //     //       $sqlInsertRifa = "INSERT INTO rifas (id_rifa, titulo, descripcion, estado, fecha_creacion, id_configuracion) 
-  //     //                       VALUES (1, '🎉 ¡POR EL SUPERGANA! 🎉', 'Rifa principal', 'activa', CURDATE(), 1)";
-  //     //       $this->db->ejecutar($sqlInsertRifa, []);
-  //     //   } catch (Exception $e) {
-  //     //       throw new Exception("Error al inicializar la rifa: " . $e->getMessage());
-  //     //   }
-  //     // }
-
-  //     // Verificar si ya existen boletos y cuántos hay
-  //     if (!$resultRifa) {
-  //       throw new Exception("No se encontró una rifa activa");
-  //     }
-  //   } catch (Exception $e) {
-  //     throw new Exception("Error al inicializar boletos: " . $e->getMessage());
-  //   }
-  // }
-
   public function verificarDisponibilidad($numero)
   {
+    $numero = htmlspecialchars(strip_tags($numero), ENT_QUOTES, 'UTF-8');
+
     $sql = "SELECT estado FROM boletos WHERE numero_boleto = :numero";
     $result = $this->db->consultar($sql, [':numero' => $numero]);
 
@@ -67,6 +33,11 @@ class BoletoModel
   public function verificarDisponibilidadConJoin($boletos)
   {
     try {
+
+      $boletos = array_map(function ($boleto) {
+        return htmlspecialchars(strip_tags($boleto), ENT_QUOTES, 'UTF-8');
+      }, $boletos);
+
       $params = [];
       $placeholders = [];
       foreach ($boletos as $index => $numero) {
@@ -136,9 +107,20 @@ class BoletoModel
 
   public function procesarCompraConJoin($id_usuario, $boletos, $montoPagado, $titular, $referencia, $metodoPago)
   {
+
     try {
+
       // 1. Primero verificamos la disponibilidad de todos los boletos
       $boletosVerificar = [];
+      // Sanitize boletos array
+      $boletos = array_map(function ($boleto) {
+        return htmlspecialchars(strip_tags($boleto), ENT_QUOTES, 'UTF-8');
+      }, $boletos);
+
+      $titular = htmlspecialchars(strip_tags($titular), ENT_QUOTES, 'UTF-8');
+      $referencia = htmlspecialchars(strip_tags($referencia), ENT_QUOTES, 'UTF-8');
+      $metodoPago = htmlspecialchars(strip_tags($metodoPago), ENT_QUOTES, 'UTF-8');
+
       foreach ($boletos as $numeroBoleto) {
         $sqlBoleto = "SELECT b.id_boleto FROM boletos b INNER JOIN rifas r ON b.id_rifa = r.id_rifa INNER JOIN configuracion c ON c.id_configuracion = r.id_configuracion WHERE b.numero_boleto = :numero AND b.estado ='disponible' AND c.estado= 1";
         $resultBoleto = $this->db->consultar($sqlBoleto, [':numero' => $numeroBoleto]);
@@ -282,9 +264,6 @@ class BoletoModel
   public function obtenerBoletos()
   {
     try {
-      // Asegurarse de que los boletos estén inicializados
-      // $this->inicializarBoletos();
-
       // Optimizamos la consulta para mejor rendimiento
       $sql = "SELECT b.id_boleto, b.id_rifa, b.numero_boleto, b.estado AS estado, c.estado AS rifa_estado, r.id_rifa FROM boletos b INNER JOIN rifas r ON r.id_rifa = b.id_rifa INNER JOIN configuracion c ON c.id_configuracion = r.id_configuracion WHERE c.estado = 1 ORDER BY b.id_boleto ASC";
 
@@ -311,32 +290,34 @@ class BoletoModel
   {
     try {
       $sql = "SELECT
-              cb.id_compra,
-              b.id_rifa,
-              b.numero_boleto,
-              dc.nom_comprador AS cliente,
-              dc.ape_comprador AS a_cliente,
-              dc.telefono_comprador AS telefono,
-              cb.total_compra,
-              cb.estado,
-              cb.fecha_compra
-                FROM
-                    boletos b
-                INNER JOIN
-                    rifas r ON r.id_rifa = b.id_rifa
-                INNER JOIN
-                    configuracion c ON c.id_configuracion = r.id_configuracion
-                LEFT JOIN -- Primero une detalle_compras, ya que depende de 'b'
-                    detalle_compras dc ON  b.id_boleto=dc.id_boleto
-                LEFT JOIN -- Luego une compras_boletos, ya que depende de 'dc'
-                    compras_boletos cb ON cb.id_compra = dc.id_compra
-                LEFT JOIN -- Usa LEFT JOIN para usuarios
-                    usuarios u ON b.id_usuario = u.id_usuario
-                WHERE
-                    c.estado = 2
-                    AND b.estado NOT IN ('disponible', 'pendiente')
-                ORDER BY
-                    b.id_boleto ASC;";
+          cb.id_compra,
+          b.id_rifa,
+          b.id_boleto,          
+          c.precio_boleto,
+          b.numero_boleto,
+          dc.nom_comprador AS cliente,
+          dc.ape_comprador AS a_cliente,
+          dc.telefono_comprador AS telefono,
+          cb.total_compra,
+          cb.estado,
+          cb.fecha_compra
+          FROM
+            boletos b
+          INNER JOIN
+            rifas r ON r.id_rifa = b.id_rifa
+          INNER JOIN
+            configuracion c ON c.id_configuracion = r.id_configuracion
+          LEFT JOIN -- Primero une detalle_compras, ya que depende de 'b'
+            detalle_compras dc ON  b.id_boleto=dc.id_boleto
+          LEFT JOIN -- Luego une compras_boletos, ya que depende de 'dc'
+            compras_boletos cb ON cb.id_compra = dc.id_compra
+          LEFT JOIN -- Usa LEFT JOIN para usuarios
+            usuarios u ON b.id_usuario = u.id_usuario
+          WHERE
+            c.estado = 2
+            AND b.estado NOT IN ('disponible', 'pendiente')
+          ORDER BY
+            b.id_boleto ASC;";
 
       $boletos = $this->db->consultar($sql, []);
 
@@ -347,9 +328,27 @@ class BoletoModel
           'total' => 0,
         ];
       }
+
+      $data = [];
+      foreach ($boletos as $boleto) {
+        $data[] = [
+            'id_compra' => $boleto['id_compra'] ?? null,
+            'id_rifa' => $boleto['id_rifa'],
+            'id_boleto' => $boleto['id_boleto'],
+            'numero_boleto' => $boleto['numero_boleto'],
+            'cliente' => !empty($boleto['cliente']) ? ucwords(strtolower($boleto['cliente'])) : null,
+            'a_cliente' => !empty($boleto['a_cliente']) ? ucwords(strtolower($boleto['a_cliente'])) : null,
+            'telefono' => !empty($boleto['telefono']) ? substr($boleto['telefono'], 0, 4) . '****' . substr($boleto['telefono'], -2) : null,
+            'precio_boleto' => $boleto['precio_boleto'],
+            'total_compra' => $boleto['total_compra'] ?? null,
+            'estado' => $boleto['estado'] ?? null,
+            'fecha_compra' => $boleto['fecha_compra'] ?? null,
+        ];
+      }
+
       return [
         'success' => true,
-        'data' => $boletos,
+        'data' => $data,
         'total' => count($boletos)
       ];
     } catch (Exception $e) {
@@ -360,10 +359,14 @@ class BoletoModel
   public function verificarBoletosXCompra($id_rifa, $boleto)
   {
     try {
+
       // Validar que los parámetros existan y no estén vacíos
       if (empty($id_rifa) || empty($boleto)) {
         throw new Exception("Faltan parámetros requeridos: id_rifa o boleto.");
       }
+
+      $id_rifa = htmlspecialchars(strip_tags($id_rifa), ENT_QUOTES, 'UTF-8');
+      $boleto = htmlspecialchars(strip_tags($boleto), ENT_QUOTES, 'UTF-8');
 
       $sql = "SELECT
           b.id_rifa,
@@ -379,15 +382,15 @@ class BoletoModel
           cb.fecha_compra
           FROM
             boletos b
-          INNER JOIN
+            INNER JOIN
             rifas r ON r.id_rifa = b.id_rifa
-          INNER JOIN
+            INNER JOIN
             configuracion c ON c.id_configuracion = r.id_configuracion
-          LEFT JOIN -- Primero une detalle_compras, ya que depende de 'b'
+            LEFT JOIN -- Primero une detalle_compras, ya que depende de 'b'
             detalle_compras dc ON  b.id_boleto=dc.id_boleto
-          LEFT JOIN -- Luego une compras_boletos, ya que depende de 'dc'
+            LEFT JOIN -- Luego une compras_boletos, ya que depende de 'dc'
             compras_boletos cb ON cb.id_compra = dc.id_compra
-          LEFT JOIN -- Usa LEFT JOIN para usuarios
+            LEFT JOIN -- Usa LEFT JOIN para usuarios
             usuarios u ON b.id_usuario = u.id_usuario
           WHERE
             b.id_rifa = :id_rifa
@@ -407,9 +410,27 @@ class BoletoModel
           'total' => 0,
         ];
       }
+
+      $data = [];
+      foreach ($boletos as $boleto) {
+        $data[] = [
+          'id_compra' => $boleto['id_compra'] ?? null,
+          'id_rifa' => $boleto['id_rifa'],
+          'id_boleto' => $boleto['id_boleto'],
+          'numero_boleto' => $boleto['numero_boleto'],
+          'cliente' => !empty($boleto['cliente']) ? ucwords(strtolower($boleto['cliente'])) : null,
+          'a_cliente' => !empty($boleto['a_cliente']) ? ucwords(strtolower($boleto['a_cliente'])) : null,
+          'telefono' => !empty($boleto['telefono']) ? substr($boleto['telefono'], 0, 4) . '****' . substr($boleto['telefono'], -2) : null,
+          'precio_boleto' => $boleto['precio_boleto'],
+          'total_compra' => $boleto['total_compra'],
+          'estado' => $boleto['estado'],
+          'fecha_compra' => $boleto['fecha_compra'] ?? null,
+        ];
+      }
       return [
         'success' => true,
-        'data' => $boletos,
+        'data' => $data,
+        'marco' => ["comprados" => "0"],
         'total' => count($boletos)
       ];
     } catch (Exception $e) {
@@ -431,7 +452,6 @@ class BoletoModel
               cb.total_compra,
               cb.estado,
               cb.fecha_compra,
-              TIMESTAMPADD(HOUR, 24, cb.fecha_compra) AS fecha_limite,
               p.validacion AS estado_pago,
               p.titular,
               p.referencia, 
@@ -452,10 +472,6 @@ class BoletoModel
 
         if (!isset($compras[$id_compra])) {
           // Primera vez que vemos esta compra
-          $fecha_limite = new \DateTime($row['fecha_limite']);
-          $ahora = new \DateTime();
-          $tiempo_restante = $fecha_limite->diff($ahora);
-
           $compras[$id_compra] = [
             'id_compra' => $id_compra,
             'cliente' => ucwords(strtolower($row['cliente'] . " " . $row['a_cliente'])),
@@ -467,6 +483,7 @@ class BoletoModel
             'estado_pago' => $row['estado_pago'],
             'titular' => $row['titular'],
             'id_rifa' => $row['id_rifa'],
+            'telefono' => substr($row['telefono'], 0, 4) . '****' . substr($row['telefono'], -2),
             'referencia' => $row['referencia'],
             'boletos' => []
           ];
@@ -496,7 +513,6 @@ class BoletoModel
               cb.total_compra,
               cb.estado,
               cb.fecha_compra,
-              TIMESTAMPADD(HOUR, 24, cb.fecha_compra) AS fecha_limite,
               p.validacion AS estado_pago,
               p.titular,
               p.referencia, 
@@ -522,10 +538,6 @@ class BoletoModel
 
         if (!isset($compras[$id_compra])) {
           // Primera vez que vemos esta compra
-          $fecha_limite = new \DateTime($row['fecha_limite']);
-          $ahora = new \DateTime();
-          $tiempo_restante = $fecha_limite->diff($ahora);
-
           $compras[$id_compra] = [
             'id_compra' => $id_compra,
             'cliente' => ucwords(strtolower($row['cliente'] . " " . $row['a_cliente'])),
@@ -565,7 +577,6 @@ class BoletoModel
               cb.total_compra,
               cb.estado,
               cb.fecha_compra,
-              TIMESTAMPADD(HOUR, 24, cb.fecha_compra) AS fecha_limite,
               p.validacion AS estado_pago,
               p.titular,
               p.referencia, 
@@ -592,9 +603,6 @@ class BoletoModel
 
         if (!isset($compras[$id_compra])) {
           // Primera vez que vemos esta compra
-          $fecha_limite = new \DateTime($row['fecha_limite']);
-          $ahora = new \DateTime();
-          $tiempo_restante = $fecha_limite->diff($ahora);
 
           $compras[$id_compra] = [
             'id_compra' => $id_compra,
@@ -622,9 +630,12 @@ class BoletoModel
     }
   }
 
-  public function marcarCompraComoPagada($id_compra)
+  public function marcarCompraComoPagada($id_comp)
   {
     try {
+
+      $id_compra = htmlspecialchars(strip_tags($id_comp), ENT_QUOTES, 'UTF-8');
+      
       $sql = "SELECT dc.id_boleto, p.id_pago FROM compras_boletos cb INNER JOIN detalle_compras dc ON cb.id_compra = dc.id_compra INNER JOIN pagos p on p.id_compra = cb.id_compra WHERE cb.id_compra = :id_compra";
       $result = $this->db->consultar($sql, [':id_compra' => $id_compra]);
 
@@ -677,9 +688,12 @@ class BoletoModel
     }
   }
 
-  public function marcarCompraComoRechazada($id_compra)
+  public function marcarCompraComoRechazada($id_comp)
   {
     try {
+
+      $id_compra = htmlspecialchars(strip_tags($id_comp), ENT_QUOTES, 'UTF-8');
+
       $sql = "SELECT dc.id_boleto, p.id_pago FROM compras_boletos cb INNER JOIN detalle_compras dc ON cb.id_compra = dc.id_compra INNER JOIN pagos p on p.id_compra = cb.id_compra WHERE cb.id_compra = :id_compra";
       $result = $this->db->consultar($sql, [':id_compra' => $id_compra]);
 

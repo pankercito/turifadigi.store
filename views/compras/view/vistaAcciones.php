@@ -25,7 +25,7 @@ if ($response["success"] == null) {
   exit;
 }
 
-$titular = $data["cliente"] ?? '';
+$titular = $data["titular"] ?? '';
 $referencia = $data["referencia"] ?? '';
 $monto_pagado = $data["monto_pagado"] ?? '';
 $metodo_pago = $data["metodo_pago"] ?? '';

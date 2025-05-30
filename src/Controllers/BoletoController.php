@@ -216,7 +216,7 @@ class BoletoController
 
         $idbol = $array["boleto"];
         $idrif = $array["id_rifa"];
-        
+
         $boletos = $this->model->verificarBoletosXCompra($idrif, $idbol);
 
         if (empty($boletos) || !isset($boletos['success']) || $boletos['success'] == false) {

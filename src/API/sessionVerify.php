@@ -30,10 +30,6 @@ try {
                     "session" => true,
                     "user" => [
                         "id_usuario" => $result['id_usuario'],
-                        "nombre" => $result['nombre'],
-                        "apellido" => $result['apellido'],
-                        "telefono" => $result['telefono'],
-                        "ubicacion" => $result['ubicacion']
                     ],
                 ]);
                 exit;

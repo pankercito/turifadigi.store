@@ -364,14 +364,14 @@
                       setTimeout(() => {
                         const container = document.getElementById('boletoContainer');
                         if (container && Array.isArray(boletosWn)) {
-                          let databot = boletosWn.data || "";
                           boletosWn.forEach(boleto => {
                             // Llama a renderBoleto con los datos del boleto
                             renderBoleto({
                               items: {
-                                nombre: databot.nombre || i18n.t("no_purchases"),
-                                telefono: databot.telefono || i18n.t("no_purchases"),
-                                "Precio": databot.precio || i18n.t("no_purchases")
+                                [`${i18n.t("ticket_name")}`]: boleto.cliente != null ? boleto.cliente + " " + boleto.a_cliente : i18n.t("no_purchases"),
+                                [`${i18n.t("ticket_phone")}`]: boleto.telefono != null ? boleto.telefono : i18n.t("no_purchases"),
+                                [`${i18n.t("ticket_price")}`]: boleto.precio_boleto != null ? boleto.precio_boleto + "$" : i18n.t("no_purchases"),
+                                [`${i18n.t("ticket_state")}`]: boleto.estado != null ? boleto.estado : i18n.t("no_purchases"),
                               },
                               fecha_compra: boleto.fecha_compra || i18n.t("no_purchases"),
                               numero: boleto.numero_boleto || "",
@@ -691,7 +691,7 @@
             const valorConvertido = dc;
 
             inputMapr.textContent = `${valorConvertido} $`;
-            tasaEx.textContent = `Tasa de cambio: 1 USD = 1 USD`;
+            tasaEx.textContent = `Tasa de cambio: 1 USD`;
             contenedorOpciones.innerHTML = "";
             contenedorOpciones.appendChild(opcionesMonedaHTML);
           }
@@ -1159,8 +1159,9 @@
         paymentDetails.innerHTML = `
             <p class="subtitle">Datos de la cuenta</p>
             <p>Nombre: Mailiny Cruz</p>
-            <p>Cédula de identidad: 28517267</p>
-            <p>Numero de cuenta: 01021234567891234567</p>
+            <p>Tipo de cuenta: Corriente</p>
+            <p>Cédula de identidad: V-28517267</p>
+            <p>Numero de cuenta: 0102-0317-11-0000757793</p>
           `;
         break
 
@@ -1179,7 +1180,7 @@
         paymentDetails.innerHTML = `
               <p class="subtitle">Datos de la cuenta</p>
               <p>Número de teléfono: 04124124923</p>
-              <p>Cédula de identidad: 28517267</p>
+              <p>Cédula de identidad: V-28517267</p>
               <p>Banco: 0102 - Banco de Venezuela</p>  
             `;
         break;

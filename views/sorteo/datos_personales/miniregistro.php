@@ -6,13 +6,13 @@
     <div style="flex: 1 1 200px; min-width: 200px;">
         <div class="form-group-custom">
             <label class="required" data-i18n="first_name">Nombre</label>
-            <input type="text" class="form-control-custom" id="nombre" name="nombre" data-i18n-placeholder="first_name" placeholder="Nombre" required>
+            <input type="text" class="form-control-custom" id="nombre" name="nombre" data-i18n-placeholder="first_name" placeholder="Nombre" required onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32)">
         </div>
     </div>
     <div style="flex: 1 1 200px; min-width: 200px;">
         <div class="form-group-custom">
             <label class="required" data-i18n="last_name">Apellido</label>
-            <input type="text" class="form-control-custom" id="apellido" name="apellido" data-i18n-placeholder="last_name" placeholder="Apellido" required>
+            <input type="text" class="form-control-custom" id="apellido" name="apellido" data-i18n-placeholder="last_name" placeholder="Apellido" required onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32)">
         </div>
     </div>
 </div>
@@ -68,7 +68,7 @@
             <option value="+599-7">Curazao (+599-7)</option>
             <option value="+599-3">Bonaire, San Eustaquio y Saba (+599-3)</option>
         </select>
-        <input type="tel" class="form-control-custom" id="telefono" name="telefono" data-i18n-placeholder="phone" placeholder="Número" required pattern="[0-9]{6,15}">
+        <input type="tel" class="form-control-custom" id="telefono" name="telefono" data-i18n-placeholder="phone" placeholder="Número" required pattern="[0-9]{6,15}" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
     </div>
 </div>
 <style>

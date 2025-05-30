@@ -87,6 +87,7 @@
   "social_networks": "Social networks",
   "follow_instagram": "Follow us on instagram!",
   "contact": "Contact",
+  "support": "support",
   "phone_number": "+1 4074287580",
 
   "login_title": "Login",
@@ -109,13 +110,14 @@
 
   "title": "Title not available",
   "80_percent": "When 80% is completed, our raffle plays",
-  "play_supergana": "📍 Play SuperGana",
+  "play_supergana": "📍 Play Super Gana",
   "price_ticket": "🎟️ Price Ticket:",
   "minimum_tickets": "🎟️ Minimum Tickets:",
   "when_raffle_plays": "🗓️ When does the raffle play?",
   "when_raffle_plays_desc": "The raffle date will be announced once 80% of the tickets are sold",
   "official_link": "🔗 Official link to follow the raffle:",
   "contact_number": "📞 Contact number:",
+  "contact_number_support": "📞 support number:",
 
   "last_winners_tickets": "Last winners tickets",
   "no_purchases": "No purchased",
@@ -275,6 +277,7 @@
 "premio_required": "Prize name and description are required",
 
 "contacto_numero": "Contact Number",
+"contact_support_number": "support Number",
 "contacto_numero_desc": "407-428-7580",
 "contacto_numero_required": "Contact number is required",
 
@@ -318,5 +321,9 @@
 
 "m_raffle":"easily.",
 "easy_an_safe": "and great opportunities.",
-"ur_tickets": "of your tickets."
+"ur_tickets": "of your tickets.",
+"ticket_name": "name",
+"ticket_phone": "phone",
+"ticket_price":"price",
+"ticket_state":"status"
 }

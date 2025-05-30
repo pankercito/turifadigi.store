@@ -58,8 +58,12 @@ class Usuario
         return false;
       }
 
+      // Sanitizar datos
+      $usuario = filter_var($data['usuario'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_ENCODE_HIGH);
+      $password = filter_var($data['password'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_ENCODE_HIGH);
+
       // Verificar si el usuario ya existe
-      if ($this->existeUsuario($data['usuario'])) {
+      if ($this->existeUsuario($usuario)) {
         error_log("Error en Usuario::insert: El usuario ya existe");
         return false;
       }
@@ -70,8 +74,8 @@ class Usuario
                 VALUES (:usuario, :password, 1, 1)";
 
       $userId = $this->db->ejecutar($userSql, [
-        ':usuario' => $data['usuario'],
-        ':password' => password_hash($data['password'], PASSWORD_DEFAULT),
+        ':usuario' => $usuario,
+        ':password' => password_hash($password, PASSWORD_DEFAULT),
       ]);
 
       $this->audi->store([

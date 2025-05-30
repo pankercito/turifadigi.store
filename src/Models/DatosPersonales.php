@@ -37,6 +37,12 @@ class DatosPersonales
   {
     try {
       // Validar datos requeridos
+      // Sanitizar datos
+      $datos['nombre'] = htmlspecialchars(strip_tags($datos['nombre']));
+      $datos['apellido'] = htmlspecialchars(strip_tags($datos['apellido']));
+      $datos['telefono'] = htmlspecialchars(strip_tags($datos['telefono']));
+      $datos['ubicacion'] = htmlspecialchars(strip_tags($datos['ubicacion']));
+
       if (
         empty($datos['nombre']) || empty($datos['apellido']) ||
         empty($datos['telefono']) || empty($datos['ubicacion'])

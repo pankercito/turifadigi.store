@@ -219,7 +219,6 @@ class ConfigMainController
     if ($id != null && $estado != null) {
 
       try {
-
         if ($ganadores) {
           $mrc = $this->model->finalizarRifa($id, $estado, $ganadores);
         } else {

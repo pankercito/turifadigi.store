@@ -19,7 +19,7 @@ class ConfigMain
     try {
       // 1. Insertar en configuracion
       $sqlConfig = "INSERT INTO configuracion (id_usuario, titulo, fecha_inicio, fecha_final, precio_boleto, boletos_minimos, boletos_maximos, numero_contacto, url_rifa, texto_ejemplo) 
-                    VALUES (:id_usuario, :titulo, :fecha_inicio, :fecha_final, :precio_boleto, :boletos_minimos, :boletos_maximos, :numero_contacto, :url_rifa, :texto_ejemplo)";
+        VALUES (:id_usuario, :titulo, :fecha_inicio, :fecha_final, :precio_boleto, :boletos_minimos, :boletos_maximos, :numero_contacto, :url_rifa, :texto_ejemplo)";
       $paramsConfig = [
         ':id_usuario' => $id_usuario,
         ':titulo' => $titulo,
@@ -164,7 +164,7 @@ class ConfigMain
   {
 
     try {
-      $sql = "UPDATE `configuracion` SET `estado` = 0";
+      $sql = "UPDATE `configuracion` SET `estado` = 0 WHERE `estado` != 2";
       $result = $this->db->consultar($sql, []);
 
       return true;

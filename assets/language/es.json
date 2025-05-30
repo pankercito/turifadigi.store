@@ -89,6 +89,7 @@
   "social_networks": "Redes sociales",
   "follow_instagram": "¡Síguenos en instagram!",
   "contact": "Contacto",
+  "support": "Soporte",
   "phone_number": "+1 4074287580",
   
   "login_title": "Iniciar Sesión",
@@ -112,13 +113,14 @@
 
   "title": "Título no disponible",
   "80_percent": "Al completarse el 80% juega nuestra rifa",
-  "play_supergana": "📍 Juega por la lotería de SuperGana",
+  "play_supergana": "📍 Juega por la lotería de Super Gana",
   "price_ticket": "🎟️ Valor del boleto:",
   "minimum_tickets": "🎟️ Compra mínima:",
   "when_raffle_plays": "🗓️ ¿Cuándo se juega la rifa?",
   "when_raffle_plays_desc": "La fecha del sorteo será anunciada una vez se alcance el 80% de los boletos vendidos",
   "official_link": "🔗 Enlace oficial para seguir el sorteo:",
   "contact_number": "📞 Número de contacto:",
+  "contact_number_support": "📞 Número de soporte:",
 
   "last_winners_tickets": "Últimos boletos ganadores",
   "no_purchases": "No comprado",
@@ -238,7 +240,7 @@
 "banner_sorteo_help": "(Opcional, PNG o JPG, máximo 5MB)",
 
 "title_sorteo": "Título del Sorteo",
-"title_sorteo_desc": "🎉 ¡POR EL SUPERGANA! 🎉",
+"title_sorteo_desc": "🎉 ¡POR EL SUPER GANA! 🎉",
 "title_sorteo_required": "Título del sorteo es requerido",
 
 "fecha_inicio": "Fecha de Inicio",
@@ -267,6 +269,7 @@
 "premio_required": "Nombre y descripción del premio son requeridos",
 
 "contacto_numero": "Número de Contacto",
+"contact_support_number": "Número de soporte",
 "contacto_numero_desc": "407-428-7580",
 "contacto_numero_required": "Número de contacto es requerido",
 
@@ -318,5 +321,10 @@
 "for_raffles": "para rifas",
 "m_raffle":"facilmente.",
 "easy_an_safe": "y grandes oportunidades.",
-"ur_tickets": "sobre tus boletos."
+"ur_tickets": "sobre tus boletos.",
+"ticket_name": "nombre",
+"ticket_phone": "telefono",
+"ticket_price":"precio",
+"ticket_state":"estado"
+
 }

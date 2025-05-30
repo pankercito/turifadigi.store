@@ -109,8 +109,8 @@ if ($sorteo['success'] && isset($sorteo['data'])) {
             <section class="lottery-info mb-4" aria-label="Información básica">
               <p data-i18n="play_supergana">📍 Juega por la lotería de SuperGana</p>
               <p class="price" style="line-height:1; font-size:1.2em;"><span data-i18n="price_ticket" class="mb-0" style="line-height:1;"> ??? Valor del boleto: </span> $<?php echo htmlspecialchars((string)$precioBoleto); ?></p>
-              <p class="min-tickets"><span data-i18n="minimum_tickets">??? Compra m�nima: </span> <?php echo htmlspecialchars((string)$boletosMinimos); ?></p>
-	  </section>
+              <p class="min-tickets"><span data-i18n="minimum_tickets">??? Compra m�nima: </span> <?php echo htmlspecialchars((string)$boletosMinimos); ?></p>
+            </section>
 
             <section class="prize-list mb-4" aria-label="Lista de premios">
               <?php foreach ($premiosMulti as $premio): ?>
@@ -137,9 +137,13 @@ if ($sorteo['success'] && isset($sorteo['data'])) {
             </section>
 
             <section class="contact-info mb-4" aria-label="Información de contacto">
-              <h2 data-i18n="contact_number">📞 Número de contacto:</h2>
-              <p><a href="tel:<?php echo htmlspecialchars((string)$numeroContacto); ?>" class="phone-number">
-                  <strong>+1 <?php echo htmlspecialchars((string)$numeroContacto); ?></strong>
+              <h2><span data-i18n="contact_number"> Número de contacto:</span> </h2>
+              <p><a href="tel:14074287580" class="phone-number">
+                  <strong>+1 407-428-7580</strong>
+                </a></p>
+              <h2><span data-i18n="contact_number_support"> Número de soporte:</span> </h2>
+              <p><a href="tel:14077329524?>" class="phone-number">
+                  <strong>+1 407-732-9524</strong>
                 </a></p>
             </section>
             <!-- <?php if ($textoImportante): ?> -->

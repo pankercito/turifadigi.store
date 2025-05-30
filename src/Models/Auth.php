@@ -48,9 +48,22 @@ class Auth
         return self::ERROR_INVALID_DATA;
       }
 
+      $request;
+
       // Consulta SQL para validar solo por usuario
       $sql = "SELECT * FROM usuarios WHERE 
              usuario = :usuario";
+
+      // Sanitize the input to prevent HTML, script, and SQL injection
+      $request['usuario'] = filter_var($request['usuario'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+      $request['usuario'] = strip_tags($request['usuario']); // Remove HTML tags
+      $request['usuario'] = htmlspecialchars($request['usuario'], ENT_QUOTES, 'UTF-8'); // Escape HTML entities
+
+
+      // Sanitize the input to prevent HTML, script, and SQL injection
+      $request['password'] = filter_var($request['password'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+      $request['password'] = strip_tags($request['password']); // Remove HTML tags
+      $request['password'] = htmlspecialchars($request['password'], ENT_QUOTES, 'UTF-8'); // Escape HTML entities
 
       $params = [
         ':usuario' => trim($request['usuario']),
@@ -200,42 +213,6 @@ class Auth
       return false;
     }
   }
-
-  /* public function getStatusMessage(int $status): array */
-  /* { */
-  /*   switch ($status) { */
-  /*     case self::LOGIN_SUCCESS: */
-  /*       return [ */
-  /*         'success' => true, */
-  /*         'message' => 'Inicio de sesión exitoso, redirigiendo.', */
-  /*         'type' => 'success' */
-  /*       ]; */
-  /*     case self::ERROR_INVALID_CREDENTIALS: */
-  /*       return [ */
-  /*         'success' => false, */
-  /*         'message' => 'No se encontró ninguna cuenta asociada a este usuario. Por favor, verifica el usuario  *//* ingresado.', */
-  /*         'type' => 'error' */
-  /*       ]; */
-  /*     case self::ERROR_INVALID_DATA: */
-  /*       return [ */
-  /*         'success' => false, */
-  /*         'message' => 'La contraseña ingresada es incorrecta. Por favor, inténtalo nuevamente.', */
-  /*         'type' => 'error' */
-  /*       ]; */
-  /*     case self::ERROR_DATABASE: */
-  /*       return [ */
-  /*         'success' => false, */
-  /*         'message' => 'Hubo un error al procesar tu solicitud. Por favor, verifica tu conexión a internet e  *//* intenta nuevamente.', */
-  /*         'type' => 'error' */
-  /*       ]; */
-  /*     default: */
-  /*       return [ */
-  /*         'success' => false, */
-  /*         'message' => 'Ocurrió un error inesperado. Por favor, intenta nuevamente más tarde o contacta al soporte  *//* técnico.', */
-  /*         'type' => 'error' */
-  /*       ]; */
-  /*   } */
-  /* } */
 
   public function getStatusMessage(int $status, $translations): array
   {

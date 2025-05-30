@@ -5,8 +5,6 @@ header('Content-Type: application/json');
 use App\Controllers\RegisterUserController;
 use App\Models\Usuario; // Asegúrate de que esta clase tenga un método para verificar la existencia del usuario
 
-// --- INICIO DE LA CORRECCIÓN Y FUNCIÓN MEJORADA ---
-
 // Función para generar un nombre de usuario único
 function generarNombreUsuarioUnico(string $nombre, string $apellido, Usuario $controladorUser): string
 {
@@ -68,9 +66,6 @@ function generarNombreUsuarioUnico(string $nombre, string $apellido, Usuario $co
 
     return $nombre_usuario;
 }
-
-// --- FIN DE LA FUNCIÓN MEJORADA ---
-
 
 // 1. Obtener el contenido bruto del cuerpo de la solicitud
 $json_data = file_get_contents('php://input');

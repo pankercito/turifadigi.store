@@ -138,19 +138,19 @@
             const boleto = numeroBoleto ? data.data[0] : null;
 
             if (boleto) {
-                const datosBoleto = {
-                    items: {
-                        nombre: (boleto.cliente || 'no') + ' ' + (boleto.a_cliente || 'comprado'),
-                        telefono: boleto.telefono || 'no comprado',
-                        "Precio": boleto.precio_boleto ? boleto.precio_boleto + '$' : 'no comprado',
-		    Estado: boleto.estado ? boleto.estado : "no recibido"
-                    },
-                    fecha_compra: boleto.fecha_compra || 'No disponible',
-                    numero: boleto.numero_boleto,
-                    id_boleto: boleto.id_boleto
-                };
                 container.innerHTML = "";
-                renderBoleto(datosBoleto);
+                renderBoleto({
+                    items: {
+                        [`${i18n.t("ticket_name")}`]: boleto.cliente != null ? boleto.cliente + " " + boleto.a_cliente : i18n.t("no_purchases"),
+                        [`${i18n.t("ticket_phone")}`]: boleto.telefono != null ? boleto.telefono : i18n.t("no_purchases"),
+                        [`${i18n.t("ticket_price")}`]: boleto.precio_boleto != null ? boleto.precio_boleto + "$" : i18n.t("no_purchases"),
+                        [`${i18n.t("ticket_state")}`]: boleto.estado != null ? boleto.estado : i18n.t("no_purchases"),
+                    },
+                    fecha_compra: boleto.fecha_compra || i18n.t("no_purchases"),
+                    numero: boleto.numero_boleto || "",
+                    id_boleto: boleto.id_boleto || "",
+                    id_rifa: boleto.id_rifa || "",
+                });
             } else if (data.data && data.data.length > 0) {
                 // Si buscas todos los boletos de la rifa, puedes listarlos aquí
                 container.innerHTML = data.data.map(boleto => `

@@ -12,7 +12,16 @@
                <h3 class="site-footer__social-title" data-i18n="social_networks">Redes sociales</h3>
                <div class="phone number">
                  <i class="fa-brands fa-instagram"></i>
-                 <a href="https://www.instagram.com/yorsinjose?igsh=MWY4MWQzaW90dWpjMA%3D%3D" data-i18n="follow_instagram">¡Siguenos en instagram!</a>
+                 <a href="https://www.instagram.com/yorsinjose?igsh=MWY4MWQzaW90dWpjMA%3D%3D" data-i18n="follow_instagram">ï¿½Siguenos en instagram!</a>
+               </div>
+               <h3 class="site-footer__social-title" data-i18n="support">Soporte</h3>
+               <div class="phone number">
+                 <i class="fa fa-envelope"></i>
+                 <a href="mailto:support@turifadigital.org">support@turifadigital.org</a>
+               </div>
+               <div class="phone number">
+                 <i class="fa-solid fa-phone-volume"></i>
+                 <a href="tel:14077329524" data-i18n="phone_number">+1 407-732-9524</a>
                </div>
              </div>
            </div>
@@ -24,13 +33,9 @@
              <p class="footer-widget__about-text"></p>
              <div class="site-footer__social-box">
                <h3 class="site-footer__social-title" data-i18n="contact">Contacto</h3>
-	     <div class="phone number">
-                 <i class="fa fa-envelope"></i>
-                 <a href="mailto:support@turifadigital.org">support@turifadigital.org</a>
-               </div>
                <div class="phone number">
                  <i class="fa-solid fa-phone-volume"></i>
-                 <a href="tel:14074287580" data-i18n="phone_number">+1 4074287580</a>
+                 <a href="tel:14074287580" data-i18n="phone_number">+1 407-428-7580</a>
                </div>
                <style>
                  .main-menu .mobile-nav__toggler {
@@ -85,7 +90,6 @@
 
                  .macfoot.row {
                    display: flex;
-                   align-items: center;
                    justify-content: space-around;
                  }
                </style>
@@ -103,7 +107,7 @@
            <div class="site-footer__bottom-inner">
 
              <p class="site-footer__bottom-text">
-               <!-- Copyright © 2024 -->
+               <!-- Copyright ï¿½ 2024 -->
                <a href="#"><!-- Zefxa. --></a>
                <!-- All Rights Reserved. -->
              </p>
@@ -127,15 +131,15 @@
    <div class="mobile-nav__content">
 
      <!-- <div class="mobile-nav__btns"> -->
-     <!--   <a href="/login" class="main-menu__btn thm-btn"  --><!-- data-i18n="login_btn">Iniciar Sesión</a> -->
+     <!--   <a href="/login" class="main-menu__btn thm-btn"  --><!-- data-i18n="login_btn">Iniciar Sesiï¿½n</a> -->
      <!--   <div class="custom-language-select" id="custom-language-select-mobile"> -->
      <!--     <div class="custom-language-button"> -->
      <!--       <span class="custom-language-selected">Idioma</span> -->
      <!--       <span class="custom-language-arrow">?</span> -->
      <!--     </div> -->
      <!--     <div class="custom-language-options"> -->
-     <!--       <div class="custom-language-option" data-value="es">Español</div> -->
-     <!--       <div class="custom-language-option" data-value="en">Inglés</div> -->
+     <!--       <div class="custom-language-option" data-value="es">Espaï¿½ol</div> -->
+     <!--       <div class="custom-language-option" data-value="en">Inglï¿½s</div> -->
      <!--     </div> -->
      <!--     <input type="hidden" name="language" value="es"> -->
      <!--   </div> -->
@@ -165,7 +169,7 @@
                <h3 class="site-footer__social-title" data-i18n="social_networks">Redes sociales</h3>
                <div class="phone number">
                  <i class="fa-brands fa-instagram"></i>
-                 <a href="https://www.instagram.com/yorsinjose?igsh=MWY4MWQzaW90dWpjMA%3D%3D" data-i18n="follow_instagram">¡Siguenos en instagram!</a>
+                 <a href="https://www.instagram.com/yorsinjose?igsh=MWY4MWQzaW90dWpjMA%3D%3D" data-i18n="follow_instagram">ï¿½Siguenos en instagram!</a>
                </div>
              </div>
            </div>
@@ -180,12 +184,17 @@
              <div class="site-footer__social-box">
                <h3 class="site-footer__social-title" data-i18n="contact">Contacto</h3>
                <div class="phone number">
+                 <i class="fa-solid fa-phone-volume"></i>
+                 <a href="tel:14074287580" data-i18n="phone_number">+1 407-428-7580</a>
+               </div>
+               <h3 class="site-footer__social-title" data-i18n="support">Soporte</h3>
+               <div class="phone number">
                  <i class="fa fa-envelope"></i>
                  <a href="mailto:support@turifadigital.org">support@turifadigital.org</a>
                </div>
-	     <div class="phone number">
+               <div class="phone number">
                  <i class="fa-solid fa-phone-volume"></i>
-                 <a href="tel:14074287580" data-i18n="phone_number">+1 4074287580</a>
+                 <a href="tel:14077329524" data-i18n="phone_number">+1 407-732-9524</a>
                </div>
              </div>
            </div>
