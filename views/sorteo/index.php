@@ -818,8 +818,18 @@
                       Swal.fire({
                         title: '¡Compra procesada correctamente!',
                         icon: 'success',
-                        confirmButtonText: 'OK'
-                      }).then(() => {
+                        confirmButtonText: 'Clic aquí si no se abrio WhatsApp',
+                        denyButtonText: 'Salir', // Asegúrate de que el texto sea claro
+                        showDenyButton: true, // ¡Este es el cambio clave para mostrar el botón Salir!
+                      }).then((sid) => {
+                        if (sid.isConfirmed) {
+                          generarEnlaceWhatsApp({
+                            nombre: formData.nombre,
+                            telefono: formData.telefono
+                          }, boletosCargar);
+                        } else if (sid.isDenied) {
+                          window.location.href = '/sorteo';
+                        }
                         window.location.href = '/sorteo';
                       });
                     } else {
@@ -981,10 +991,19 @@
 
                           Swal.fire({
                             title: '¡Compra procesada correctamente!',
-                            text: 'OK',
                             icon: 'success',
-                            confirmButtonText: 'OK'
-                          }).then(() => {
+                            confirmButtonText: 'Clic aquí si no se abrio WhatsApp',
+                            denyButtonText: 'Salir', // Asegúrate de que el texto sea claro
+                            showDenyButton: true, // ¡Este es el cambio clave para mostrar el botón Salir!
+                          }).then((sid) => {
+                            if (sid.isConfirmed) {
+                              generarEnlaceWhatsApp({
+                                nombre: formData.nombre,
+                                telefono: formData.telefono
+                              }, boletosCargar);
+                            } else if (sid.isDenied) {
+                              window.location.href = '/sorteo';
+                            }
                             window.location.href = '/sorteo';
                           });
                         } else {
