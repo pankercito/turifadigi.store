@@ -308,3 +308,17 @@
     <div class="stricky-header stricked-menu main-menu">
       <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
     </div><!-- /.stricky-header -->
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.custom-language-select').forEach(function(selector) {
+          selector.querySelectorAll('.custom-language-option').forEach(function(option) {
+            option.addEventListener('click', function() {
+              var lang = this.getAttribute('data-value');
+              document.cookie = 'language=' + lang + '; path=/; max-age=' + (60 * 60 * 24 * 365);
+              location.reload();
+            });
+          });
+        });
+      });
+    </script>

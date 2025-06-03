@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <section class="main-slider">
     <div id="mainCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
         <div class="carousel-indicators">
@@ -7,6 +8,27 @@
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active" style="height: 850px;">
+=======
+<!-- <section class="main-slider">
+    <div class="swiper-container thm-swiper__slider" data-swiper-options='{"slidesPerView": 1, "loop": true,
+                "effect": "fade",
+                "pagination": {
+                "el": "#main-slider-pagination",
+                "type": "bullets",
+                "clickable": true
+                },
+                "navigation": {
+                "nextEl": "#main-slider__swiper-button-next",
+                "prevEl": "#main-slider__swiper-button-prev"
+                },
+                "autoplay": {
+                    "delay": 8000
+                } 
+            }'>
+        <div class="swiper-wrapper">
+
+            <div class="swiper-slide">
+>>>>>>> 27704c9bd19dc94788d5b70591d251d55bc374ef
                 <div class="main-slider__bg" style="background-image: url(assets/img/backgrounds/sorteo.webp);"></div>
                 <div class="main-slider__shape-bg" style="background-image: url(assets/img/shapes/main-slider-shape-bg.png);"></div>
                 <div class="main-slider__shape-1 float-bob-y">
@@ -38,6 +60,7 @@
                     <img src="assets/img/shapes/main-slider-shape-2.png" alt="">
                 </div>
                 <div class="container">
+<<<<<<< HEAD
                     <div class="strucs">
                         <div class="cs_main-slider__content">
                             <h2 class="main-slider__title" ">TuRifaDigital<br><span data-i18n="manage_raffles">Gestiona tus boletos</span><br><span data-i18n="m_raffle">manera facil y rapida</span></h2>
@@ -50,6 +73,22 @@
                                     </div>';
                             }
                             ?>
+=======
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="main-slider__content">
+                                <h2 class="main-slider__title" data-i18n="manage_raffles">Gestiona tus <br> <span>Rifas</span> <br> con facilidad</h2>
+                                <p class="main-slider__text" data-i18n="full_control">Control total sobre tus sorteos <br> y participantes.</p>
+                                <?php
+                                $session = $_SESSION['usuario'] ?? '';
+                                if ($session === '') {
+                                    echo '<div class="main-slider__btn-box">
+                            <a href="/login" class="turifaboton-style" data-i18n="register_free">Regístrate gratis</a>
+                          </div>';
+                                }
+                                ?>
+                            </div>
+>>>>>>> 27704c9bd19dc94788d5b70591d251d55bc374ef
                         </div>
                     </div>
                 </div>
@@ -81,6 +120,7 @@
 
         </div>
     </div>
+<<<<<<< HEAD
 </section>
 
 <style>
@@ -177,5 +217,164 @@
             transform: scale(1.05);
             /* Termina con el zoom deseado */
         }
+=======
+</section> -->
+
+
+<!--Main Slider Start-->
+<section class="main-slider">
+    <div class="swiper-container thm-swiper__slider" data-swiper-options='{"slidesPerView": 1, "loop": true,
+                "effect": "fade",
+                "pagination": {
+                "el": "#main-slider-pagination",
+                "type": "bullets",
+                "clickable": true
+                },
+                "navigation": {
+                "nextEl": "#main-slider__swiper-button-next",
+                "prevEl": "#main-slider__swiper-button-prev"
+                },
+                "autoplay": {
+                    "delay": 8000
+                } 
+            }'>
+        <div class="swiper-wrapper">
+
+            <div class="swiper-slide">
+                <div class="main-slider__bg"
+                    style="background-image: url(assets/img/backgrounds/sorteo.webp);"></div>
+                <div class="main-slider__shape-bg"
+                    style="background-image: url(assets/img/shapes/main-slider-shape-bg.png);"></div>
+                <div class="main-slider__shape-1 float-bob-y">
+                    <!-- <img src="assets/img/shapes/main-slider-shape-1.png" alt=""> -->
+                </div>
+                <div class="main-slider__shape-2 img-bounce">
+                    <!-- <img src="assets/img/shapes/main-slider-shape-2.png" alt=""> -->
+                </div>
+                <div class="main-slider__shape-3 float-bob-x">
+                    <!--  <img src="assets/img/shapes/main-slider-shape-3.png" alt=""> -->
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="main-slider__content">
+                                <h2 class="main-slider__title" data-i18n="best_option">TuRifaDigital <br> <span>Tu mejor opción</span> <br>
+                                    para rifas</h2>
+                                <p class="main-slider__text" data-i18n="easy_safe">Crea y gestiona tus rifas de manera <br>
+                                    fácil y segura.</p>
+                                <div class="">
+                                    <a href="/login" class="turifaboton-style" data-i18n="start_now">Comenzar ahora</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="main-slider__bg"
+                    style="background-image: url(assets/img/backgrounds/MotoYorsi.webp);"></div>
+                <div class="main-slider__shape-bg"
+                    style="background-image: url(assets/img/shapes/main-slider-shape-bg.png);"></div>
+                <div class="main-slider__shape-1 float-bob-y">
+                    <!-- <img src="assets/img/shapes/main-slider-shape-1.png" alt=""> -->
+                </div>
+                <div class="main-slider__shape-2 img-bounce">
+                    <!-- <img src="assets/img/shapes/main-slider-shape-2.png" alt=""> -->
+                </div>
+                <div class="main-slider__shape-3 float-bob-x">
+                    <!-- <img src="assets/img/shapes/main-slider-shape-3.png" alt=""> -->
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="main-slider__content">
+                                <h2 class="main-slider__title" data-i18n="manage_raffles">Gestiona tus <br> <span>Rifas</span> <br>
+                                    con facilidad</h2>
+                                <p class="main-slider__text" data-i18n="full_control">Control total sobre tus sorteos <br>
+                                    y participantes.</p>
+                                <?php
+                                $session = $_SESSION['usuario'] ?? '';
+                                if ($session === '') {
+                                    /* echo '<div class="main-slider__btn-box"> */
+                                    /*     <a href="/login" class="turifaboton-style" data-i18n="register_free">Regístrate gratis</a> */
+                                    /* </div>'; */
+                                }
+                                ?>
+                                <!-- <div class=""> -->
+                                <!--     <a href="/login" class="turifaboton-style">Regístrate gratis</a> -->
+                                <!-- </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="main-slider__bg"
+                    style="background-image: url(assets/img/backgrounds/iPhoneback.webp);"></div>
+                <div class="main-slider__shape-bg"
+                    style="background-image: url(assets/img/shapes/main-slider-shape-bg.png);"></div>
+                <div class="main-slider__shape-1 float-bob-y">
+                    <!-- <img src="assets/img/shapes/main-slider-shape-1.png" alt=""> -->
+                </div>
+                <div class="main-slider__shape-2 img-bounce">
+                    <!-- <img src="assets/img/shapes/main-slider-shape-2.png" alt=""> -->
+                </div>
+                <div class="main-slider__shape-3 float-bob-x">
+                    <!-- <img src="assets/img/shapes/main-slider-shape-3.png" alt=""> -->
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="main-slider__content">
+                                <h2 class="main-slider__title" data-i18n="payment_system">Sistema de <br> <span>Pagos</span> <br>
+                                    Seguro</h2>
+                                <p class="main-slider__text" data-i18n="multiple_methods">Múltiples métodos de pago <br>
+                                    y transacciones seguras.</p>
+                                <div class="">
+                                    <a href="/login" class="turifaboton-style" data-i18n="learn_more">Conoce más</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <div class="swiper-pagination" id="main-slider-pagination"></div>
+        <!-- If we need navigation buttons -->
+
+    </div>
+</section>
+<!--Main Slider End-->
+
+
+<style>
+    .turifaboton-style {
+        background-color: var(--zefxa-base);
+        color: var(--zefxa-white);
+        padding: 12px 24px;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .turifaboton-style:hover {
+        background-color: var(--zefxa-black);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .turifaboton-style:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+>>>>>>> 27704c9bd19dc94788d5b70591d251d55bc374ef
     }
 </style>

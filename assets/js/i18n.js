@@ -97,6 +97,7 @@ const i18n = {
       await this.loadTranslations(this.currentLang);
       this.translatePage();
     } catch (error) {
+      // Después:
       console.warn(
         "No se encontraron los archivos de traducción. Por favor, verifica que existan es.json y en.json en la carpeta assets/language/"
       );
@@ -111,7 +112,7 @@ const i18n = {
       }
       this.translations = await response.json();
     } catch (error) {
-      console.warn(
+      alert(
         `Error cargando traducciones para ${lang}. Verifica que el archivo ${lang}.json exista y tenga el formato correcto.`
       );
     }
