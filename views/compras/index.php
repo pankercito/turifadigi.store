@@ -176,14 +176,29 @@
     const htmlPersonalizado = await response.text();
 
     if (condition) {
-      let title = pagdo == null ? '' : '<h5><span class="pago-confirmado">Pago Confirmado<span class="icono-confirmado"></span><i class="fa-solid fa-check-circle"></i></span></h5>';
+      let title = pagdo == null ? '' : `<h5><span class="pago-confirmado">${i18n.t("payment_confirm")}<span class="icono-confirmado"></span><i class="fa-solid fa-check-circle"></i></span></h5>`;
       Swal.fire({
         title: title,
         html: htmlPersonalizado,
         showCloseButton: true,
         focusConfirm: false,
-        confirmButtonText: `
-        cerrar`,
+        confirmButtonText: i18n.t("btn_close"),
+        width: '850px',
+        didOpen: () => {
+          // This function runs AFTER SweetAlert has rendered the HTML
+          // Now you can safely execute your JavaScript that interacts with elements inside the SweetAlert
+          if (typeof i18n !== 'undefined' && typeof i18n.t === 'function') {
+            document.getElementById('payment-confirm-text').innerText = i18n.t("comprobante_title");
+            document.getElementById('label-titular').innerText = i18n.t("comprobante_titular_title");
+            document.getElementById('label-referencia').innerText = i18n.t("comprobante_referencia");
+            document.getElementById('label-monto-pagar').innerText = i18n.t("comprobante_amonto");
+            document.getElementById('label-monto-pagado').innerText = i18n.t("comprobante_monto");
+            document.getElementById('label-metodo').innerText = i18n.t("comprobante_metodo");
+          } else {
+            console.error("i18n object or i18n.t function is not defined.");
+          }
+        }
+
       });
       return;
     }

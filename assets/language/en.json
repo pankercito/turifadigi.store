@@ -12,7 +12,10 @@
   "username": "Username",
   "enter_username": "Create a username",
   "password": "Password",
+  "rest_password": "Password Reset",
   "enter_password": "Create a password",
+  "enter_new_password": "Create a new password",
+  "enter_repeat_password": "Repeat a new password",
   "phone": "Phone",
   "country": "Country",
   "enter_phone": "Enter your phone number",
@@ -60,7 +63,17 @@
   "login_btn": "Login",
 
   "logout_btn": "Logout",
-
+  
+  "btn_close": "close",
+  "btn_cancel": "Cancel",
+  "btn_accept": "Accept",  
+  "btn_save": "Save",
+  "btn_continue": "Continue",
+  "btn_reject": "Reject",
+  "btn_confirm": "Confirm",
+  "btn_verify": "Verify",
+  
+  "payment_confirm" :"Payment Confirmed",
   "payment_system": "Secure",
   "payment_system2" :"payment",
   "payment_system3" :"system",
@@ -165,8 +178,10 @@
   "comprobante_title": "PAYMENT PROOF",
 
   "comprobante_titular": "Payment title (Payment title phone, if it is Pago Movil)",
+  "comprobante_titular_title": "Payment title",
   "comprobante_referencia": "Payment reference",
   "comprobante_monto": "Amount paid",
+  "comprobante_amonto": "Amount to paid",
   "comprobante_metodo": "Payment method",
   "ingrese_sus_datos": "Enter your data",
   "comprobante_metodo_seleccionar": "Select payment method",
@@ -187,6 +202,7 @@
   "database_error": "There was an error processing your request. Please check your internet connection and try again.",
   "unexpected_error": "An unexpected error occurred. Please try again later or contact support.",
   "all_fields_required": "All fields are required",
+  "reset_success": "Password reset successful",
 
   "username_already_exists": "Username already exists",
   "user_registration_success": "User registered successfully",

@@ -126,6 +126,7 @@
                           <li><a href="/compra_verificacion" data-i18n="verify purchases">Verificar compras</a></li>
                           <li><a href="/sorteo_verificacion" data-i18n="verify raffles">Verificar sorteos</a></li>
                           <li><a href="/crear_sorteo" data-i18n="create raffle">Crear sorteo</a></li>
+                          <li><a href="/restablecer_contrasena" data-i18n="rest_password">Restablecer Contraseña</a></li>
                         </ul>
                       <?php endif; ?>
                     </li>

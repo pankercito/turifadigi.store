@@ -6,6 +6,7 @@ use App\config\Conexion;
 use App\Controllers\CorreoController;
 use App\Controllers\CriptografiaController;
 use Exception;
+use GrahamCampbell\ResultType\Success;
 
 class Auth
 {
@@ -21,12 +22,14 @@ class Auth
   const ERROR_INVALID_CREDENTIALS = 2;
   const ERROR_DATABASE = 3;
   const ERROR_INVALID_DATA = 4;
+  const SUCCESS_RESET_PASSWORD = 5;
 
   // Mensajes de respuesta
   const MESSAGE_LOGIN_SUCCESS = 'Inicio de sesión exitoso';
   const MESSAGE_INVALID_CREDENTIALS = 'Credenciales inválidas';
   const MESSAGE_DATABASE_ERROR = 'Error al procesar la solicitud en la base de datos';
   const MESSAGE_INVALID_DATA = 'Datos inválidos o incompletos';
+  const MESSAGE_RESET_SUCCESS = 'Contraseña restablecida exitosamente';
 
   private $db;
   private $ctf;
@@ -104,16 +107,16 @@ class Auth
   {
     try {
       // Validar datos requeridos
-      if (empty($request['correo'])) {
-        error_log("Error: Correo vacío");
+      if (empty($request['usuario'])) {
+        error_log("Error: usuario vacío");
         return self::ERROR_INVALID_DATA;
       }
 
-      error_log("Intentando recuperar contraseña para: " . $request['correo']);
+      error_log("Intentando recuperar contraseña para: " . $request['usuario']);
 
       // Consulta SQL para validar solo por correo
-      $sql = "SELECT id_usuario, usuario, correo FROM usuarios WHERE correo = :correo AND estado = 1 LIMIT 1";
-      $params = [':correo' => trim($request['correo'])];
+      $sql = "SELECT * FROM usuarios WHERE usuario = :usuario";
+      $params = [':usuario' => trim($request['usuario'])];
 
       error_log("Ejecutando consulta SQL: " . $sql);
       error_log("Con parámetros: " . json_encode($params));
@@ -190,18 +193,26 @@ class Auth
     }
   }
 
-  public function resetPassword(string $token, string $newPassword): bool
+  public function resetPassword(string $user, string $newPassword): bool
   {
     try {
-      $sql = "SELECT * FROM usuarios WHERE token_recuperacion = :token LIMIT 1";
-      $params = [':token' => $token];
+      if (empty($user)) {
+        error_log("Error: usuario vacío");
+        return self::ERROR_INVALID_DATA;
+      }
+
+      error_log("Intentando recuperar contraseña para: " . $user);
+
+      // Consulta SQL para validar solo por correo
+      $sql = "SELECT * FROM usuarios WHERE usuario = :usuario";
+      $params = [':usuario' => trim($user)];
       $result = $this->db->consultar($sql, $params);
 
       if ($result && count($result) > 0) {
-        $sqlUpdate = "UPDATE usuarios SET password = :password, token_recuperacion = NULL WHERE token_recuperacion = :token";
+        $sqlUpdate = "UPDATE usuarios SET password = :password WHERE usuario = :usuario";
         $paramsUpdate = [
-          ':password' => $newPassword,
-          ':token' => $token
+          ':password' => password_hash($newPassword, PASSWORD_DEFAULT),
+          ':usuario' => $user,
         ];
 
         $this->db->ejecutar($sqlUpdate, $paramsUpdate);
@@ -240,6 +251,12 @@ class Auth
           'success' => false,
           'message' => $translations['database_error'],
           'type' => 'error'
+        ];
+        case self::SUCCESS_RESET_PASSWORD:
+        return [
+          'success' => true,
+          'message' => $translations['reset_success'],
+          'type' => 'success'
         ];
       default:
         return [

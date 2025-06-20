@@ -129,10 +129,10 @@
               </div>
               <div class="col-xl-6 col-lg-6">
                 <label for="ubicacion_signup" class="form-label" style="font-weight: bold;">
-                  <i class="bi bi-geo-alt-fill icon-signup ubicacion"></i> <span data-i18n="location">Ubicaci�n</span> *
+                  <i class="bi bi-geo-alt-fill icon-signup ubicacion"></i> <span data-i18n="location">Ubicación</span> *
                 </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="ubicacion" id="ubicacion_signup" data-i18n-placeholder="enter_location" placeholder="E.J: Pa�s, estado, direcci�n" class="input-hover-signup">
+                  <input type="text" name="ubicacion" id="ubicacion_signup" data-i18n-placeholder="enter_location" placeholder="E.J: País, estado, dirección" class="input-hover-signup">
                   <span id="ubicacion_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
@@ -147,10 +147,10 @@
               </div>
               <div class="col-xl-6 col-lg-6">
                 <label for="password_signup" class="form-label" style="font-weight: bold;">
-                  <i class="bi bi-lock-fill icon-signup password"></i> <span data-i18n="password">Contrase�a</span> *
+                  <i class="bi bi-lock-fill icon-signup password"></i> <span data-i18n="password">Contraseña</span> *
                 </label>
                 <div class="contact-two__input-box" style="position: relative;">
-                  <input type="password" name="password" id="password_signup" data-i18n-placeholder="enter_password" placeholder="Cree una contrase�a" class="input-hover-signup" autocomplete="off">
+                  <input type="password" name="password" id="password_signup" data-i18n-placeholder="enter_password" placeholder="Cree una contraseña" class="input-hover-signup" autocomplete="off">
                   <span class="password-toggle" id="password-togle" onclick="togglePasswordVisibilitySignup()">
                     <i class="bi bi-eye-fill" id="icon-eye-signup"></i>
                   </span>
@@ -212,7 +212,7 @@
                       <option value="599-7">Curazao (+599-7)</option>
                       <option value="599-3">Bonaire, San Eustaquio y Saba (+599-3)</option>
                     </select>
-                    <input type="text" name="telefono" id="telefono_signup" data-i18n-placeholder="enter_phone" placeholder="Ingrese su n�mero de tel�fono" class="input-hover-signup">
+                    <input type="text" name="telefono" id="telefono_signup" data-i18n-placeholder="enter_phone" placeholder="Ingrese su número de teléfono" class="input-hover-signup">
                   </div>
                   <span id="telefono_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
@@ -243,7 +243,7 @@
 </style>
 <script>
   // Eliminar todas las validaciones de campos y reglas
-  // Solo dejar el env�o simple del formulario
+  // Solo dejar el envío simple del formulario
 
   const form = document.getElementById('form-registro');
   let isSubmitting = false;
@@ -307,7 +307,7 @@
 
       if (!response.ok) throw data;
 
-      showToast('success', '�xito', data.message);
+      showToast('success', 'éxito', data.message);
 
       Array.from(form.getElementsByTagName('input')).forEach(input => input.disabled = true);
       // console.log('Redirigiendo a /login en 2 segundos...');
@@ -373,7 +373,7 @@
 
   inputNombre.addEventListener('keyup', function() {
     const valor = this.value;
-    const esValido = /^[A-Za-z������������ ]{3,}$/.test(valor);
+    const esValido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]{3,}$/.test(valor);
     estadoValidacionCampos.nombre = esValido;
 
     if (valor.length === 0) {
@@ -397,7 +397,7 @@
 
   inputApellido.addEventListener('keyup', function() {
     const valor = this.value;
-    const esValido = /^[A-Za-z������������ ]{3,}$/.test(valor);
+    const esValido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]{3,}$/.test(valor);
     estadoValidacionCampos.apellido = esValido;
 
     if (valor.length === 0) {
@@ -421,7 +421,7 @@
 
   inputUbicacion.addEventListener('keyup', function() {
     const valor = this.value;
-    const esValido = /^[A-Za-z������������0-9 ,.]{3,}$/.test(valor);
+    const esValido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9 ,.]{3,}$/.test(valor);
     estadoValidacionCampos.ubicacion = esValido;
 
     if (valor.length === 0) {
@@ -445,7 +445,7 @@
 
   inputUsuario.addEventListener('keyup', function() {
     const valor = this.value;
-    const esValido = /^[A-Za-z������������0-9_-]{3,}$/.test(valor);
+    const esValido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9_-]{3,}$/.test(valor);
     estadoValidacionCampos.usuario = esValido;
 
     if (valor.length === 0) {
@@ -540,7 +540,7 @@
   prefijoPais.addEventListener('change', validarTelefonoCompleto);
 
 
-  // Funci�n para alternar visibilidad de la contrase�a en el signup
+  // Función para alternar visibilidad de la contrase�a en el signup
   function togglePasswordVisibilitySignup() {
     const passwordInput = document.getElementById('password_signup');
     const icon = document.getElementById('icon-eye-signup');

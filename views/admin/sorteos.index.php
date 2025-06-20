@@ -59,13 +59,16 @@
 
           data.forEach((elemento, index) => {
             let acciones = `<div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-info btn-sm" onclick="obsSorteo(${elemento['id_rifa']})" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Editar Sorteo">
-                           <i class="fa-solid fa-arrows-up-down-left-right fa-md"></i>
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm" onclick="cambiarEstado(${elemento['id_rifa']})" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Cambiar Estado">
-                            <i class="fa-solid fa-pen"></i>
-                        </button>
-                    </div>`;
+              <button type="button" class="btn btn-info btn-sm" onclick="obsSorteo(${elemento['id_rifa']})" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Editar Sorteo">
+                <i class="fa-solid fa-arrows-up-down-left-right fa-md"></i>
+              </button>
+              <button type="button" class="btn btn-danger btn-sm" 
+                onclick="${elemento['estado'] == 2 ? `obsSorteo(${elemento['id_rifa']})` : `cambiarEstado(${elemento['id_rifa']})`}" 
+                data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Cambiar Estado"
+                ${elemento['estado'] == 2 ? 'disabled' : ''}>
+                <i class="fa-solid fa-pen"></i>
+              </button>
+            </div>`;
 
             let estado = '';
 
@@ -388,7 +391,6 @@
         focusConfirm: false,
         confirmButtonText: 'cerrar',
         showCancelButton: false,
-        width: '800px'
       });
 
       return;

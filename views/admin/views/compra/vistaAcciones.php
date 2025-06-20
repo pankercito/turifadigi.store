@@ -32,22 +32,40 @@ $montoa_pagar = $data["total"] ?? '';
 <div class="form-section">
   <h4 class="form-section-title" data-i18n="comprobante_title">
     <i class="fas fa-file-invoice"></i>
-    COMPROBANTE DE PAGO
+    <span id="comprobante-title-text">COMPROBANTE DE PAGO</span>
   </h4>
-  <div class="form-group-custom">
-    <label class="required">Titular</label>
-    <input type="text" class="form-control-custom" id="titular" disabled value="<?php echo htmlspecialchars($titular); ?>">
+  <div class="form-row-custom">
+    <div class="form-group-custom" style="flex: 1; margin-right: 10px;">
+      <label class="required" id="label-titular">Titular</label>
+      <input type="text" class="form-control-custom" id="titular" disabled value="<?php echo htmlspecialchars($titular); ?>">
+    </div>
+    <div class="form-group-custom" style="flex: 1;">
+      <label class="required" id="label-referencia">Referencia de pago</label>
+      <input type="text" class="form-control-custom" id="referencia" disabled value="<?php echo htmlspecialchars($referencia); ?>">
+    </div>
   </div>
-
   <div class="form-group-custom">
-    <label class="required">Referencia de pago</label>
-    <input type="text" class="form-control-custom" id="referencia" disabled value="<?php echo htmlspecialchars($referencia); ?>">
-  </div>
-
-  <div class="form-group-custom">
-    <label class="required">Monto a pagar</label>
+    <label class="required" id="label-monto-pagar">Monto a pagar</label>
     <input type="text" class="form-control-custom" id="monto_pagar" disabled value="<?php echo htmlspecialchars($montoa_pagar); ?> $">
   </div>
+  <style>
+    .form-row-custom {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+    }
+
+    @media (max-width: 600px) {
+      .form-row-custom {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .form-row-custom .form-group-custom {
+        margin-right: 0 !important;
+      }
+    }
+  </style>
 
   <?php
   function renderPaymentMethodDropdown($selectedMethod, $monto_pagado)
@@ -84,11 +102,11 @@ $montoa_pagar = $data["total"] ?? '';
       if ($key == $selectedMethod) {
     ?>
         <div class="form-group-custom">
-          <label class="required">Monto Pagado</label>
+          <label class="required" id="label-monto-pagado">Monto Pagado</label>
           <input type="text" class="form-control-custom" id="monto_pagado" disabled value="<?php echo htmlspecialchars($monto_pagado . " " . $moneda[$key]); ?>">
         </div>
         <div class="form-group-custom input-con-icono">
-          <label class="required">Metodo de pago</label>
+          <label class="required" id="label-metodo-pago">Metodo de pago</label>
           <img class="input-con-icono icono" src="<?php echo htmlspecialchars($icons[$key]); ?>" alt="Logo <?php echo htmlspecialchars($label); ?>">
           <input type="text" class="form-control-custom" id="metodo_pago" disabled value="<?php echo htmlspecialchars($label); ?>">
         </div>

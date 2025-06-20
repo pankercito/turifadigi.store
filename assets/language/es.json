@@ -12,7 +12,10 @@
   "username": "Nombre de usuario",
   "enter_username": "Cree un nombre de usuario",
   "password": "Contraseña",
+  "rest_password": "Restablecer Contraseña",
   "enter_password": "Cree una contraseña",
+  "enter_new_password": "Crea una nueva contraseña",
+  "enter_repeat_password": "Repita la contraseña",
   "phone": "Teléfono",
   "country": "País",
   "enter_phone": "Ingrese su número de teléfono",
@@ -63,7 +66,17 @@
 
   "logout_btn": "Cerrar Sesión",
 
+  "btn_close": "Cerrar",
+  "btn_save": "Guardar",
+  "btn_cancel": "Cancelar",
+  "btn_accept": "Aceptar",
+  "btn_continue": "Continuar",
+  "btn_back": "Volver",
+  "btn_confirm": "Confirmar",
+  "btn_reject": "Rechazar",
+  "btn_verify": "Verificar",
   
+  "payment_confirm" :"Pago Confirmado",
   "payment_system": "Sistema de",
   "payment_system2" :"pagos",
   "payment_system3" :"seguro",
@@ -170,8 +183,10 @@
   "exchange_rate": "Tasa de cambio: ",
   "comprobante_title": "COMPROBANTE DE PAGO",
 
+  "comprobante_titular_title": "Titular del pago",
   "comprobante_titular": "Titular del pago (Telefono del titular del pago, si es Pago Movil)",
   "comprobante_referencia": "Referencia del pago",
+  "comprobante_amonto": "Monto a Pagar",
   "comprobante_monto": "Monto Pagado",
   "comprobante_metodo": "Método de pago",
   "ingrese_sus_datos": "INGRESE SUS DATOS",
@@ -193,6 +208,7 @@
   "database_error": "Hubo un error al procesar tu solicitud. Por favor, verifica tu conexión a internet e intenta nuevamente.",
   "unexpected_error": "Ocurrió un error inesperado. Por favor, intenta nuevamente más tarde o contacta al soporte técnico.",
   "all_fields_required": "Todos los campos son requeridos",
+  "reset_success": "Restablecimiento de contraseña exitoso",
 
   "username_already_exists": "El nombre de usuario ya existe",
   "user_registration_success": "Usuario registrado exitosamente",

@@ -44,17 +44,17 @@ class AuthController
         exit();
     }
 
- 
+
 
     public function recuperarPassword(array $request): void
     {
-        header('Content-Type: application/json');
         $lang = $_SERVER['HTTP_X_LANGUAGE'] ?? 'es';
         if (!in_array($lang, ['es', 'en'])) $lang = 'es';
         $translations = $this->loadTranslations($lang);
+
         try {
             // Validación básica de datos
-            if (empty($request['correo'])) {
+            if (empty($request['usuario']) & empty($request['password_algos']) & empty($request['re_password'])) {
                 echo json_encode([
                     'success' => false,
                     'message' => 'El correo electrónico es requerido',
@@ -63,8 +63,17 @@ class AuthController
                 exit;
             }
 
-            $result = $this->login->recuperarPassword($request);
-            $response = $this->login->getStatusMessage($result, $translations);
+            if ($request['password_algos'] != $request['re_password']) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => "Las contraseñas no coinciden",
+                    'type' => 'error'
+                ]);
+                exit;
+            }
+            
+            $result = $this->login->resetPassword($request['usuario'], $request['password_algos']);
+            $response = $this->login->getStatusMessage(5, $translations);
 
             echo json_encode($response);
         } catch (\Exception $e) {

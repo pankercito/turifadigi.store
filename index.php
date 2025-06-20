@@ -53,34 +53,6 @@ if ($request_method === 'POST' && $route === '/verificarDisponibilidad') {
     (new BoletoController())->verificarDisponibilidad();
 }
 
-if ($request_method === 'GET' && strpos($route, '/boletos/obtenerBoletosPaginados') === 0) {
-    header('Content-Type: application/json');
-    try {
-        $controller = new BoletoController();
-        $controller->obtenerBoletosPaginados();
-    } catch (Exception $e) {
-        http_response_code(500);
-        echo json_encode(['success' => false, 'error' => $e->getMessage()]);
-    }
-}
-
-if ($request_method === 'POST' && $route === '/reset_password') {
-    (new AuthController())->resetPassword([
-        'token' => $_REQUEST['token'],
-        'password' => $_REQUEST['password']
-    ]);
-    exit;
-}
-
-if ($request_method === 'GET' && $route === '/reset-password') {
-    if (!isset($_GET['token'])) {
-        header('Location: /login');
-        exit;
-    }
-    require_once 'views/auth/reset-password.php';
-    exit;
-}
-
 if ($request_method === 'POST' && $route === '/registro_usuario') {
     (new RegisterUserController())->insert($_POST);
     exit;
@@ -197,7 +169,7 @@ switch (strtok($route, '?')) {
             exit;
         }
 
-        require_once 'views/admin/resetear_contra.php';
+        require_once 'views/admin/reset_password.php';
         break;
 
     //SECCION PANTALLAS DE SWEET ALERT

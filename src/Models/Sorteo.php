@@ -73,6 +73,7 @@ class SorteoModel
                 r.fecha_creacion,
                 c.id_configuracion,
                 c.id_usuario,
+                u.usuario,
                 c.titulo AS titulo_config,
                 c.fecha_inicio,
                 c.fecha_final,
@@ -85,6 +86,7 @@ class SorteoModel
                 c.estado
               FROM rifas r
               INNER JOIN configuracion c ON r.id_configuracion = c.id_configuracion
+              INNER JOIN usuarios u ON c.id_usuario = u.id_usuario
               WHERE r.id_rifa = :id_sorteo";
 
       $result = $this->db->consultar(
@@ -104,6 +106,7 @@ class SorteoModel
           'precio_boleto' => $row['precio_boleto'],
           'boletos_minimos' => $row['boletos_minimos'],
           'boletos_maximos' => $row['boletos_maximos'],
+          'usuario' => $row['usuario'],
           'numero_contacto' => $row['numero_contacto'],
           'url_rifa' => $row['url_rifa'],
           'texto_ejemplo' => $row['texto_ejemplo'],

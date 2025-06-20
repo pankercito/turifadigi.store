@@ -32,26 +32,26 @@ $metodo_pago = $data["metodo_pago"] ?? '';
 $montoa_pagar = $data["total"] ?? '';
 
 ?>
-<div class="form-section">
-  <h4 class="form-section-title" data-i18n="comprobante_title">
+
+<div class="comprobante-container">
+  <h4 class="comprobante-title" id="label-comprobante-title">
     <i class="fas fa-file-invoice"></i>
-    COMPROBANTE DE PAGO
+    <span id="payment-confirm-text"></span>
   </h4>
-  <div class="form-group-custom">
-    <label class="required">Titular</label>
-    <input type="text" class="form-control-custom" id="titular" disabled value="<?php echo htmlspecialchars($titular); ?>">
+  <div class="comprobante-row">
+    <div class="comprobante-group">
+      <label class="comprobante-label" id="label-titular">Titular</label>
+      <input type="text" class="comprobante-input" id="titular" disabled value="<?php echo htmlspecialchars($titular); ?>">
+    </div>
+    <div class="comprobante-group">
+      <label class="comprobante-label" id="label-referencia">Referencia de pago</label>
+      <input type="text" class="comprobante-input" id="referencia" disabled value="<?php echo htmlspecialchars($referencia); ?>">
+    </div>
   </div>
-
-  <div class="form-group-custom">
-    <label class="required">Referencia de pago</label>
-    <input type="text" class="form-control-custom" id="referencia" disabled value="<?php echo htmlspecialchars($referencia); ?>">
+  <div class="comprobante-group">
+    <label class="comprobante-label" id="label-monto-pagar">Monto a pagar</label>
+    <input type="text" class="comprobante-input" id="monto_pagar" disabled value="<?php echo htmlspecialchars($montoa_pagar); ?> $">
   </div>
-
-  <div class="form-group-custom">
-    <label class="required">Monto a pagar</label>
-    <input type="text" class="form-control-custom" id="monto_pagar" disabled value="<?php echo htmlspecialchars($montoa_pagar); ?> $">
-  </div>
-
   <?php
   function renderPaymentMethodDropdown($selectedMethod, $monto_pagado)
   {
@@ -82,41 +82,20 @@ $montoa_pagar = $data["total"] ?? '';
       "bancolombia" => "COP"
     ];
 
-  ?>
-    <?php foreach ($methods as $key => $label):
+    foreach ($methods as $key => $label):
       if ($key == $selectedMethod) {
-    ?>
-        <div class="form-group-custom">
-          <label class="required">Monto Pagado</label>
-          <input type="text" class="form-control-custom" id="monto_pagado" disabled value="<?php echo htmlspecialchars($monto_pagado . " " . $moneda[$key]); ?>">
+  ?>
+        <div class="comprobante-group">
+          <label class="comprobante-label" id="label-monto-pagado" >Monto Pagado</label>
+          <input type="text" class="comprobante-input" id="monto_pagado" disabled value="<?php echo htmlspecialchars($monto_pagado . " " . $moneda[$key]); ?>">
         </div>
-        <div class="form-group-custom input-con-icono">
-          <label class="required">Metodo de pago</label>
-          <img class="input-con-icono icono" src="<?php echo htmlspecialchars($icons[$key]); ?>" alt="Logo <?php echo htmlspecialchars($label); ?>">
-          <input type="text" class="form-control-custom" id="metodo_pago" disabled value="<?php echo htmlspecialchars($label); ?>">
+        <div class="comprobante-group comprobante-method">
+          <label class="comprobante-label" id="label-metodo" >Metodo de pago</label>
+          <div class="comprobante-method-box">
+            <img class="comprobante-icon" src="<?php echo htmlspecialchars($icons[$key]); ?>" alt="Logo <?php echo htmlspecialchars($label); ?>">
+            <input type="text" class="comprobante-input comprobante-method-input" id="metodo_pago" disabled value="<?php echo htmlspecialchars($label); ?>">
+          </div>
         </div>
-        <style>
-          .input-con-icono {
-            position: relative;
-          }
-
-          .input-con-icono input {
-            padding-left: 75px;
-            /* Espacio para que la imagen no tape el texto */
-            width: 100%;
-            box-sizing: border-box;
-            /* Incluye el padding en el ancho total */
-          }
-
-          .input-con-icono .icono {
-            position: absolute;
-            top: 70%;
-            padding: 0 0 0 10px;
-            transform: translateY(-50%);
-            width: 65px;
-            /* height: 65px; */
-          }
-        </style>
   <?php
       }
     endforeach;
@@ -124,12 +103,117 @@ $montoa_pagar = $data["total"] ?? '';
 
   renderPaymentMethodDropdown($metodo_pago, $monto_pagado);
   ?>
-
 </div>
+
+<style>
+  .comprobante-container {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px 0 rgba(44, 62, 80, 0.10);
+    padding: 32px 28px 24px 28px;
+    max-width: 540px;
+    margin: 20px auto;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    color: #222;
+  }
+
+  .comprobante-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2d6cdf;
+    margin: 25px auto 28px auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: 0.5px;
+    justify-content: center;
+  }
+
+  .comprobante-row {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 18px;
+  }
+
+  .comprobante-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+  }
+
+  .comprobante-label {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 7px;
+    color: #4a4a4a;
+    letter-spacing: 0.2px;
+  }
+
+  .comprobante-input {
+    background: #f5f8fa;
+    border: 1.5px solid #e3e8ee;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 1rem;
+    color: #222;
+    transition: border 0.2s;
+    outline: none;
+    font-weight: 500;
+  }
+
+  .comprobante-input:disabled {
+    background: #f5f8fa;
+    color: #888;
+    opacity: 1;
+  }
+
+  .comprobante-method {
+    margin-bottom: 0;
+  }
+
+  .comprobante-method-box {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .comprobante-icon {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    background: #f5f8fa;
+    border-radius: 8px;
+    border: 1px solid #e3e8ee;
+    padding: 6px;
+  }
+
+  .comprobante-method-input {
+    flex: 1;
+    margin-left: 0;
+  }
+
+  @media (max-width: 700px) {
+    .comprobante-container {
+      padding: 18px 8px 14px 8px;
+      max-width: 98vw;
+    }
+
+    .comprobante-title {
+      font-size: 1.1rem;
+    }
+
+    .comprobante-row {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .comprobante-icon {
+      width: 50px;
+      height: 47px;
+    }
+  }
+</style>
 <link rel="stylesheet" href="assets/css/dropdown-search-method.css">
-
-<head>
-  <link rel="stylesheet" href="/assets/css/payment.css">
-  <link rel="stylesheet" href="/assets/css/datos_personales.css">
-
-</head>
+<link rel="stylesheet" href="/assets/css/payment.css">
+<link rel="stylesheet" href="/assets/css/datos_personales.css">
