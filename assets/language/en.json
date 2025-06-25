@@ -22,7 +22,9 @@
   "email": "Email",
   "enter_email": "Enter your email",
   "register": "Register",
-  "already_have_account": "¿Already have an account?",
+  "already_have_account": "Already have an account?",
+  "forgot_password": "Forgot Password?",
+
 
   "first_last_name_phone_placeholder": "First Name Last Name (or phone)",
 
