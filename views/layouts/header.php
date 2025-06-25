@@ -85,7 +85,14 @@
                     <?php
                     @$session = $_SESSION['usuario'] ?? '';
                     @$sessionRol = $_SESSION['rol_usuario'] ?? '';
-                    $class = $sessionRol != 2 || $sessionRol != 3 ? 'element' : 'dropdown';
+                    // La validación original:
+                    // $class = $sessionRol != 2 || $sessionRol != 3 ? 'element' : 'dropdown';
+
+                    // Esta validación siempre será verdadera porque si $sessionRol es 2, entonces $sessionRol != 3 es true, y viceversa.
+                    // Por lo tanto, siempre asignará 'element'.
+                    // Para que sea 'dropdown' solo cuando $sessionRol sea 2 o 3, usa:
+
+                    $class = ($sessionRol == 2 || $sessionRol == 3) ? 'dropdown' : 'element';
                     ?>
                     <li class="<?php echo $class ?>">
                       <a href="/">
