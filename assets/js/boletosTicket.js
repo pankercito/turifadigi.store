@@ -22,8 +22,31 @@ function renderBoleto(data) {
             </div>`
     ).join('');
 
+
+
+    
+
     const ganador = data.ganador ? `<p class="subabel win" data-i18n="winning_ticket">Boleto Ganador</p>` : "";
-    const fondogan = data.ganador ? 'style="background: #007bff6e"' : "";
+    const fondogan = data.ganador ? 'style="background: #007bff9e"' : "";
+    
+    let premio = "";
+    if (data.ganador) {
+        let premioLabel = "";
+        switch (data.ganador) {
+            case "premio1":
+                premioLabel = `<span data-i18n="first_price" style="display:inline-block;padding:4px 12px;border-radius:18px;border:2px solid #FFD700;background:#fff8dc;color:#bfa100;font-weight:bold;box-shadow:0 2px 6px #ffd70044;letter-spacing:1px;">Primer Premio</span>`;
+                break;
+            case "premio2":
+                premioLabel = `<span data-i18n="second_price" style="display:inline-block;padding:4px 12px;border-radius:18px;border:2px solid #C0C0C0;background:#f8f8ff;color:#6e6e6e;font-weight:bold;box-shadow:0 2px 6px #c0c0c044;letter-spacing:1px;">Segundo Premio</span>`;
+                break;
+            case "premio3":
+                premioLabel = `<span data-i18n="third_price" style="display:inline-block;padding:4px 12px;border-radius:18px;border:2px solid #CD7F32;background:#fff8f0;color:#8c4c14;font-weight:bold;box-shadow:0 2px 6px #cd7f3244;letter-spacing:1px;">Tercer Premio</span>`;
+                break;
+            default:
+                premioLabel = "";
+        }
+        premio = `<p class="subabel win" style="margin-top: 0px;">${premioLabel}</p>`;
+    }
 
     // Crea un elemento contenedor para el boleto
     const boletoDiv = document.createElement('div');
@@ -45,14 +68,16 @@ function renderBoleto(data) {
                 <div class="raffle-ticket-separator"></div>
                 <div class="raffle-ticket-bottom" ${fondogan}>
                 ${ganador}
+                ${premio}
                 <p class="ticket-number">Nº ${data.numero}</p>
                 <div class="barcode">
-                    <img id="barcode_${data.id_boleto}" alt="Código de Barras">
-                    <p class="barcode-text win"><span data-i18n="ticket_id">ID Boleto:</span> ${data.id_boleto}</p>
-                </div>
-            </div>
-        </div>
-    `;
+                    <div class="p-2" id="barcode_${data.id_boleto}" alt="qr"></div>
+                    <p class="barcode-text win"><span data-i18n="raffle_id">ID Rifa:</span> ${data.id_rifa}</p>
+                    </div>
+                    </div>
+                    </div>
+                    `;
+    // <p class="barcode-text win"><span data-i18n="ticket_id">ID Boleto:</span> ${data.id_boleto}</p>
 
     container.appendChild(boletoDiv);
 
@@ -73,16 +98,30 @@ function renderBoleto(data) {
     // Genera el código de barras cuando el DOM esté listo
     setTimeout(() => {
         const barcodeElement = document.getElementById(`barcode_${data.id_boleto}`);
-        if (barcodeElement) {
-            JsBarcode(barcodeElement, data.id_boleto, {
-                format: "CODE128",
-                lineColor: "#2962ff",
-                width: 5,
-                height: 100,
-                displayValue: false
-            });
-        } else {
-            console.error(`Error: Elemento con ID barcode_${data.id_boleto} no encontrado para generar el código de barras.`);
-        }
+
+
+        var options_object = {
+            // ====== Basic
+            text: "turifadigital.org/boletos?boleto=" + data.id_rifa + "-" + data.id_boleto, // El texto que se codificará en el código QR
+            width: 90,
+            height: 90,
+            colorDark: "#007bff",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H,
+        };
+
+        var qrcode = new QRCode(barcodeElement, options_object);
+
+        // if (barcodeElement) {
+        //     JsBarcode(barcodeElement, "ID-" + data.id_boleto, {
+        //         format: "CODE128",
+        //         lineColor: "#2962ff",
+        //         width: 5,
+        //         height: 100,
+        //         displayValue: false
+        //     });
+        // } else {
+        //     console.error(`Error: Elemento con ID barcode_${data.id_boleto} no encontrado para generar el código de barras.`);
+        // }
     });
 }

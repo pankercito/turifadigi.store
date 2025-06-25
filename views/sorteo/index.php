@@ -234,7 +234,7 @@
     const numeroTelefono = "14077329524"; // Numero de la empresa en WhatsApp
     const listaTickets = ticketsComprados.join(', '); // Convierte el array de tickets en una cadena separada por comas
 
-    const mensaje = `FELICIDADES, ${nombre}!\n\nHas registrado exitosamente tus numeros: ${listaTickets}.\n\nEn un lapso no mayor a 24 horas las asesoras verificaran tus boletos y los podras observar en nuestro verificador.\n\nAl contrario, de no estar pagos tus boletos, tendras un lapso maximo de 72 horas para realizarlo con soporte. Pasando su tiempo estimado, saldran a disponibles nuevamente.\n\nTus datos de registro:\nNombre: ${nombre}\nCelular: ${celular}\n\nUN PLACER PARA NOSOTROS QUE FORMES PARTE DE NUESTROS GANADORES, GRACIAS POR CONFIAR EN EL MEJOR SORTEO DE TODOS CON TURIFADIGITAL!`;
+    const mensaje = `FELICIDADES, ${nombre}!\n\nHas registrado exitosamente tus numeros: ${listaTickets}.\n\nEn un lapso no mayor a 24 horas las asesoras verificaran tus boletos y los podras observar en nuestro verificador.\n\nAl contrario, de no estar pagos tus boletos, tendras un lapso maximo de 72 horas para realizarlo con soporte. Pasado su tiempo estimado, saldran a disponibles nuevamente.\n\nTus datos de registro:\nNombre: ${nombre}\n Telefono: ${celular}\n\nUN PLACER PARA NOSOTROS QUE FORMES PARTE DE NUESTROS GANADORES, GRACIAS POR CONFIAR EN EL MEJOR SORTEO DE TODOS CON TURIFADIGITAL!`;
 
     const mensajeCodificado = encodeURIComponent(mensaje);
     const enlaceWhatsApp = `https://wa.me/${numeroTelefono}?text=${mensajeCodificado}`;
@@ -378,7 +378,7 @@
                               numero: boleto.numero_boleto || "",
                               id_boleto: boleto.id_boleto || "",
                               id_rifa: boleto.id_rifa || "",
-                              ganador: true
+                              ganador: boleto.boleto_es || "",
                             });
                           });
                         }

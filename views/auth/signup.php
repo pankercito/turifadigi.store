@@ -101,9 +101,7 @@
           <div class="section-title text-left">
             <div class="section-title__tagline-box">
               <div class="section-title__tagline-shape">
-
               </div>
-
             </div>
             <h2 class="section-title__title" data-i18n="register_account">Registrar Cuenta</h2>
           </div>
@@ -221,12 +219,14 @@
                 <div class="contact-two__btn-box">
                   <button type="submit" class="thm-btn contact-two__btn" id="buttonForm" data-i18n="register" disabled>Registrarme</button>
                 </div>
+                <label class="form-label mt-3" style="display:block; font-size: 0.98em; color:rgba(41, 98, 255, 0.7); font-weight: 500;">
+                  <span data-i18n="terms_conditions_desc">Al registrarte, aceptas nuestros</span>
+                  <a href="/terminos" target="_blank" style="color:#4173ff; text-decoration:underline;" data-i18n="terms_conditions">Términos y Condiciones</a>
+                </label>
               </div>
             </div>
           </form>
-
           <div class="result"></div>
-
           <a href="/login">
             <p class="contact-two__left-text" style="margin-top: 20px;" data-i18n="already_have_account">¿Ya tiene una cuenta?</p>
           </a>
@@ -257,7 +257,7 @@
     submitButton.disabled = true;
 
     try {
-      boton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+      boton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>' + i18n.t('processing_purchase_text');
       boton.disabled = true;
 
       var formData1 = new FormData(this);
@@ -289,18 +289,6 @@
         mode: 'same-origin'
       });
 
-      /* const response = await fetch('/registro_usuario', { */
-      /*   method: 'POST', */
-      /*   headers: { */
-      /*     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8', */
-      /*     'Accept': 'application/json', */
-      /*     'X-Requested-With': 'XMLHttpRequest' */
-      /*   }, */
-      /*   body: formData.toString(), */
-      /*   credentials: 'same-origin', */
-      /*   mode: 'same-origin' */
-      /* }); */
-
       // console.log('Respuesta recibida:', response);
       const data = await response.json();
       // console.log('JSON recibido:', data);
@@ -319,12 +307,12 @@
     } catch (error) {
       // console.error('Error en el catch:', error);
       showToast('error', 'Error', error.message || 'Hubo un error al procesar la solicitud');
-      boton.innerHTML = 'Registrarme';
+      boton.innerHTML = i18n.t('register');
       boton.disabled = false;
     } finally {
       isSubmitting = false;
       submitButton.disabled = false;
-      boton.innerHTML = 'Registrarme';
+      boton.innerHTML = i18n.t('register');
       boton.disabled = false;
       // console.log('Finalizo el submit');
     }
@@ -571,7 +559,14 @@
     } else {
       console.error('i18n no está definido. Asegúrate de que el archivo i18n.js está cargado correctamente.');
     }
+
   });
+
+  // --- Ejemplo de cómo usar la función ---
+
+  // Suponiendo que tienes tu JSON en una variable:
+
+  // Llama a la función para mostrar los términos y condiciones
 </script>
 
 <?php if (!empty($_SESSION['mensaje'])) {

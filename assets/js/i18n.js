@@ -1,52 +1,61 @@
-// Sistema de traducciones
-document.addEventListener("DOMContentLoaded", () => {
-  const languageSwitcher = document.getElementById(
-    "language-selector-dropdown"
-  );
-
-  if (languageSwitcher) {
-    const savedLang = localStorage.getItem("language") || "es";
-    const defaultText = languageSwitcher.querySelector(".default.text");
-    const hiddenInput = languageSwitcher.querySelector('input[type="hidden"]');
-    const menu = languageSwitcher.querySelector(".menu"); // Cache the menu element
-
-    hiddenInput.value = savedLang;
-    defaultText.textContent = savedLang.toUpperCase();
-    i18n.changeLang(savedLang);
-
-    languageSwitcher.addEventListener("click", function (e) {
-      e.stopPropagation();
-      this.classList.toggle("active");
-      menu.style.display = this.classList.contains("active") ? "block" : "none"; // Use cached menu
-    });
-
-    languageSwitcher.querySelectorAll(".item").forEach((item) => {
-      item.addEventListener("click", function (e) {
-        e.stopPropagation();
-        const selectedLang = this.getAttribute("data-value");
-
-        defaultText.textContent = selectedLang.toUpperCase();
-        hiddenInput.value = selectedLang;
-
-        localStorage.setItem("language", selectedLang);
-        i18n.changeLang(selectedLang);
-
-        languageSwitcher.classList.remove("active");
-        menu.style.display = "none"; // Use cached menu
-      });
-    });
-
-    document.addEventListener("click", function (e) {
-      if (!languageSwitcher.contains(e.target)) {
-        languageSwitcher.classList.remove("active");
-        menu.style.display = "none"; // Use cached menu
-      }
-    });
-  } else {
-    console.log("language-selector-dropdown no encontrado en el DOM.");
+// --- FUNCIÓN displayTermsAndConditions MODIFICADA ---
+// Ahora toma un 'targetElementId' como argumento opcional
+function displayTermsAndConditions(termsContentObject, targetElementId = 'terms-content') {
+  if (!termsContentObject || !termsContentObject.title_general || !termsContentObject.conten) {
+    console.error("Datos de términos y condiciones no encontrados o mal estructurados.");
+    return;
   }
-});
 
+  const { title_general, conten } = termsContentObject;
+
+  // Intentar encontrar el contenedor específico o el body como fallback
+  let targetElement = document.getElementById(targetElementId);
+  if (!targetElement) {
+    // Si el ID especificado no existe, se busca un contenedor existente
+    // con la clase '.terms-container' o se crea uno nuevo en el body.
+    // Esto es un ajuste para evitar adjuntar directamente al body sin un contenedor.
+    targetElement = document.querySelector('.terms-container') || document.body;
+    console.warn(`Elemento con id '${targetElementId}' no encontrado. Se usará el primer '.terms-container' o el 'body'.`);
+  }
+
+  // Eliminar el contenido anterior solo dentro del targetElement para evitar duplicados.
+  // Es crucial limpiar SOLO el contenedor donde se van a insertar los nuevos términos.
+  // Si el targetElement ya es '.terms-container', limpiamos ese.
+  // Si es el 'body', podríamos crear un '.terms-container' interno para limpiarlo después.
+  let termsContainer = targetElement.querySelector('.terms-container');
+  if (termsContainer) {
+    termsContainer.innerHTML = ''; // Limpiar su contenido
+  } else {
+    termsContainer = document.createElement('div');
+    termsContainer.className = 'terms-container';
+    targetElement.appendChild(termsContainer);
+  }
+
+
+  // Agrega el título general
+  const titleElement = document.createElement('h1');
+  titleElement.textContent = title_general;
+  termsContainer.appendChild(titleElement);
+
+  // Itera sobre cada sección de los términos y condiciones
+  conten.forEach(section => {
+    const sectionDiv = document.createElement('div');
+    sectionDiv.className = 'term-section';
+
+    const sectionTitle = document.createElement('h2');
+    sectionTitle.textContent = section.titulo;
+    sectionDiv.appendChild(sectionTitle);
+
+    const sectionContent = document.createElement('p');
+    // Reemplaza los saltos de línea literales '\n' con etiquetas <br> para HTML
+    sectionContent.innerHTML = section.contenido.replace(/\n/g, '<br>');
+    sectionDiv.appendChild(sectionContent);
+
+    termsContainer.appendChild(sectionDiv);
+  });
+}
+
+// --- OBJETO i18n MODIFICADO ---
 const i18n = {
   translations: {},
   currentLang: "es",
@@ -96,7 +105,12 @@ const i18n = {
 
       await this.loadTranslations(this.currentLang);
       this.translatePage();
+
+      // ¡IMPORTANTE! Eliminamos la llamada automática aquí:
+      // this.loadAndDisplayTerms();
+
     } catch (error) {
+      console.error("Error en i18n.init():", error);
       alert(
         "No se encontraron los archivos de traducción. Por favor, verifica que existan es.json y en.json en la carpeta assets/language/"
       );
@@ -110,7 +124,9 @@ const i18n = {
         throw new Error(`No se encontró el archivo ${lang}.json`);
       }
       this.translations = await response.json();
+      // console.log(`Traducciones cargadas para ${lang}:`, this.translations); // <--- AGREGAR ESTO
     } catch (error) {
+      console.error(`Error cargando traducciones para ${lang}:`, error);
       alert(
         `Error cargando traducciones para ${lang}. Verifica que el archivo ${lang}.json exista y tenga el formato correcto.`
       );
@@ -118,7 +134,16 @@ const i18n = {
   },
 
   t(key) {
-    return this.translations[key] || key;
+    const keys = key.split('.');
+    let value = this.translations;
+    for (let i = 0; i < keys.length; i++) {
+      if (value && typeof value === 'object' && value.hasOwnProperty(keys[i])) {
+        value = value[keys[i]];
+      } else {
+        return key;
+      }
+    }
+    return value;
   },
 
   async changeLang(lang) {
@@ -129,12 +154,35 @@ const i18n = {
     await this.loadTranslations(lang);
     this.translatePage();
 
+    // --- ¡Esta línea es clave! Asegúrate de que no se haya comentado o movido. ---
     window.dispatchEvent(
       new CustomEvent("languageChanged", { detail: { language: lang } })
     );
 
-    // Recargar la página después de cambiar el idioma
-    window.location.reload();
+    // --- NUEVA VALIDACIÓN AQUÍ ---
+    const currentUrl = window.location.href;
+    const sorteoUrl = 'http://turifadigital.local/sorteo';
+
+    if (currentUrl === sorteoUrl) {
+      window.location.reload(); // Recarga solo si estás en la URL del sorteo
+    }
+
+    // ¡IMPORTANTE! Eliminamos la llamada automática aquí:
+    // this.loadAndDisplayTerms(); // Ya no se llama automáticamente
+
+    // Si quieres que los términos se actualicen SOLAMENTE si ya están visibles,
+    // podrías añadir una lógica aquí, pero la idea es que tú controles cuándo se llaman.
+    // Por ejemplo: if (document.getElementById('my-terms-modal').style.display === 'block') { this.loadAndDisplayTerms(); }
+  },
+
+  // --- FUNCIÓN loadAndDisplayTerms (ahora con argumento targetElementId) ---
+  loadAndDisplayTerms(targetElementId = 'terms-content') {
+    const termsContent = this.translations.terms_conditions_conten;
+    if (typeof termsContent === 'object' && termsContent !== null) {
+      displayTermsAndConditions(termsContent, targetElementId); // Pasa el ID al displayer
+    } else {
+      console.warn("No se encontraron los datos de términos y condiciones para el idioma actual en las traducciones cargadas.");
+    }
   },
 
   translatePage() {
@@ -167,21 +215,55 @@ const i18n = {
   },
 };
 
+// Inicia el sistema de i18n cuando el DOM esté completamente cargado
 document.addEventListener("DOMContentLoaded", () => {
   i18n.init();
 });
 
-function getTextByLanguage(jsonText) {
-  try {
-    if (typeof jsonText === "string") {
-      const texts = JSON.parse(jsonText);
-      const currentLang = localStorage.getItem("language") || "es";
-      const langKey = currentLang.toUpperCase();
-      return texts[langKey] || texts["ES"] || Object.values(texts)[0];
-    }
-    return jsonText;
-  } catch (e) {
-    console.error("Error al parsear texto JSON:", e);
-    return jsonText;
+// El bloque de "languageSwitcher" va aquí, dentro del DOMContentLoaded listener
+document.addEventListener("DOMContentLoaded", () => {
+  const languageSwitcher = document.getElementById(
+    "language-selector-dropdown"
+  );
+
+  if (languageSwitcher) {
+    const savedLang = localStorage.getItem("language") || "es";
+    const defaultText = languageSwitcher.querySelector(".default.text");
+    const hiddenInput = languageSwitcher.querySelector('input[type="hidden"]');
+    const menu = languageSwitcher.querySelector(".menu");
+
+    hiddenInput.value = savedLang;
+    defaultText.textContent = savedLang.toUpperCase();
+
+    languageSwitcher.addEventListener("click", function (e) {
+      e.stopPropagation();
+      this.classList.toggle("active");
+      menu.style.display = this.classList.contains("active") ? "block" : "none";
+    });
+
+    languageSwitcher.querySelectorAll(".item").forEach((item) => {
+      item.addEventListener("click", function (e) {
+        e.stopPropagation();
+        const selectedLang = this.getAttribute("data-value");
+
+        defaultText.textContent = selectedLang.toUpperCase();
+        hiddenInput.value = selectedLang;
+
+        localStorage.setItem("language", selectedLang);
+        i18n.changeLang(selectedLang); // Esta llamada ya se encarga de todo
+
+        languageSwitcher.classList.remove("active");
+        menu.style.display = "none";
+      });
+    });
+
+    document.addEventListener("click", function (e) {
+      if (!languageSwitcher.contains(e.target)) {
+        languageSwitcher.classList.remove("active");
+        menu.style.display = "none";
+      }
+    });
+  } else {
+    console.log("language-selector-dropdown no encontrado en el DOM.");
   }
-}
+});
