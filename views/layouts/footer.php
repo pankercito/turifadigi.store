@@ -13,7 +13,6 @@
                <div class="phone number">
                  <i class="fa-brands fa-instagram"></i>
                  <a href="https://www.instagram.com/yorsinjose?igsh=MWY4MWQzaW90dWpjMA%3D%3D" data-i18n="follow_instagram">�Siguenos en instagram!</a>
-<<<<<<< HEAD
                </div>
                <h3 class="site-footer__social-title" data-i18n="support">Soporte</h3>
                <div class="phone number">
@@ -23,8 +22,6 @@
                <div class="phone number">
                  <i class="fa-solid fa-phone-volume"></i>
                  <a href="tel:14077329524" data-i18n="phone_number">+1 407-732-9524</a>
-=======
->>>>>>> 27704c9bd19dc94788d5b70591d251d55bc374ef
                </div>
              </div>
            </div>
