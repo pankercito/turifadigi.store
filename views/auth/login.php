@@ -51,7 +51,7 @@
               <span data-i18n="no_account">¿No tienes cuenta?</span> <a href="/signup" data-i18n="register_here">Regístrate aquí</a>
             </p>
             <p class="forgot-password-link mt-2">
-              <a class="href" onclick="enviarMensajeWhatsAppRestablecerContrasena()" data-i18n="register_here">¿Olvidaste tu contraseña?</a>
+              <a class="href" onclick="enviarMensajeWhatsAppRestablecerContrasena()" data-i18n="forgot_password">¿Olvidaste tu contraseña?</a>
             </p>
           </div>
 
