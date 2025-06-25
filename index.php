@@ -171,7 +171,7 @@ switch (strtok($route, '?')) {
             header("Location: /login");
             exit;
         }
-        if ($_SESSION['rol_usuario'] != 2) {
+        if ($_SESSION['rol_usuario'] != 3) {
             header("Location: /");
             exit;
         }
