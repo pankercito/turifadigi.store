@@ -406,14 +406,14 @@
       Self.countdown(countDate, function (event) {
         $(this).html(
           '<li> <div class="box"> <span class="days">' +
-            event.strftime("%D") +
-            '</span> <span class="timeRef">days</span> </div> </li> <li> <div class="box"> <span class="hours">' +
-            event.strftime("%H") +
-            '</span> <span class="timeRef clr-1">hrs</span> </div> </li> <li> <div class="box"> <span class="minutes">' +
-            event.strftime("%M") +
-            '</span> <span class="timeRef clr-2">mins</span> </div> </li> <li> <div class="box"> <span class="seconds">' +
-            event.strftime("%S") +
-            '</span> <span class="timeRef clr-3">secs</span> </div> </li>'
+          event.strftime("%D") +
+          '</span> <span class="timeRef">days</span> </div> </li> <li> <div class="box"> <span class="hours">' +
+          event.strftime("%H") +
+          '</span> <span class="timeRef clr-1">hrs</span> </div> </li> <li> <div class="box"> <span class="minutes">' +
+          event.strftime("%M") +
+          '</span> <span class="timeRef clr-2">mins</span> </div> </li> <li> <div class="box"> <span class="seconds">' +
+          event.strftime("%S") +
+          '</span> <span class="timeRef clr-3">secs</span> </div> </li>'
         );
       });
     });
@@ -1102,3 +1102,12 @@
   // // Nice Select
   // $("select").niceSelect();
 })(jQuery);
+
+
+window.onload = function () {
+  lax.init()
+
+  lax.addDriver('scrollY', function () {
+    return window.scrollY
+  })
+};

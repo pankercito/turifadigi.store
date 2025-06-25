@@ -5,18 +5,42 @@ use App\Controllers\SorteoController;
 $sorteoController = new SorteoController();
 $sorteo = $sorteoController->obtenerSorteoActivo();
 
+// Función general para obtener texto multilenguaje
+/* function getTextoByLang($jsonText, $idioma = 'ES') */
+/* { */
+/*   if (!$jsonText) return ''; */
+/*   if (is_array($jsonText)) { */
+/*     return $jsonText[$idioma] ?? $jsonText['ES'] ?? $jsonText['EN'] ?? ''; */
+/*   } */
+/*   $arr = json_decode($jsonText, true); */
+/*   if (is_array($arr)) { */
+/*     return $arr[$idioma] ?? $arr['ES'] ?? $arr['EN'] ?? ''; */
+/*   } */
+/*   return ''; */
+/* } */
+
+/* function getTextoByLang($jsonText, $idioma = 'ES') */
+/* { */
+/*   if (!$jsonText) return ''; */
+/*   if (is_array($jsonText)) { */
+/*     $idioma = strtoupper($idioma); */
+/*     return $jsonText[$idioma] ?? $jsonText['ES'] ?? $jsonText['EN'] ?? ''; */
+/*   } */
+/*   $arr = json_decode($jsonText, true); */
+/*   if (is_array($arr)) { */
+/*     $idioma = strtoupper($idioma); */
+/*     return $arr[$idioma] ?? $arr['ES'] ?? $arr['EN'] ?? ''; */
+/*   } */
+/*   return ''; */
+/* } */
+
+
 function getTextoByLang($jsonText, $idioma = 'ES')
 {
   if (!$jsonText) return '';
   if (is_array($jsonText)) {
     $idioma = strtoupper($idioma);
-    $text = $jsonText[$idioma] ?? $jsonText['ES'] ?? $jsonText['EN'] ?? '';
-    // Reemplaza secuencias escapadas y saltos reales por un espacio
-    $text = preg_replace('/\\\\\\
-|\\\
-|\\\/', ' ', $text); // secuencias escapadas
-    $text = preg_replace("/\r\n|\n|\r/", " ", $text); // saltos reales
-    return $text;
+    return $jsonText[$idioma] ?? $jsonText['ES'] ?? $jsonText['EN'] ?? '';
   }
   // LIMPIA el string si viene con comillas escapadas
   $jsonText = trim($jsonText, "\"");
@@ -25,16 +49,21 @@ function getTextoByLang($jsonText, $idioma = 'ES')
   $arr = json_decode($jsonText, true);
   if (is_array($arr)) {
     $idioma = strtoupper($idioma);
-    $text = $arr[$idioma] ?? $arr['ES'] ?? $arr['EN'] ?? '';
-    // Reemplaza secuencias escapadas y saltos reales por un espacio
-    $text = preg_replace('/\\\\\\
-|\\\
-|\\\/', ' ', $text); // secuencias escapadas
-    $text = preg_replace("/\r\n|\n|\r/", " ", $text); // saltos reales
-    return $text;
+    return $arr[$idioma] ?? $arr['ES'] ?? $arr['EN'] ?? '';
   }
   return '';
 }
+
+
+
+// Detectar idioma desde cookie o localStorage (si se pasa por GET, POST, etc.)
+/* $idioma = 'ES'; */
+/* if (isset($_COOKIE['language'])) { */
+/*   $idioma = strtoupper($_COOKIE['language']); */
+/* } */
+/* if (isset($_GET['lang'])) { */
+/*   $idioma = strtoupper($_GET['lang']); */
+/* } */
 
 $idioma = 'ES';
 if (isset($_COOKIE['language'])) {

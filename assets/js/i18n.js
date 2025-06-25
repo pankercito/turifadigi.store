@@ -110,13 +110,8 @@ const i18n = {
       // this.loadAndDisplayTerms();
 
     } catch (error) {
-<<<<<<< HEAD
-      // Después:
-      console.warn(
-=======
       console.error("Error en i18n.init():", error);
       alert(
->>>>>>> d4b66c1688faa1092a5fd9280ffa33175827a234
         "No se encontraron los archivos de traducción. Por favor, verifica que existan es.json y en.json en la carpeta assets/language/"
       );
     }

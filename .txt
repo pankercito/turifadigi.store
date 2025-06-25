@@ -1,5 +1,0 @@
-"{\"ES\":\"Si estás en Estados Unidos, ganas una moto Si estás en otro país, ganas el valor de la moto al cambio de la moneda local desde donde participes\", \"EN\":\"If you're in the United States, you win a motorcycle.If you're in another country, you win the cash equivalent of the motorcycle in your local currency.\"}"
-
-"{\"ES\":\"Un iPhone 16 Pro Max Disponible para cualquier país participante\", \"EN\":\"An iPhone 16 Pro Max Available for participants from any country. Prize Name\"}"
-
-"{\"ES\":\"$100 en efectivo Para participar debes comprar 10 boletos o más Este premio se activa con el 30% de los boletos vendidos\", \"EN\":\"$100 in cash To participate, you must purchase 10 or more tickets. This prize is activated when 30% of the tickets are sold.\"}"

@@ -50,8 +50,6 @@
                     <img src="assets/img/shapes/main-slider-shape-2.png" alt="">
                 </div>
                 <div class="container">
-<<<<<<< HEAD
-<<<<<<< HEAD
                     <div class="strucs">
                         <div class="cs_main-slider__content">
                             <h2 class="main-slider__title" ">TuRifaDigital<br><span data-i18n="manage_raffles">Gestiona tus boletos</span><br><span data-i18n="m_raffle">manera facil y rapida</span></h2>
@@ -70,23 +68,6 @@
                                     </div>';
                             }
                             ?>
-=======
-=======
->>>>>>> 41885de278bc70a543277a08c3f53cde973dd870
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="main-slider__content">
-                                <h2 class="main-slider__title" data-i18n="manage_raffles">Gestiona tus <br> <span>Rifas</span> <br> con facilidad</h2>
-                                <p class="main-slider__text" data-i18n="full_control">Control total sobre tus sorteos <br> y participantes.</p>
-                                <?php
-                                $session = $_SESSION['usuario'] ?? '';
-                                if ($session === '') {
-                                    echo '<div class="main-slider__btn-box">
-                            <a href="/login" class="turifaboton-style" data-i18n="register_free">Regístrate gratis</a>
-                          </div>';
-                                }
-                                ?>
-                            </div>
                         </div>
                     </div>
                 </div>

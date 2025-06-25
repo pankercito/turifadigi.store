@@ -10,7 +10,6 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/img/ico/TuRifadigi.ico" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/ico/TuRifadigi.ico" />
   <link rel="icon" type="image/png" sizes="16x16" href="assets/img/ico/TuRifadigi.ico" />
-  <link rel="manifest" href="assets/img/favicons/site.webmanifest" />
   <meta name="description" content="TuRifaDigital" />
   <!-- fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,23 +17,31 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- node  -->
+  <script src="node_modules/easyqrcodejs/src/easy.qrcode.js"></script>
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="node_modules/jquery-ui/dist/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="node_modules/animate.css/animate.min.css">
+  <link rel="stylesheet" href="node_modules/animate.css/animate.compat.css">
+  <script src="node_modules/lax.js/lib/lax.min.js"></script>
+  <script src="node_modules/wow.js/dist/wow.min.js"></script>
+
+
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Bootstrap fallback -->
-  <noscript>
-    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
-  </noscript>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- FUNCION DE TICKETS -->
   <script src="assets/js/boletosTicket.js"></script>
   <script src="assets/js/jsbarcode.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="node_modules/easyqrcodejs/src/easy.qrcode.js"></script>
 
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <noscript>
-    <link rel="stylesheet" href="vendor/fontawesome/css/all.min.css">
-  </noscript>
 
   <!-- TOASTYFY -->
   <script type="text/javascript" src="assets/js/ToastPersonalizado.js"></script>
@@ -48,53 +55,17 @@
 
   <!-- Swiper -->
   <link href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" rel="stylesheet">
-  <noscript>
-    <link rel="stylesheet" href="vendor/swiper/swiper.min.css">
-  </noscript>
-
-  <!-- Recursos locales personalizados -->
-  <link rel="stylesheet" href="vendor/animate/animate.min.css" />
-  <link rel="stylesheet" href="vendor/animate/custom-animate.css" />
-  <link rel="stylesheet" href="vendor/jarallax/jarallax.css" />
-  <link rel="stylesheet" href="vendor/jquery-magnific-popup/jquery.magnific-popup.css" />
-  <link rel="stylesheet" href="vendor/odometer/odometer.min.css" />
-  <link rel="stylesheet" href="vendor/zefxa-icons/style.css">
-  <link rel="stylesheet" href="vendor/owl-carousel/owl.carousel.min.css" />
-  <link rel="stylesheet" href="vendor/owl-carousel/owl.theme.default.min.css" />
-  <link rel="stylesheet" href="vendor/bootstrap-select/css/bootstrap-select.min.css" />
-  <link rel="stylesheet" href="vendor/nice-select/nice-select.css" />
-  <link rel="stylesheet" href="vendor/reey-font/stylesheet.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/9.0.0/swiper-bundle.min.js"></script>
 
   <!-- template styles -->
   <link rel="stylesheet" href="assets/css/botonTickets.css" />
   <link rel="stylesheet" href="assets/css/custom.css" />
   <link rel="stylesheet" href="assets/css/custom_responsive.css" />
-
   <link rel="stylesheet" href="assets/css/dropdownMetodosPagos.css">
-
   <link rel="stylesheet" href="assets/css/dropdown-language.css">
-
-  <!-- Scripts adicionales CSS -->
-  <link rel="stylesheet" href="vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css">
-  <link rel="stylesheet" href="vendor/bootstrap-timepicker/css/bootstrap-timepicker.min.css">
-  <link rel="stylesheet" href="vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
-  <link rel="stylesheet" href="vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css">
-  <link rel="stylesheet" href="vendor/select2/css/select2.min.css">
-  <link rel="stylesheet" href="vendor/datatables/css/dataTables.bootstrap5.min.css">
-  <link rel="stylesheet" href="vendor/dropzone/dropzone.css">
-  <link rel="stylesheet" href="vendor/summernote/summernote-bs4.min.css">
-  <link rel="stylesheet" href="vendor/toastr/toastr.min.css">
-
 </head>
 
-<body class="custom-cursor">
-
-
-
-
-
-  <div class="custom-cursor__cursor"></div>
-  <div class="custom-cursor__cursor-two"></div>
+<body>
   <div class="page-wrapper">
     <header class="main-header">
       <div class="main-menu__top">
@@ -313,17 +284,3 @@
     <div class="stricky-header stricked-menu main-menu">
       <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
     </div><!-- /.stricky-header -->
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.custom-language-select').forEach(function(selector) {
-          selector.querySelectorAll('.custom-language-option').forEach(function(option) {
-            option.addEventListener('click', function() {
-              var lang = this.getAttribute('data-value');
-              document.cookie = 'language=' + lang + '; path=/; max-age=' + (60 * 60 * 24 * 365);
-              location.reload();
-            });
-          });
-        });
-      });
-    </script>

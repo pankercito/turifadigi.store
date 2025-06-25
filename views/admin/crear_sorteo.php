@@ -134,11 +134,7 @@ require_once 'views/layouts/header.php';
                       <label class="form-label" style="font-weight: bold;">
                         <i class="bi bi-card-text icon-signup"></i> <span data-i18n="descripcion_premio">Descripción del Premio</span> *
                       </label>
-                      <textarea class="form-control input-hover-signup" name="premios[2][descripcion]" rows="3" required>{"ES":"$100 en efectivo
-Para participar debes comprar 10 boletos o más
-Este premio se activa con el 30% de los boletos vendidos", "EN":"$100 in cash
-To participate, you must purchase 10 or more tickets.
-This prize is activated when 30% of the tickets are sold."}</textarea>
+                      <textarea class="form-control input-hover-signup" name="premios[2][descripcion]" rows="3" required>{"EN": "Your chance to win $1,000 cash begins when we reach 30% of raffle tickets sold!", "ES": "¡Tu oportunidad de ganar $1000 en efectivo comienza cuando alcancemos el 30% de los boletos vendidos en la rifa!"}</textarea>
                     </div>
                   </div>
                 </div>
@@ -159,9 +155,8 @@ This prize is activated when 30% of the tickets are sold."}</textarea>
                 <label for="texto_ejemplo" class="form-label" style="font-weight: bold;">
                   <i class="bi bi-chat-left-text icon-signup"></i> <span data-i18n="texto_ejemplo">Texto de Ejemplo</span> *
                 </label>
-                <textarea class="form-control input-hover-signup" id="texto_ejemplo" name="texto_ejemplo" rows="3" required>{"ES":"Si compras 10 boletos, participas automáticamente en el sorteo de $100 cuando se alcance el 30% de los números vendidos. El día se anunciará públicamente.","EN":"If you buy 10 tickets, you automatically enter the $100 raffle once 30% of the numbers are sold. The date will be announced publicly."}</textarea>
+                <textarea class="form-control input-hover-signup" id="texto_ejemplo" name="texto_ejemplo" rows="3" required>{"ES":"","EN":""}</textarea>
               </div>
-
               <button type="submit" class="btn btn-primary" data-i18n="create_raffle2">Crear Sorteo</button>
             </form>
           </div>
@@ -217,7 +212,7 @@ This prize is activated when 30% of the tickets are sold."}</textarea>
                     const timer = Swal.getPopup().querySelector("b");
                     timerInterval = setInterval(() => {
                       timer.textContent = `${Swal.getTimerLeft()}`;
-                    }, 1000);
+                    }, 100);
                   },
                   willClose: () => {
                     clearInterval(timerInterval);
