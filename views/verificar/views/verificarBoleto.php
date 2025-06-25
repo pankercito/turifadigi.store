@@ -146,10 +146,11 @@
                         [`${i18n.t("ticket_price")}`]: boleto.precio_boleto != null ? boleto.precio_boleto + "$" : i18n.t("no_purchases"),
                         [`${i18n.t("ticket_state")}`]: boleto.estado != null ? boleto.estado : i18n.t("no_purchases"),
                     },
-                    fecha_compra: boleto.fecha_compra || i18n.t("no_purchases"),
-                    numero: boleto.numero_boleto || "",
-                    id_boleto: boleto.id_boleto || "",
-                    id_rifa: boleto.id_rifa || "",
+                    fecha_compra: boleto.fecha_compra ? boleto.fecha_compras : i18n.t("no_purchases"),
+                    numero: boleto.numero_boleto ? boleto.numero_boleto : "",
+                    id_boleto: boleto.id_boleto ? boleto.id_boleto : "",
+                    id_rifa: boleto.id_rifa ? boleto.id_rifa : "",
+                    ganador: boleto.boleto_es ? boleto.boleto_es : false,
                 });
             } else if (data.data && data.data.length > 0) {
                 // Si buscas todos los boletos de la rifa, puedes listarlos aquí

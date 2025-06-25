@@ -24,13 +24,13 @@ function renderBoleto(data) {
 
 
 
-    
 
-    const ganador = data.ganador ? `<p class="subabel win" data-i18n="winning_ticket">Boleto Ganador</p>` : "";
-    const fondogan = data.ganador ? 'style="background: #007bff9e"' : "";
-    
+
+    const ganador = (data.ganador === "premio1" || data.ganador === "premio2" || data.ganador === "premio3") ? `<p class="subabel win" data-i18n="winning_ticket">Boleto Ganador</p>` : "";
+    const fondogan = (data.ganador === "premio1" || data.ganador === "premio2" || data.ganador === "premio3") ? 'style="background: #007bff9e"' : "";
+
     let premio = "";
-    if (data.ganador) {
+    if (data.ganador === "premio1" || data.ganador === "premio2" || data.ganador === "premio3") {
         let premioLabel = "";
         switch (data.ganador) {
             case "premio1":
