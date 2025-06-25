@@ -199,8 +199,38 @@ class BoletoController
     }
   }
 
-  public function obtenerBoletos($peticion = null, $array = null)
+  public function obtenerBoletos($peticion = null, $array = null, $id_bol = null)
   {
+
+    if ($id_bol !== null) {
+      try {
+        // Selecciona el método según el valor de $peticion
+        $boletos = $this->model->obtenerBoletosBy($id_bol);
+
+        if (empty($boletos) || !isset($boletos['success']) || $boletos['success'] == false) {
+          echo json_encode([
+            'success' => false,
+            'data' => $boletos['data'] ?? [],
+            'total' => $boletos['total'] ?? 0,
+          ]);
+          exit;
+        }
+
+        echo json_encode([
+          'success' => true,
+          'data' => $boletos['data'],
+          'total' => $boletos['total'],
+        ]);
+        
+      } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode([
+          'success' => false,
+          'error' => $e->getMessage()
+        ]);
+      }
+      exit;
+    }
 
     try {
       // Validar si $array es un array

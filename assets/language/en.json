@@ -22,7 +22,9 @@
   "email": "Email",
   "enter_email": "Enter your email",
   "register": "Register",
-  "already_have_account": "¿Already have an account?",
+  "already_have_account": "Already have an account?",
+  "forgot_password": "Forgot Password?",
+
 
   "first_last_name_phone_placeholder": "First Name Last Name (or phone)",
 
@@ -74,6 +76,7 @@
   "btn_verify": "Verify",
   
   "payment_confirm" :"Payment Confirmed",
+  "payment_rejected" :"Payment Rejected",
   "payment_system": "Secure",
   "payment_system2" :"payment",
   "payment_system3" :"system",
@@ -123,6 +126,12 @@
   "ticket_details": "Ticket Details",
   "purchase_date": "Purchase Date:",
   "ticket_id": "Ticket ID:",
+  "raffle_id": "Raffle ID:",
+  
+  "serching": "Searching...",
+  "ticket_example": "Scanned ticket is invalid, please check the ticket again",
+  "ticket_example_notice": "This ticket is just an example. No actual data was received from the server.",
+  
 
   "title": "Title not available",
   "80_percent": "When 80% is completed, our raffle plays",
@@ -360,8 +369,62 @@
   "user_account_pay": "usuario",
   "type_account_pay": "account type",
   "number_account_pay": "account number",
-  "bank_account_pay": "bank"
+  "bank_account_pay": "bank",
+
+  "first_price": "First Prize",
+  "second_price": "Second Prize",
+  "third_price": "Third Prize",
 
 
-
+  "terms_conditions": "Terms and Conditions",
+  "terms_conditions_desc": "By registering, you agree to the ",
+  "terms_conditions_conten": {
+    "title_general": "Terms and Conditions of Use",
+    "conten": [
+      {
+        "titulo": "1. Company Identification",
+        "contenido": "These Terms and Conditions govern the use of TurifaDigi, administered by Yorsi Cruz. The platform operates online, and its official web address is turifadigital.org. Additionally, any relevant communications will also be made through a selector within the site."
+      },
+      {
+        "titulo": "2. Description of Products and Services",
+        "contenido": "TurifaDigi is a platform dedicated to the sale and management of tickets. Upon completing a purchase, the user will receive a confirmation notification for their purchased ticket via the contact methods provided."
+      },
+      {
+        "titulo": "3. Payment Conditions",
+        "contenido": "We accept payments via bank transfer, Pago Móvil, or any other additional method listed on the platform. We reserve the right to modify or add payment methods without prior notice. The ticket price does not include additional taxes."
+      },
+      {
+        "titulo": "4. Returns, Refunds, and Cancellations",
+        "contenido": "We want to be clear: returns, refunds, or cancellations are not permitted once a purchase has been processed. All sales are final, and TurifaDigi is not responsible for these actions."
+      },
+      {
+        "titulo": "5. Data Protection",
+        "contenido": "The personal information we collect is handled with strict privacy and security, stored in our database to ensure its confidentiality and protection."
+      },
+      {
+        "titulo": "6. Limitation of Liability",
+        "contenido": "TurifaDigi is committed to resolving any technical failures or inconveniences that directly affect the functionality of the service on our platform. However, we will not be held responsible for improper use of the platform or errors beyond our direct control that do not impede the main functionality of the purchased service."
+      },
+      {
+        "titulo": "7. Modifications",
+        "contenido": "We reserve the right to modify these terms at any time. Updates will be notified directly on the platform via a visible \"selector\" and through the official URL (turifadigital.org). We recommend reviewing these terms periodically."
+      },
+      {
+        "titulo": "8. Applicable Law and Jurisdiction",
+        "contenido": "These terms are governed by the laws of the Bolivarian Republic of Venezuela. Any dispute arising in connection with these terms shall be resolved exclusively in the competent courts of Venezuela."
+      },
+      {
+        "titulo": "9. Platform Usage",
+        "contenido": "Permitted Use: Individual and legitimate purchase of tickets for the user's personal use.\nProhibited Use:\nSending multiple ticket requests simultaneously while Browse or scrolling through the platform is not permitted.\nConcurrent access or use from multiple devices for the same account is not recommended. Suspicious activities involving the use of multiple devices for a single account may result in service suspension."
+      },
+      {
+        "titulo": "10. Intellectual Property",
+        "contenido": "TurifaDigi, including its design, content, and functionalities, is the exclusive property of Yorsi Cruz. The base template used is an adaptation from Zecfa. All rights to the content and materials present on our platform belong to me."
+      },
+      {
+        "titulo": "11. Rights of Use",
+        "contenido": "As a user, you have a non-exclusive and limited right to use the platform for ticket purchases, provided you handle your account and platform usage with care and caution, and comply with all these Terms and Conditions."
+      }
+    ]
+  }
 }

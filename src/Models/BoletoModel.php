@@ -286,13 +286,92 @@ class BoletoModel
     }
   }
 
+
+  // Método para obtener boletos filtrados por id_rifa y/o estado
+  public function obtenerBoletosBy($id_boleto = null, $estado = null)
+  {
+    try {
+      $sql = "SELECT
+          cb.id_compra,
+          b.id_rifa,
+          b.id_boleto,
+          b.estado as boleto_es,
+          c.precio_boleto,
+          b.numero_boleto,
+          dc.nom_comprador AS cliente,
+          dc.ape_comprador AS a_cliente,
+          dc.telefono_comprador AS telefono,
+          cb.total_compra,
+          cb.estado,
+          cb.fecha_compra
+          FROM
+            boletos b
+          INNER JOIN
+            rifas r ON r.id_rifa = b.id_rifa
+          INNER JOIN
+            configuracion c ON c.id_configuracion = r.id_configuracion
+          LEFT JOIN -- Primero une detalle_compras, ya que depende de 'b'
+            detalle_compras dc ON  b.id_boleto=dc.id_boleto
+          LEFT JOIN -- Luego une compras_boletos, ya que depende de 'dc'
+            compras_boletos cb ON cb.id_compra = dc.id_compra
+          LEFT JOIN -- Usa LEFT JOIN para usuarios
+            usuarios u ON b.id_usuario = u.id_usuario ";
+      $params = [];
+
+      if ($id_boleto !== null) {
+        $sql .= "WHERE b.id_boleto = :id_boleto";
+        $params[':id_boleto'] = $id_boleto;
+      }
+      if ($estado !== null) {
+        $sql .= " AND b.estado = :estado";
+        $params[':estado'] = $estado;
+      }
+
+      $boletos = $this->db->consultar($sql, $params);
+
+      if (count($boletos) == 0) {
+        return [
+          'success' => false,
+          'data' => [],
+          'total' => 0
+        ];
+      }
+
+      foreach ($boletos as $boleto) {
+        $data[] = [
+          'id_compra' => $boleto['id_compra'] ?? null,
+          'id_rifa' => $boleto['id_rifa'],
+          'id_boleto' => $boleto['id_boleto'],
+          'numero_boleto' => $boleto['numero_boleto'],
+          'cliente' => !empty($boleto['cliente']) ? ucwords(strtolower($boleto['cliente'])) : null,
+          'a_cliente' => !empty($boleto['a_cliente']) ? ucwords(strtolower($boleto['a_cliente'])) : null,
+          'telefono' => !empty($boleto['telefono']) ? substr($boleto['telefono'], 0, 4) . '****' . substr($boleto['telefono'], -2) : null,
+          'precio_boleto' => $boleto['precio_boleto'],
+          'total_compra' => $boleto['total_compra'] ?? null,
+          'estado' => $boleto['estado'] ?? null,
+          'boleto_es' => $boleto['boleto_es'] ?? null,
+          'fecha_compra' => $boleto['fecha_compra'] ?? null,
+        ];
+      }
+
+      return [
+        'success' => true,
+        'data' => $data[0],
+        'total' => count($boletos)
+      ];
+    } catch (Exception $e) {
+      throw new Exception("Error al obtener boletos: " . $e->getMessage());
+    }
+  }
+
   public function obtenerBoletosGandores()
   {
     try {
       $sql = "SELECT
           cb.id_compra,
           b.id_rifa,
-          b.id_boleto,          
+          b.id_boleto,
+          b.estado as boleto_es,
           c.precio_boleto,
           b.numero_boleto,
           dc.nom_comprador AS cliente,
@@ -315,7 +394,7 @@ class BoletoModel
             usuarios u ON b.id_usuario = u.id_usuario
           WHERE
             c.estado = 2
-            AND b.estado NOT IN ('disponible', 'pendiente')
+            AND b.estado NOT IN ('disponible', 'pendiente', 'vendido', 'reservado')
           ORDER BY
             b.id_boleto ASC;";
 
@@ -332,17 +411,18 @@ class BoletoModel
       $data = [];
       foreach ($boletos as $boleto) {
         $data[] = [
-            'id_compra' => $boleto['id_compra'] ?? null,
-            'id_rifa' => $boleto['id_rifa'],
-            'id_boleto' => $boleto['id_boleto'],
-            'numero_boleto' => $boleto['numero_boleto'],
-            'cliente' => !empty($boleto['cliente']) ? ucwords(strtolower($boleto['cliente'])) : null,
-            'a_cliente' => !empty($boleto['a_cliente']) ? ucwords(strtolower($boleto['a_cliente'])) : null,
-            'telefono' => !empty($boleto['telefono']) ? substr($boleto['telefono'], 0, 4) . '****' . substr($boleto['telefono'], -2) : null,
-            'precio_boleto' => $boleto['precio_boleto'],
-            'total_compra' => $boleto['total_compra'] ?? null,
-            'estado' => $boleto['estado'] ?? null,
-            'fecha_compra' => $boleto['fecha_compra'] ?? null,
+          'id_compra' => $boleto['id_compra'] ?? null,
+          'id_rifa' => $boleto['id_rifa'],
+          'id_boleto' => $boleto['id_boleto'],
+          'numero_boleto' => $boleto['numero_boleto'],
+          'cliente' => !empty($boleto['cliente']) ? ucwords(strtolower($boleto['cliente'])) : null,
+          'a_cliente' => !empty($boleto['a_cliente']) ? ucwords(strtolower($boleto['a_cliente'])) : null,
+          'telefono' => !empty($boleto['telefono']) ? substr($boleto['telefono'], 0, 4) . '****' . substr($boleto['telefono'], -2) : null,
+          'precio_boleto' => $boleto['precio_boleto'],
+          'total_compra' => $boleto['total_compra'] ?? null,
+          'estado' => $boleto['estado'] ?? null,
+          'boleto_es' => $boleto['boleto_es'] ?? null,
+          'fecha_compra' => $boleto['fecha_compra'] ?? null,
         ];
       }
 
@@ -635,7 +715,7 @@ class BoletoModel
     try {
 
       $id_compra = htmlspecialchars(strip_tags($id_comp), ENT_QUOTES, 'UTF-8');
-      
+
       $sql = "SELECT dc.id_boleto, p.id_pago FROM compras_boletos cb INNER JOIN detalle_compras dc ON cb.id_compra = dc.id_compra INNER JOIN pagos p on p.id_compra = cb.id_compra WHERE cb.id_compra = :id_compra";
       $result = $this->db->consultar($sql, [':id_compra' => $id_compra]);
 

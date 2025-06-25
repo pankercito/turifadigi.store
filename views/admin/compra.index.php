@@ -206,7 +206,7 @@
     }
     if (condition == 'rechazado') {
       Swal.fire({
-        title: `<h5><span class="pago-rechazado">${i18n.t("payment_confirm")}<span class="icono-rechazado"></span><i class="fa-solid fa-circle-xmark"></i></span></h5>`,
+        title: `<h5><span class="pago-rechazado">${i18n.t("payment_rejected")}<span class="icono-rechazado"></span><i class="fa-solid fa-circle-xmark"></i></span></h5>`,
         html: htmlPersonalizado,
         showCloseButton: true,
         focusConfirm: false,

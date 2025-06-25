@@ -8,9 +8,15 @@ try {
 	$controller = new BoletoController();
 	$id_rifa = $_GET['id_rifa']  ?? null;
 	$boleto = $_GET['numero_boleto']  ?? null;
+	$idboleto = $_GET['id_boleto']  ?? null;
 	$wn = $_GET['wn'] ?? null;
 
 	$data = null;
+	if ($idboleto !== null) {
+		$controller->obtenerBoletos($wn, $data, $idboleto);
+		exit;
+	}
+
 	if ($boleto !== null && $id_rifa !== null) {
 		$data = [
 			'boleto' => $boleto,

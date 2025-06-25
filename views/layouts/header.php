@@ -28,6 +28,7 @@
   <!-- FUNCION DE TICKETS -->
   <script src="assets/js/boletosTicket.js"></script>
   <script src="assets/js/jsbarcode.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -121,12 +122,15 @@
                         <span class="main-menu-border"></span>
                       </a>
                       <?php
-                      if (!empty($session) && $sessionRol == 2) : ?>
+                      if (!empty($session) && $sessionRol == 2 || !empty($session) && $sessionRol == 3) : ?>
                         <ul class="dropdown-menu">
                           <li><a href="/compra_verificacion" data-i18n="verify purchases">Verificar compras</a></li>
                           <li><a href="/sorteo_verificacion" data-i18n="verify raffles">Verificar sorteos</a></li>
                           <li><a href="/crear_sorteo" data-i18n="create raffle">Crear sorteo</a></li>
-                          <li><a href="/restablecer_contrasena" data-i18n="rest_password">Restablecer Contraseña</a></li>
+                          <?php
+                          if (!empty($session) && $sessionRol == 3) : ?>
+                            <li><a href="/restablecer_contrasena" data-i18n="rest_password">Restablecer Contraseña</a></li>
+                          <?php endif; ?>
                         </ul>
                       <?php endif; ?>
                     </li>

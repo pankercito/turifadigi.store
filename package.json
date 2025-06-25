@@ -31,6 +31,7 @@
     "terser": "^5.39.0"
   },
   "dependencies": {
+    "easyqrcodejs": "^4.6.2",
     "jsbarcode": "^3.11.6",
     "toastify-js": "^1.12.0"
   }

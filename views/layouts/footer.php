@@ -105,6 +105,16 @@
        <div class="row">
          <div class="col-xl-12">
            <div class="site-footer__bottom-inner">
+             <div class="site-footer__bottom-left">
+               <p class="site-footer__bottom-text" data-i18n="turifadigital">turifadigital</p>
+             </div>
+             <!-- /.site-footer__bottom-left -->
+             <div class="site-footer__bottom-right">
+               <ul class="list-unstyled site-footer__bottom-links">
+                 <li><a href="/terminos_y_condiciones" data-i18n="terms_conditions">terms and conditions</a></li>
+               </ul>
+             </div>
+             <!-- /.site-footer__bottom-right -->
 
              <p class="site-footer__bottom-text">
                <!-- Copyright � 2024 -->
@@ -115,8 +125,6 @@
            </div>
          </div>
        </div>
-     </div>
-   </div>
 
  </footer>
 

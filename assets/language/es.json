@@ -22,6 +22,7 @@
   "email": "Correo electrónico",
   "enter_email": "Ingrese su correo electrónico",
   "register": "Registrarme",
+  "forgot_password": "¿Olvidaste tu contraseña?",
 
   "first_last_name_phone_placeholder": "Nombre Apellido (o telefono)",
  
@@ -77,6 +78,7 @@
   "btn_verify": "Verificar",
   
   "payment_confirm" :"Pago Confirmado",
+  "payment_rejected" :"Pago Rechazado",
   "payment_system": "Sistema de",
   "payment_system2" :"pagos",
   "payment_system3" :"seguro",
@@ -127,6 +129,12 @@
   "ticket_details": "Detalles de Boleto",
   "purchase_date": "Fecha de compra:",
   "ticket_id": "ID Boleto:",
+  "raffle_id": "ID Rifa:",
+
+  "serching": "Buscando...",
+  "ticket_example": "Boleto escaneado es invalido por favor verifique el boleto nuevamente",
+  "ticket_example_notice": "Este boleto es solo un ejemplo. No se recibieron datos reales del servidor.",
+
 
   "title": "Título no disponible",
   "80_percent": "Al completarse el 80% juega nuestra rifa",
@@ -361,8 +369,61 @@
   "user_account_pay": "usuario",
   "type_account_pay": "tipo de cuenta",
   "number_account_pay": "número de cuenta",
-  "bank_account_pay": "banco"
-
-
-
+  "bank_account_pay": "banco",
+  
+  "first_price": "Primer Premio",
+  "second_price": "Segundo Premio",
+  "third_price": "Tercer Premio",
+  
+  "terms_conditions": "Términos y Condiciones",
+  "terms_conditions_desc": "Al registrarte, aceptas nuestros ",
+  "terms_conditions_conten": {
+    "title_general": "Términos y Condiciones de Uso",
+    "conten": [
+      {
+        "titulo": "1. Identificación de la Empresa",
+        "contenido": "Estos Términos y Condiciones regulan el uso de TurifaDigi, administrado por Yorsi Cruz. La plataforma opera en línea y su dirección web oficial es turifadigital.org. Además, cualquier comunicación relevante también se realizará mediante un selector dentro del sitio."
+      },
+      {
+        "titulo": "2. Descripción de Productos y Servicios",
+        "contenido": "TurifaDigi es una plataforma dedicada a la venta y gestión de boletos. Al completar una compra, el usuario recibirá una notificación de confirmación de su boleto adquirido a través de los medios de contacto proporcionados."
+      },
+      {
+        "titulo": "3. Condiciones de Pago",
+        "contenido": "Aceptamos pagos por transferencia bancaria, Pago Móvil o cualquier otro método adicional listado en la plataforma. Nos reservamos el derecho de modificar o añadir métodos de pago sin previo aviso. El precio del boleto no incluye impuestos adicionales."
+      },
+      {
+        "titulo": "4. Devoluciones, Reembolsos y Cancelaciones",
+        "contenido": "Queremos ser claros: no se permiten devoluciones, reembolsos ni cancelaciones una vez que la compra ha sido procesada. La venta es final, y TurifaDigi no se hace responsable de estas gestiones."
+      },
+      {
+        "titulo": "5. Protección de Datos",
+        "contenido": "La información personal que recopilamos se maneja de forma estrictamente privada y segura, almacenada en nuestra base de datos para garantizar su confidencialidad y protección."
+      },
+      {
+        "titulo": "6. Limitación de Responsabilidad",
+        "contenido": "TurifaDigi se compromete a resolver cualquier falla técnica o inconveniente que afecte directamente la funcionalidad del servicio en nuestra plataforma. No obstante, no nos haremos responsables por usos indebidos de la plataforma o errores ajenos a nuestro control directo que no impidan la funcionalidad principal del servicio adquirido."
+      },
+      {
+        "titulo": "7. Modificaciones",
+        "contenido": "Nos reservamos el derecho de modificar estos términos en cualquier momento. Las actualizaciones serán notificadas directamente en la plataforma a través de un \"selector\" visible y mediante la URL oficial (turifadigital.org). Te recomendamos revisar estos términos periódicamente."
+      },
+      {
+        "titulo": "8. Ley Aplicable y Jurisdicción",
+        "contenido": "Estos términos se rigen por las leyes de la República Bolivariana de Venezuela. Cualquier disputa que surja en relación con estos términos será resuelta exclusivamente en los tribunales competentes de Venezuela."
+      },
+      {
+        "titulo": "9. Uso de la Plataforma",
+        "contenido": "Uso permitido: La compra individual y legítima de boletos para el uso personal del usuario.\nUso prohibido:\nNo se permite el envío de múltiples solicitudes de boletos simultáneamente al navegar o desplazarse por la plataforma.\nNo se recomienda el acceso o uso concurrente desde varios dispositivos a una misma cuenta. Actividades sospechosas que involucren el uso de múltiples dispositivos para una sola cuenta pueden resultar en la suspensión del servicio."
+      },
+      {
+        "titulo": "10. Propiedad Intelectual",
+        "contenido": "TurifaDigi, incluyendo su diseño, contenido y funcionalidades, es propiedad exclusiva de Yorsi Cruz. La plantilla base utilizada es una adaptación de Zecfa. Todos los derechos sobre el contenido y los materiales presentes en nuestra plataforma me pertenecen."
+      },
+      {
+        "titulo": "11. Derechos de Uso",
+        "contenido": "Como usuario, tienes el derecho de usar la plataforma de forma no exclusiva y limitada para la compra de boletos, siempre y cuando manejes tu cuenta y el uso de la plataforma con cuidado y cautela, y cumplas con todos los presentes Términos y Condiciones."
+      }
+    ]
+  }
 } 

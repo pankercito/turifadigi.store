@@ -50,9 +50,9 @@
             <p class="register-link">
               <span data-i18n="no_account">¿No tienes cuenta?</span> <a href="/signup" data-i18n="register_here">Regístrate aquí</a>
             </p>
-            <!-- <p class="forgot-password-link mt-2">
-              <a href="/forgot-password">¿Olvidaste tu contraseña?</a>
-            </p> -->
+            <p class="forgot-password-link mt-2">
+              <a class="href" onclick="enviarMensajeWhatsAppRestablecerContrasena()" data-i18n="forgot_password">¿Olvidaste tu contraseña?</a>
+            </p>
           </div>
 
           <!-- Notificaciones Toast -->
@@ -139,7 +139,9 @@
 
   .register-link a:hover,
   .forgot-password-link a:hover {
+    color: #4a90e2;
     text-decoration: underline;
+    cursor: pointer;
   }
 
   /* Responsive */
@@ -154,6 +156,20 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+  function enviarMensajeWhatsAppRestablecerContrasena() {
+    numeroTelefono = "584124578781"; // Reemplaza con el número de soporte,
+
+    // Mensaje mejorado: más directo y con un toque de cordialidad
+    const mensaje = encodeURIComponent("¡Hola! Necesito ayuda para restablecer mi contraseña en TurifaDigi. ¿Me podrían indicar los pasos a seguir? Gracias.");
+
+    const enlaceWhatsApp = `https://wa.me/${numeroTelefono}?text=${mensaje}`;
+
+    window.open(enlaceWhatsApp, '_blank');
+
+    console.log("Intentando enviar mensaje de WhatsApp mejorado a:", numeroTelefono);
+  }
+
+
   // Función para mostrar/ocultar contraseña
   function togglePasswordVisibility() {
     const passwordInput = document.getElementById('password');
