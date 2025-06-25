@@ -34,7 +34,7 @@
     color: #007bff;
 }
 
-.item {
+.raffle-ticket-top .item {
     display: flex;
     justify-content: space-between;
     margin-bottom: 5px;

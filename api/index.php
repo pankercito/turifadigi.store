@@ -47,6 +47,9 @@ switch (strtok($route, '?')) {
     case '/api/recovery_password':
         require_once '../src/API/passwordRecovery.php';
         break;
+    case '/api/get_user':
+        require_once '../src/API/obtener_usuarios.php';
+        break;
     case '/api/session_verfication':
         require_once '../src/API/sessionVerify.php';
         break;
@@ -86,11 +89,6 @@ switch (strtok($route, '?')) {
             break;
         }
         break;
-    case '/api/admin_password_reset':
-
-        echo "ruta activa";
-
-        break;
     case '/api/exchange_rate':
         require_once '../src/API/verificar.tasa.php';
         break;
@@ -104,6 +102,6 @@ switch (strtok($route, '?')) {
         require_once '../src/API/actualizar_coin.php';
         break;
     default:
-        echo "Error api " . __DIR__;
+        require_once 'views/errors/404.php';
         break;
 }

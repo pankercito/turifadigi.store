@@ -85,7 +85,6 @@ require_once 'views/layouts/header.php';
                   </div>
                 </div>
               </div>
-
               <h4 class="mt-4 mb-3" style="font-weight: bold;">
                 <i class="bi bi-gift icon-signup"></i> <span data-i18n="premios">Premios</span>
               </h4>
@@ -102,13 +101,10 @@ require_once 'views/layouts/header.php';
                       <label class="form-label" style="font-weight: bold;">
                         <i class="bi bi-card-text icon-signup"></i> <span data-i18n="descripcion_premio">Descripción del Premio</span> *
                       </label>
-                      <textarea class="form-control input-hover-signup" name="premios[0][descripcion]" rows="3" required>{"ES":"Si estás en Estados Unidos, ganas una moto
-Si estás en otro país, ganas el valor de la moto al cambio de la moneda local desde donde participes", "EN":"If you're in the United States, you win a motorcycle.
-If you're in another country, you win the cash equivalent of the motorcycle in your local currency."}</textarea>
+                      <textarea class="form-control input-hover-signup" name="premios[0][descripcion]" rows="3" required>{"EN": "If you're in the United States, you win a motorcycle! If you're in another country, you win the cash equivalent of the motorcycle in your local currency.", "ES": "Si estás en Estados Unidos ¡Ganas una moto! Si estás en otro país, ganas el valor de la moto al cambio de la moneda local desde donde participes"}</textarea>
                     </div>
                   </div>
                 </div>
-
                 <div class="card mb-3 premio-item">
                   <div class="card-body">
                     <div class="mb-3">
@@ -121,10 +117,7 @@ If you're in another country, you win the cash equivalent of the motorcycle in y
                       <label class="form-label" style="font-weight: bold;">
                         <i class="bi bi-card-text icon-signup"></i> <span data-i18n="descripcion_premio">Descripción del Premio</span> *
                       </label>
-                      <textarea class="form-control input-hover-signup" name="premios[1][descripcion]" rows="3" required>{"ES":"Un iPhone 16 Pro Max
-Disponible para cualquier país participante", "EN":"An iPhone 16 Pro Max
-Available for participants from any country.
-Prize Name"}</textarea>
+                      <textarea class="form-control input-hover-signup" name="premios[1][descripcion]" rows="3" required>{"EN": "Win an iPhone 16 Pro Max! Open to participants from any country. This prize is activated when 60% of the tickets are sold.", "ES": "¡Gana un iPhone 16 Pro Max! Abierto a participantes de cualquier país. Este premio se activa con el 60% de los boletos vendidos."}</textarea>
                     </div>
                   </div>
                 </div>
@@ -141,42 +134,36 @@ Prize Name"}</textarea>
                       <label class="form-label" style="font-weight: bold;">
                         <i class="bi bi-card-text icon-signup"></i> <span data-i18n="descripcion_premio">Descripción del Premio</span> *
                       </label>
-                      <textarea class="form-control input-hover-signup" name="premios[2][descripcion]" rows="3" required>{"ES":"$1000 en efectivo
+                      <textarea class="form-control input-hover-signup" name="premios[2][descripcion]" rows="3" required>{"ES":"$100 en efectivo
 Para participar debes comprar 10 boletos o más
-Este premio se activa con el 30% de los boletos vendidos", "EN":"$1000 in cash
+Este premio se activa con el 30% de los boletos vendidos", "EN":"$100 in cash
 To participate, you must purchase 10 or more tickets.
 This prize is activated when 30% of the tickets are sold."}</textarea>
                     </div>
                   </div>
                 </div>
               </div>
-
               <div class="mb-3">
                 <label for="numero_contacto" class="form-label" style="font-weight: bold;">
                   <i class="bi bi-telephone-fill icon-signup"></i> <span data-i18n="contacto_numero">Número de Contacto</span> *
                 </label>
                 <input type="text" class="form-control input-hover-signup" id="numero_contacto" name="numero_contacto" value="407-428-7580" required>
               </div>
-
               <div class="mb-3">
                 <label for="url_rifa" class="form-label" style="font-weight: bold;">
                   <i class="bi bi-link-45deg icon-signup"></i> <span data-i18n="url_loteria">URL de la Lotería</span> *
                 </label>
                 <input type="url" class="form-control input-hover-signup" id="url_rifa" name="url_rifa" value="https://tripletachira.com/" required>
               </div>
-
-              <div class="mb-3">
+              <div class="mb-3 d-none">
                 <label for="texto_ejemplo" class="form-label" style="font-weight: bold;">
                   <i class="bi bi-chat-left-text icon-signup"></i> <span data-i18n="texto_ejemplo">Texto de Ejemplo</span> *
                 </label>
-                <textarea class="form-control input-hover-signup" id="texto_ejemplo" name="texto_ejemplo" rows="3" required>{"ES":"Con el 30%,juegan 1000$ en efectivo.","EN":"With 30%, they play $1000 in cash."}</textarea>
+                <textarea class="form-control input-hover-signup" id="texto_ejemplo" name="texto_ejemplo" rows="3" required>{"ES":"Si compras 10 boletos, participas automáticamente en el sorteo de $100 cuando se alcance el 30% de los números vendidos. El día se anunciará públicamente.","EN":"If you buy 10 tickets, you automatically enter the $100 raffle once 30% of the numbers are sold. The date will be announced publicly."}</textarea>
               </div>
-
-              <!-- "{\"ES\":\"Con el 30%,juegan 1000$ en efectivo\", \"EN\":\"With 30%, they play $1000 in cash.\"}" -->
 
               <button type="submit" class="btn btn-primary" data-i18n="create_raffle2">Crear Sorteo</button>
             </form>
-
           </div>
         </div>
       </div>

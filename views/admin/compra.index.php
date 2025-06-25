@@ -1,117 +1,5 @@
 <?php include_once "views/layouts/header.php"; ?>
 
-<section class="main-slider">
-
-  <div class="swiper-container thm-swiper__slider" data-swiper-options='{"slidesPerView": 1, "loop": true,
-                "effect": "fade",
-                "pagination": {
-                "el": "#main-slider-pagination",
-                "type": "bullets",
-                "clickable": true
-                },
-                "navigation": {
-                "nextEl": "#main-slider__swiper-button-next",
-                "prevEl": "#main-slider__swiper-button-prev"
-                },
-                "autoplay": {
-                    "delay": 8000
-                } 
-            }'>
-
-    <div class="swiper-wrapper">
-
-      <script>
-        // Redireccionar a una nueva URL
-        function redireccionar(url) {
-          window.location.href = url;
-        }
-      </script>
-
-      <div class="swiper-slide">
-
-        <div class="main-slider__bg" style="background-image: url(assets/img/backgrounds/sorteo.jpg);"></div>
-        <div class="main-slider__shape-bg" style="background-image: url(assets/img/shapes/main-slider-shape-bg.png);"></div>
-        <div class="main-slider__shape-1 float-bob-y">
-          <img src="assets/img/shapes/main-slider-shape-1.png" alt="">
-        </div>
-        <div class="main-slider__shape-2 img-bounce">
-          <img src="assets/img/shapes/main-slider-shape-2.png" alt="">
-        </div>
-
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="main-slider__content">
-                <h2 class="main-slider__title" data-i18n="best_option">TuRifaDigital <br> <span>Tu mejor opción</span> <br> para rifas</h2>
-                <p class="main-slider__text" data-i18n="easy_safe">Crea y gestiona tus rifas de manera <br> fácil y segura.</p>
-                <div class="main-slider__btn-box">
-                  <a href="/login" class="main-slider__btn thm-btn" data-i18n="start_now">Comenzar ahora</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="swiper-slide">
-
-        <div class="main-slider__bg" style="background-image: url(assets/img/backgrounds/slider-1-2.jpg);"></div>
-        <div class="main-slider__shape-bg" style="background-image: url(assets/img/shapes/main-slider-shature-bg.png);"></div>
-        <div class="main-slider__shape-1 float-bob-y">
-          <img src="assets/img/shapes/main-slider-shape-1.png" alt="">
-        </div>
-        <div class="main-slider__shape-2 img-bounce">
-          <img src="assets/img/shapes/main-slider-shape-2.png" alt="">
-        </div>
-
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="main-slider__content">
-                <h2 class="main-slider__title" data-i18n="manage_raffles">Gestiona tus <br> <span>Rifas</span> <br> con facilidad</h2>
-                <p class="main-slider__text" data-i18n="full_control">Control total sobre tus sorteos <br> y participantes.</p>
-                <div class="main-slider__btn-box">
-                  <a href="/login" class="main-slider__btn thm-btn" data-i18n="register_free">Regístrate gratis</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="swiper-slide">
-
-        <div class="main-slider__bg" style="background-image: url(assets/img/backgrounds/slider-1-3.jpg);"></div>
-        <div class="main-slider__shape-bg" style="background-image: url(assets/img/shapes/main-slider-shape-bg.png);"></div>
-        <div class="main-slider__shape-1 float-bob-y">
-          <img src="assets/img/shapes/main-slider-shape-1.png" alt="">
-        </div>
-        <div class="main-slider__shape-2 img-bounce">
-          <img src="assets/img/shapes/main-slider-shape-2.png" alt="">
-        </div>
-
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="main-slider__content">
-                <h2 class="main-slider__title" data-i18n="payment_system">Sistema de <br> <span>Pagos</span> <br> Seguro</h2>
-                <p class="main-slider__text" data-i18n="multiple_methods">Múltiples métodos de pago <br> y transacciones seguras.</p>
-                <div class="main-slider__btn-box">
-                  <a href="/login" class="main-slider__btn thm-btn" data-i18n="learn_more">Conoce más</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="swiper-pagination" id="main-slider-pagination"></div>
-  </div>
-</section>
-
 <div class="container-lg">
   <div class="row">
     <div class="col-lg-2"></div>
@@ -152,24 +40,25 @@
 
 <script>
   // CARGA DE LA TABLA
+  function getPurchases() {
 
-  fetch('./api/get_purchase?cmp=1', {
-      method: 'POST',
-      header: {
-        'Content-Type': 'application/json'
-      }
-    }).then(response => response.json())
-    .then(dataD => {
-      if (dataD.success) {
+    fetch('./api/get_purchase?cmp=1', {
+        method: 'POST',
+        header: {
+          'Content-Type': 'application/json'
+        }
+      }).then(response => response.json())
+      .then(dataD => {
+        if (dataD.success) {
 
-        let i = 0;
-        let data = dataD.data;
+          let i = 0;
+          let data = dataD.data;
 
-        data.forEach((elemento, index) => {
-          let boletos = elemento.boletos ? elemento.boletos.join(", ") : "";
-          let acciones;
-          if (['aprobado', 'rechazado'].includes(elemento['estado_pago'])) {
-            acciones = `
+          data.forEach((elemento, index) => {
+            let boletos = elemento.boletos ? elemento.boletos.join(", ") : "";
+            let acciones;
+            if (['aprobado', 'rechazado'].includes(elemento['estado_pago'])) {
+              acciones = `
               <div class="btn-group" role="group" aria-label="Basic example">
                 <button type="button" class="btn btn-secondary btn-sm"
                   onclick="pregunta(${elemento['id_compra']}, '${elemento['estado_pago']}')"
@@ -180,8 +69,8 @@
                   <i class="fa-solid fa-arrows-up-down-left-right fa-md"></i>
                 </button>
               </div>`;
-          } else {
-            acciones = `
+            } else {
+              acciones = `
               <div class="btn-group" role="group" aria-label="Basic example">
                 <button type="button" class="btn btn-info btn-sm"
                   onclick="pregunta(${elemento['id_compra']})"
@@ -192,90 +81,91 @@
                   <i class="fa-solid fa-pen"></i>
                 </button>
               </div>`;
-          }
-          data[i]['contador'] = (i + 1);
-          data[i]['sorteo'] = elemento['id_rifa'];
-          data[i]['boletos'] = boletos;
-          data[i]['acciones'] = acciones;
-
-          if (elemento['estado_pago'] == 'aprobado') {
-            data[i]['estado'] = `<div class="btn-group" role="group" aria-label="Estado">
-              <button type="button" class="btn btn-success btn-sm" disabled>
-              <i class="fa-solid fa-check"></i> Pagado
-              </button>
-            </div>`;
-          } else if (elemento['estado_pago'] == 'rechazado') {
-            data[i]['estado'] = `<div class="btn-group" role="group" aria-label="Estado">
-              <button type="button" class="btn btn-danger btn-sm" disabled>
-              <i class="fa-solid fa-times"></i> Rechazado
-              </button>
-            </div>`;
-          } else {
-            data[i]['estado'] = `<div class="btn-group" role="group" aria-label="Estado">
-              <button type="button" class="btn btn-info btn-sm" disabled>
-              <i class="fa-solid fa-hourglass-half"></i> Pendiente
-              </button>
-            </div>`;
-          }
-
-          i++;
-        })
-
-        const datos = {
-          'id_tabla': '#tabla',
-          'data': data,
-          'columns': [{
-              'data': 'contador',
-              'title': '#',
-              'className': 'text-center'
-            },
-            {
-              'data': 'fecha_compra',
-              'title': 'FECHA DE COMPRA',
-              'className': 'text-center'
-            },
-            {
-              'data': 'cliente',
-              'title': 'COMPRADOR',
-              'className': 'text-center'
-            },
-            {
-              'data': 'sorteo',
-              'title': 'SORTEO',
-              'className': 'text-center'
-            },
-            {
-              'data': 'boletos',
-              'title': 'BOLETOS',
-              'className': 'text-center'
-            },
-            {
-              'data': 'total',
-              'title': 'MONTO',
-              'className': 'text-center'
-            },
-            {
-              'data': 'estado',
-              'title': 'ESTADO',
-              'className': 'text-center'
-            },
-            {
-              'data': 'acciones',
-              'title': 'ACCIONES',
-              'className': 'text-center'
             }
-          ]
-        };
+            data[i]['contador'] = (i + 1);
+            data[i]['sorteo'] = elemento['id_rifa'];
+            data[i]['boletos'] = boletos;
+            data[i]['acciones'] = acciones;
 
-        cargar_tabla_boletos(datos);
+            if (elemento['estado_pago'] == 'aprobado') {
+              data[i]['estado'] = `<div class="btn-group" role="group" aria-label="Estado">
+              <button type="button" class="btn btn-success btn-sm" disabled>
+              <i class="fa-solid fa-check"></i> ${i18n.t("paid")}
+              </button>
+            </div>`;
+            } else if (elemento['estado_pago'] == 'rechazado') {
+              data[i]['estado'] = `<div class="btn-group" role="group" aria-label="Estado">
+              <button type="button" class="btn btn-danger btn-sm" disabled>
+              <i class="fa-solid fa-times"></i> ${i18n.t("rejected")}
+              </button>
+            </div>`;
+            } else {
+              data[i]['estado'] = `<div class="btn-group" role="group" aria-label="Estado">
+              <button type="button" class="btn btn-info btn-sm" disabled>
+              <i class="fa-solid fa-hourglass-half"></i> ${i18n.t("pending")}
+              </button>
+            </div>`;
+            }
 
-      } else {
-        console.error('Error al cargar los datos de la tabla:', data.error);
-      }
-    })
-    .catch(error => console.error('Error:', error));
+            i++;
+          })
 
-  // SWEETAL ALERT PARA CONFIRMAR PAGO
+          const datos = {
+            'id_tabla': '#tabla',
+            'data': data,
+            'columns': [{
+                'data': 'contador',
+                'title': i18n.t("datatable_number"),
+                'className': 'text-center'
+              },
+              {
+                'data': 'fecha_compra',
+                'title': i18n.t("purchase_date_2"),
+                'className': 'text-center'
+              },
+              {
+                'data': 'cliente',
+                'title': i18n.t("datatable_buyer"),
+                'className': 'text-center'
+              },
+              {
+                'data': 'sorteo',
+                'title': i18n.t("datatable_raffle"),
+                'className': 'text-center'
+              },
+              {
+                'data': 'boletos',
+                'title': i18n.t("datatable_tickets"),
+                'className': 'text-center'
+              },
+              {
+                'data': 'total',
+                'title': i18n.t("datatable_amount"),
+                'className': 'text-center'
+              },
+              {
+                'data': 'estado',
+                'title': i18n.t("datatable_status"),
+                'className': 'text-center'
+              },
+              {
+                'data': 'acciones',
+                'title': i18n.t("datatable_actions"),
+                'className': 'text-center'
+              }
+            ]
+          };
+
+          cargar_tabla_boletos(datos);
+
+        } else {
+          console.error('Error al cargar los datos de la tabla:', data.error);
+        }
+      })
+      .catch(error => console.error('Error:', error));
+
+    // SWEETAL ALERT PARA CONFIRMAR PAGO
+  }
 
   async function pregunta(id, condition = false) {
 
@@ -293,23 +183,47 @@
 
     if (condition == 'aprobado') {
       Swal.fire({
-        title: '<h5><span class="pago-confirmado">Pago Confirmado<span class="icono-confirmado"></span><i class="fa-solid fa-check-circle"></i></span></h5>',
+        title: `<h5><span class="pago-confirmado">${i18n.t("payment_confirm")}<span class="icono-confirmado"></span><i class="fa-solid fa-check-circle"></i></span></h5>`,
         html: htmlPersonalizado,
         showCloseButton: true,
         focusConfirm: false,
-        confirmButtonText: `
-        cerrar`,
+        confirmButtonText: i18n.t("btn_close"),
+        didOpen: () => {
+          //  TRANSLATE ZONE 
+          if (typeof i18n !== 'undefined' && typeof i18n.t === 'function') {
+            document.getElementById('comprobante-title-text').textContent = i18n.t("comprobante_title");
+            document.getElementById('label-titular').innerText = i18n.t("comprobante_titular_title");
+            document.getElementById('label-referencia').innerText = i18n.t("comprobante_referencia");
+            document.getElementById('label-monto-pagar').innerText = i18n.t("comprobante_amonto");
+            document.getElementById('label-monto-pagado').innerText = i18n.t("comprobante_monto");
+            document.getElementById('label-metodo-pago').innerText = i18n.t("comprobante_metodo");
+          } else {
+            console.error("i18n object or i18n.t function is not defined.");
+          }
+        }
       });
       return;
     }
     if (condition == 'rechazado') {
       Swal.fire({
-        title: '<h5><span class="pago-rechazado">Pago Rechazado<span class="icono-rechazado"></span><i class="fa-solid fa-circle-xmark"></i></span></h5>',
+        title: `<h5><span class="pago-rechazado">${i18n.t("payment_confirm")}<span class="icono-rechazado"></span><i class="fa-solid fa-circle-xmark"></i></span></h5>`,
         html: htmlPersonalizado,
         showCloseButton: true,
         focusConfirm: false,
-        confirmButtonText: `
-        cerrar`,
+        confirmButtonText: i18n.t("btn_close"),
+        didOpen: () => {
+          //  TRANSLATE ZONE 
+          if (typeof i18n !== 'undefined' && typeof i18n.t === 'function') {
+            document.getElementById('comprobante-title-text').textContent = i18n.t("comprobante_title");
+            document.getElementById('label-titular').innerText = i18n.t("comprobante_titular_title");
+            document.getElementById('label-referencia').innerText = i18n.t("comprobante_referencia");
+            document.getElementById('label-monto-pagar').innerText = i18n.t("comprobante_amonto");
+            document.getElementById('label-monto-pagado').innerText = i18n.t("comprobante_monto");
+            document.getElementById('label-metodo-pago').innerText = i18n.t("comprobante_metodo");
+          } else {
+            console.error("i18n object or i18n.t function is not defined.");
+          }
+        }
       });
       return;
     }
@@ -320,12 +234,22 @@
       showCancelButton: true,
       showDenyButton: true,
       focusConfirm: false,
-      confirmButtonText: `
-              verificar`,
-      denyButtonText: `
-              rechazar`,
-      cancelButtonText: `
-              cancelar `,
+      confirmButtonText: i18n.t("btn_verify"),
+      denyButtonText: i18n.t("btn_reject"),
+      cancelButtonText: i18n.t("btn_cancel"),
+      didOpen: () => {
+        //  TRANSLATE ZONE 
+        if (typeof i18n !== 'undefined' && typeof i18n.t === 'function') {
+          document.getElementById('comprobante-title-text').textContent = i18n.t("comprobante_title");
+          document.getElementById('label-titular').innerText = i18n.t("comprobante_titular_title");
+          document.getElementById('label-referencia').innerText = i18n.t("comprobante_referencia");
+          document.getElementById('label-monto-pagar').innerText = i18n.t("comprobante_amonto");
+          document.getElementById('label-monto-pagado').innerText = i18n.t("comprobante_monto");
+          document.getElementById('label-metodo-pago').innerText = i18n.t("comprobante_metodo");
+        } else {
+          console.error("i18n object or i18n.t function is not defined.");
+        }
+      }
 
     }).then((result) => {
       if (result.isConfirmed) {
@@ -440,6 +364,14 @@
       }
     });
   }
+
+  // Llamar a la función inmediatamente al cargar la página (opcional)  
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(getPurchases, 300); // Esperar 1 segundo antes de la primera llamada
+
+    // Llamar a la función cada 30 segundos (30000 milisegundos)
+    const intervalId = setInterval(getPurchases, 30000);
+  });
 </script>
 <style>
   .form-section-title {
@@ -512,6 +444,16 @@
     /* Tamaño del icono */
     vertical-align: middle;
     /* Alineación vertical con el texto */
+  }
+
+  .container-lg {
+    margin-top: 110px;
+  }
+
+  @media (max-width: 765px) {
+    .container-lg {
+      margin-top: 60px;
+    }
   }
 </style>
 <?php if (!empty($_SESSION['mensaje'])) {

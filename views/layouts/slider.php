@@ -42,9 +42,21 @@
                         <div class="cs_main-slider__content">
                             <h2 class="main-slider__title">TuRifaDigital<br> <span data-i18n="best_option">Tu mejor opción</span> <br> <span data-i18n="for_raffles">para rifas</span></h2>
                             <p class="main-slider__text"> <span data-i18n="easy_safe">Crea y gestiona tus rifas de manera</span> <br> <span data-i18n="easy_an_safe">fácil y segura.</span></p>
-                            <div class="main-slider__btn-box">
-                                <a href="/sorteo" class="main-slider__btn thm-btn" data-i18n="start_now">Comenzar ahora</a>
-                            </div>
+                            <?php
+                            $session = $_SESSION['usuario'] ?? '';
+                            if ($session === '') {
+                                echo '<div class="main-slider__btn-box">
+                                        <a href="/signup" class="main-slider__btn thm-btn" data-i18n="register_free">Regístrate gratis</a>
+                                    </div>';
+                            }
+
+                            if ($session !== '') {
+                                echo '<div class="main-slider__btn-box">
+                                        <a href="/login" class="main-slider__btn thm-btn" data-i18n="learn_more">Conoce más</a>
+                                    </div>';
+                            }
+
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -69,7 +81,13 @@
                             $session = $_SESSION['usuario'] ?? '';
                             if ($session === '') {
                                 echo '<div class="main-slider__btn-box">
-                                        <a href="/sorteo" class="main-slider__btn thm-btn" data-i18n="register_free">Regístrate gratis</a>
+                                        <a href="/signup" class="main-slider__btn thm-btn" data-i18n="register_free">Regístrate gratis</a>
+                                    </div>';
+                            }
+
+                            if ($session !== '') {
+                                echo '<div class="main-slider__btn-box">
+                                        <a href="/login" class="main-slider__btn thm-btn" data-i18n="learn_more">Conoce más</a>
                                     </div>';
                             }
                             ?>
@@ -107,11 +125,22 @@
                     <div class="strucs">
 
                         <div class="cs_main-slider__content">
-                            <h2 class="main-slider__title" >TuRifaDigital<br><span data-i18n="payment_system">Sistema de</span> <br> <span data-i18n="payment_system2">Pagos</span> <br> <span data-i18n="payment_system3">Seguro</span> </h2>
+                            <h2 class="main-slider__title">TuRifaDigital<br><span data-i18n="payment_system">Sistema de</span> <br> <span data-i18n="payment_system2">Pagos</span> <br> <span data-i18n="payment_system3">Seguro</span> </h2>
                             <p class="main-slider__text"> <span data-i18n="multiple_methods">Múltiples métodos de pago</span> <br><span data-i18n="multiple_methods2">y transacciones seguras.</span> </p>
-                            <div class="main-slider__btn-box">
-                                <a href="/login" class="main-slider__btn thm-btn" data-i18n="learn_more">Conoce más</a>
-                            </div>
+                            <?php
+                            $session = $_SESSION['usuario'] ?? '';
+                            if ($session === '') {
+                                echo '<div class="main-slider__btn-box">
+                                        <a href="/signup" class="main-slider__btn thm-btn" data-i18n="register_free">Regístrate gratis</a>
+                                    </div>';
+                            }
+
+                            if ($session !== '') {
+                                echo '<div class="main-slider__btn-box">
+                                        <a href="/login" class="main-slider__btn thm-btn" data-i18n="learn_more">Conoce más</a>
+                                    </div>';
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>

@@ -6,9 +6,10 @@
     echo '<input type="text" name="regist" class="d-none" id="regist" value="0">';
   }
   ?>
-  <h2 class="form-section-title" data-i18n="comprobante_title">
+  <h2 class="form-section-title">
     <i class="fas fa-file-invoice"></i>
-    COMPROBANTE DE PAGO
+    <span data-i18n="comprobante_title">COMPROBANTE DE PAGO</span>
+    <i class="fas fa-file-invoice"></i>
   </h2>
   <div class="form-group-custom">
     <label class="required" data-i18n="comprobante_titular">Titular del pago (Telefono del titular del pago, si es Pago Movil)</label>

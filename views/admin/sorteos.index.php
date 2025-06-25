@@ -1,110 +1,6 @@
 <?php include_once "views/layouts/header.php"; ?>
+<?php include_once "views/layouts/slider.php"; ?>
 
-<section class="main-slider">
-
-  <div class="swiper-container thm-swiper__slider" data-swiper-options='{"slidesPerView": 1, "loop": true,
-                "effect": "fade",
-                "pagination": {
-                "el": "#main-slider-pagination",
-                "type": "bullets",
-                "clickable": true
-                },
-                "navigation": {
-                "nextEl": "#main-slider__swiper-button-next",
-                "prevEl": "#main-slider__swiper-button-prev"
-                },
-                "autoplay": {
-                    "delay": 8000
-                } 
-            }'>
-
-    <div class="swiper-wrapper">
-
-
-      <div class="swiper-slide">
-
-        <div class="main-slider__bg" style="background-image: url(assets/img/backgrounds/sorteo.jpg);"></div>
-        <div class="main-slider__shape-bg" style="background-image: url(assets/img/shapes/main-slider-shape-bg.png);"></div>
-        <div class="main-slider__shape-1 float-bob-y">
-          <img src="assets/img/shapes/main-slider-shape-1.png" alt="">
-        </div>
-        <div class="main-slider__shape-2 img-bounce">
-          <img src="assets/img/shapes/main-slider-shape-2.png" alt="">
-        </div>
-
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="main-slider__content">
-                <h2 class="main-slider__title" data-i18n="best_option">TuRifaDigital <br> <span>Tu mejor opción</span> <br> para rifas</h2>
-                <p class="main-slider__text" data-i18n="easy_safe">Crea y gestiona tus rifas de manera <br> fácil y segura.</p>
-                <div class="main-slider__btn-box">
-                  <a href="/login" class="main-slider__btn thm-btn" data-i18n="start_now">Comenzar ahora</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="swiper-slide">
-
-        <div class="main-slider__bg" style="background-image: url(assets/img/backgrounds/slider-1-2.jpg);"></div>
-        <div class="main-slider__shape-bg" style="background-image: url(assets/img/shapes/main-slider-shature-bg.png);"></div>
-        <div class="main-slider__shape-1 float-bob-y">
-          <img src="assets/img/shapes/main-slider-shape-1.png" alt="">
-        </div>
-        <div class="main-slider__shape-2 img-bounce">
-          <img src="assets/img/shapes/main-slider-shape-2.png" alt="">
-        </div>
-
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="main-slider__content">
-                <h2 class="main-slider__title" data-i18n="manage_raffles">Gestiona tus <br> <span>Rifas</span> <br> con facilidad</h2>
-                <p class="main-slider__text" data-i18n="full_control">Control total sobre tus sorteos <br> y participantes.</p>
-                <div class="main-slider__btn-box">
-                  <a href="/login" class="main-slider__btn thm-btn" data-i18n="register_free">Regístrate gratis</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="swiper-slide">
-
-        <div class="main-slider__bg" style="background-image: url(assets/img/backgrounds/slider-1-3.jpg);"></div>
-        <div class="main-slider__shape-bg" style="background-image: url(assets/img/shapes/main-slider-shape-bg.png);"></div>
-        <div class="main-slider__shape-1 float-bob-y">
-          <img src="assets/img/shapes/main-slider-shape-1.png" alt="">
-        </div>
-        <div class="main-slider__shape-2 img-bounce">
-          <img src="assets/img/shapes/main-slider-shape-2.png" alt="">
-        </div>
-
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="main-slider__content">
-                <h2 class="main-slider__title" data-i18n="payment_system">Sistema de <br> <span>Pagos</span> <br> Seguro</h2>
-                <p class="main-slider__text" data-i18n="multiple_methods">Múltiples métodos de pago <br> y transacciones seguras.</p>
-                <div class="main-slider__btn-box">
-                  <a href="/login" class="main-slider__btn thm-btn" data-i18n="learn_more">Conoce más</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="swiper-pagination" id="main-slider-pagination"></div>
-  </div>
-</section>
 
 <div class="container-lg">
   <div class="row">
@@ -146,108 +42,123 @@
 
 <script>
   // CARGA DE LA TABLA
+  function getRaffles() {
 
-  fetch('./api/get_sorteo?cmp=1', {
-      method: 'POST',
-      header: {
-        'Content-Type': 'application/json'
-      }
-    }).then(response => response.json())
-    .then(dataD => {
-      if (dataD.success) {
+    fetch('./api/get_sorteo?cmp=1', {
+        method: 'POST',
+        header: {
+          'Content-Type': 'application/json'
+        }
+      }).then(response => response.json())
+      .then(dataD => {
+        if (dataD.success) {
 
-        let i = 0;
-        let data = dataD.data;
+          let i = 0;
+          let data = dataD.data;
 
 
-        data.forEach((elemento, index) => {
-          let acciones = `<div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-info btn-sm" onclick="obsSorteo(${elemento['id_rifa']})" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Editar Sorteo">
-                           <i class="fa-solid fa-arrows-up-down-left-right fa-md"></i>
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm" onclick="cambiarEstado(${elemento['id_rifa']})" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Cambiar Estado">
-                            <i class="fa-solid fa-pen"></i>
-                        </button>
-                    </div>`;
+          data.forEach((elemento, index) => {
+            let acciones = `<div class="btn-group" role="group" aria-label="Basic example">
+              <button type="button" class="btn btn-info btn-sm" onclick="obsSorteo(${elemento['id_rifa']})" data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Editar Sorteo">
+                <i class="fa-solid fa-arrows-up-down-left-right fa-md"></i>
+              </button>
+              <button type="button" class="btn btn-danger btn-sm" 
+                onclick="${elemento['estado'] == 2 ? `obsSorteo(${elemento['id_rifa']})` : `cambiarEstado(${elemento['id_rifa']})`}" 
+                data-bs-toggle-tooltip="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip tooltip-inner" data-bs-title="Cambiar Estado"
+                ${elemento['estado'] == 2 ? 'disabled' : ''}>
+                <i class="fa-solid fa-pen"></i>
+              </button>
+            </div>`;
 
-          let estado = '';
+            let estado = '';
 
-          if (elemento['estado'] == 1) {
-            estado = 'activo';
-          } else if (elemento['estado'] == 2) {
-            estado = 'finalizado';
-          } else if (elemento['estado'] == 0 || elemento['estado'] === '' || elemento['estado'] === null || typeof elemento['estado'] === 'undefined') {
-            estado = 'desactivado';
-          }
-
-          data[i]['contador'] = (i + 1);
-          data[i]['id_rifa'] = elemento['id_rifa'];
-          data[i]['titulo'] = elemento['titulo'];
-          data[i]['fecha_creacion'] = elemento['fecha_creacion'];
-          data[i]['boletos_maximos'] = elemento['configuracion']['boletos_maximos'];
-          data[i]['precio_boleto'] = elemento['configuracion']['precio_boleto'];
-          data[i]['estado'] = estado;
-          data[i]['acciones'] = acciones;
-
-          i++;
-        })
-
-        const datos = {
-          'id_tabla': '#tabla',
-          'data': data,
-          'columns': [{
-              'data': 'contador',
-              'title': '#',
-              'className': 'text-center'
-            },
-            {
-              'data': 'fecha_creacion',
-              'title': 'FECHA DE CREACION',
-              'className': 'text-center'
-            },
-            {
-              'data': 'titulo',
-              'title': 'TITULO',
-              'className': 'text-center'
-            },
-            {
-              'data': 'id_rifa',
-              'title': 'ID SORTEO',
-              'className': 'text-center'
-            },
-            {
-              'data': 'boletos_maximos',
-              'title': 'BOLETOS MAXIMOS',
-              'className': 'text-center'
-            },
-            {
-              'data': 'precio_boleto',
-              'title': 'PRECIO BOLETO',
-              'className': 'text-center'
-            },
-            {
-              'data': 'estado',
-              'title': 'ESTADO',
-              'className': 'text-center'
-            },
-            {
-              'data': 'acciones',
-              'title': 'ACCIONES',
-              'className': 'text-center'
+            if (elemento['estado'] == 1) {
+              estado = 'activo';
+            } else if (elemento['estado'] == 2) {
+              estado = 'finalizado';
+            } else if (elemento['estado'] == 0 || elemento['estado'] === '' || elemento['estado'] === null || typeof elemento['estado'] === 'undefined') {
+              estado = 'desactivado';
             }
-          ]
-        };
 
-        cargar_tabla_boletos(datos);
+            data[i]['contador'] = (i + 1);
+            data[i]['id_rifa'] = elemento['id_rifa'];
+            data[i]['titulo'] = elemento['titulo'];
+            data[i]['fecha_creacion'] = elemento['fecha_creacion'];
+            data[i]['boletos_maximos'] = elemento['configuracion']['boletos_maximos'];
+            data[i]['precio_boleto'] = elemento['configuracion']['precio_boleto'];
+            data[i]['estado'] = estado;
+            data[i]['acciones'] = acciones;
 
-      } else {
-        console.error('Error al cargar los datos de la tabla:', data.error);
-      }
-    })
-    .catch(error => console.error('Error:', error));
+            i++;
+          })
 
+          const datos = {
+            'id_tabla': '#tabla',
+            'data': data,
+            'columns': [{
+                'data': 'contador',
+                'title': '#',
+                'className': 'text-center'
+              },
+              {
+                'data': 'fecha_creacion',
+                'title': 'FECHA DE CREACION',
+                'className': 'text-center'
+              },
+              {
+                'data': 'titulo',
+                'title': 'TITULO',
+                'className': 'text-center'
+              },
+              {
+                'data': 'id_rifa',
+                'title': 'ID SORTEO',
+                'className': 'text-center'
+              },
+              {
+                'data': 'boletos_maximos',
+                'title': 'BOLETOS MAXIMOS',
+                'className': 'text-center'
+              },
+              {
+                'data': 'precio_boleto',
+                'title': 'PRECIO BOLETO',
+                'className': 'text-center'
+              },
+              {
+                'data': 'estado',
+                'title': 'ESTADO',
+                'className': 'text-center'
+              },
+              {
+                'data': 'acciones',
+                'title': 'ACCIONES',
+                'className': 'text-center'
+              }
+            ]
+          };
+
+          cargar_tabla_boletos(datos);
+
+        } else {
+          console.error('Error al cargar los datos de la tabla:', data.error);
+        }
+      })
+      .catch(error => console.error('Error:', error));
+
+  }
+
+  // Llamar a la función inmediatamente al cargar la página (opcional)
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(getRaffles, 300); // Esperar 1 segundo antes de la primera llamada
+
+    // Llamar a la función cada 30 segundos (30000 milisegundos)
+    const intervalId = setInterval(getRaffles, 300000);
+  });
+
+  // Llamar a la función cada 30 segundos (30000 milisegundos)
+  const intervalId = setInterval(getRaffles, 180000);
   // FUNCION PARA CAMBIAR ESTADO DEL SORTEO
-
   async function cambiarEstado(id) {
     Swal.fire({
       title: 'Cambio de estado',
@@ -480,7 +391,6 @@
         focusConfirm: false,
         confirmButtonText: 'cerrar',
         showCancelButton: false,
-        width: '800px'
       });
 
       return;

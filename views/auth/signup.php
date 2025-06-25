@@ -129,10 +129,10 @@
               </div>
               <div class="col-xl-6 col-lg-6">
                 <label for="ubicacion_signup" class="form-label" style="font-weight: bold;">
-                  <i class="bi bi-geo-alt-fill icon-signup ubicacion"></i> <span data-i18n="location">UbicaciÛn</span> *
+                  <i class="bi bi-geo-alt-fill icon-signup ubicacion"></i> <span data-i18n="location">Ubicaci√≥n</span> *
                 </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="ubicacion" id="ubicacion_signup" data-i18n-placeholder="enter_location" placeholder="E.J: PaÌs, estado, direcciÛn" class="input-hover-signup">
+                  <input type="text" name="ubicacion" id="ubicacion_signup" data-i18n-placeholder="enter_location" placeholder="E.J: Pa√≠s, estado, direcci√≥n" class="input-hover-signup">
                   <span id="ubicacion_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
@@ -147,10 +147,10 @@
               </div>
               <div class="col-xl-6 col-lg-6">
                 <label for="password_signup" class="form-label" style="font-weight: bold;">
-                  <i class="bi bi-lock-fill icon-signup password"></i> <span data-i18n="password">ContraseÒa</span> *
+                  <i class="bi bi-lock-fill icon-signup password"></i> <span data-i18n="password">Contrase√±a</span> *
                 </label>
                 <div class="contact-two__input-box" style="position: relative;">
-                  <input type="password" name="password" id="password_signup" data-i18n-placeholder="enter_password" placeholder="Cree una contraseÒa" class="input-hover-signup" autocomplete="off">
+                  <input type="password" name="password" id="password_signup" data-i18n-placeholder="enter_password" placeholder="Cree una contrase√±a" class="input-hover-signup" autocomplete="off">
                   <span class="password-toggle" id="password-togle" onclick="togglePasswordVisibilitySignup()">
                     <i class="bi bi-eye-fill" id="icon-eye-signup"></i>
                   </span>
@@ -159,10 +159,61 @@
               </div>
               <div class="col-xl-6 col-lg-6">
                 <label for="telefono_signup" class="form-label" style="font-weight: bold;">
-                  <i class="bi bi-telephone-fill icon-signup telefono"></i> <span data-i18n="phone">TelÈfono</span> *
+                  <i class="bi bi-telephone-fill icon-signup telefono"></i> <span data-i18n="phone">Tel√©fono</span> *
                 </label>
                 <div class="contact-two__input-box">
-                  <input type="text" name="telefono" id="telefono_signup" data-i18n-placeholder="enter_phone" placeholder="Ingrese su n˙mero de telÈfono" class="input-hover-signup">
+                  <div class="form-group-phone d-flex">
+                    <select class="select-hover-signup col-4" id="prefijo_pais" name="prefijo_pais" required style="display: block;" required>
+                      <option value="" data-i18n="country">Pa√≠s</option>
+                      <option value="1">Estados Unidos (+1)</option>
+                      <option value="1">Canad√° (+1)</option>
+                      <option value="52">M√©xico (+52)</option>
+                      <option value="55">Brasil (+55)</option>
+                      <option value="54">Argentina (+54)</option>
+                      <option value="591">Bolivia (+591)</option>
+                      <option value="56">Chile (+56)</option>
+                      <option value="57">Colombia (+57)</option>
+                      <option value="506">Costa Rica (+506)</option>
+                      <option value="53">Cuba (+53)</option>
+                      <option value="593">Ecuador (+593)</option>
+                      <option value="503">El Salvador (+503)</option>
+                      <option value="502">Guatemala (+502)</option>
+                      <option value="509">Hait√≠ (+509)</option>
+                      <option value="504">Honduras (+504)</option>
+                      <option value="1-671">Guam (+1-671)</option>
+                      <option value="1-876">Jamaica (+1-876)</option>
+                      <option value="599">Antillas Neerlandesas (+599)</option>
+                      <option value="505">Nicaragua (+505)</option>
+                      <option value="507">Panam√° (+507)</option>
+                      <option value="595">Paraguay (+595)</option>
+                      <option value="51">Per√∫ (+51)</option>
+                      <option value="1-787">Puerto Rico (+1-787)</option>
+                      <option value="1-809">Rep√∫blica Dominicana (+1-809)</option>
+                      <option value="597">Surinam (+597)</option>
+                      <option value="598">Uruguay (+598)</option>
+                      <option value="58">Venezuela (+58)</option>
+                      <option value="1-264">Anguila (+1-264)</option>
+                      <option value="1-268">Antigua y Barbuda (+1-268)</option>
+                      <option value="1-242">Bahamas (+1-242)</option>
+                      <option value="1-246">Barbados (+1-246)</option>
+                      <option value="1-441">Bermudas (+1-441)</option>
+                      <option value="1-284">Islas V√≠rgenes Brit√°nicas (+1-284)</option>
+                      <option value="1-345">Islas Caim√°n (+1-345)</option>
+                      <option value="1-767">Dominica (+1-767)</option>
+                      <option value="1-473">Granada (+1-473)</option>
+                      <option value="592">Guyana (+592)</option>
+                      <option value="1-664">Montserrat (+1-664)</option>
+                      <option value="1-869">San Crist√≥bal y Nieves (+1-869)</option>
+                      <option value="1-758">Santa Luc√≠a (+1-758)</option>
+                      <option value="1-784">San Vicente y las Granadinas (+1-784)</option>
+                      <option value="1-649">Islas Turcas y Caicos (+1-649)</option>
+                      <option value="1-340">Islas V√≠rgenes de los Estados Unidos (+1-340)</option>
+                      <option value="297">Aruba (+297)</option>
+                      <option value="599-7">Curazao (+599-7)</option>
+                      <option value="599-3">Bonaire, San Eustaquio y Saba (+599-3)</option>
+                    </select>
+                    <input type="text" name="telefono" id="telefono_signup" data-i18n-placeholder="enter_phone" placeholder="Ingrese su n√∫mero de tel√©fono" class="input-hover-signup">
+                  </div>
                   <span id="telefono_signup_msg" style="display:block;font-size:0.95em;color:#e53935;margin-top:2px;"></span>
                 </div>
               </div>
@@ -177,7 +228,7 @@
           <div class="result"></div>
 
           <a href="/login">
-            <p class="contact-two__left-text" style="margin-top: 20px;" data-i18n="already_have_account">øYa tiene una cuenta?</p>
+            <p class="contact-two__left-text" style="margin-top: 20px;" data-i18n="already_have_account">¬øYa tiene una cuenta?</p>
           </a>
 
         </div>
@@ -192,7 +243,7 @@
 </style>
 <script>
   // Eliminar todas las validaciones de campos y reglas
-  // Solo dejar el envÌo simple del formulario
+  // Solo dejar el env√≠o simple del formulario
 
   const form = document.getElementById('form-registro');
   let isSubmitting = false;
@@ -200,7 +251,6 @@
 
   form.addEventListener('submit', async function(event) {
     event.preventDefault();
-    console.log('Formulario enviado (sin validaciones)');
     if (isSubmitting) return;
     isSubmitting = true;
     const submitButton = this.querySelector('button[type="submit"]');
@@ -210,8 +260,21 @@
       boton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
       boton.disabled = true;
 
-      const formData = new URLSearchParams(new FormData(this));
-      console.log('Datos a enviar:', formData.toString());
+      var formData1 = new FormData(this);
+
+      let prefijoValor = formData1.get('prefijo_pais');
+      let telefonoValor = formData1.get('telefono');
+
+      // Concatenar los valores
+      const telefonoCompleto = prefijoValor + telefonoValor;
+
+      // Eliminar los campos originales del FormData1
+      formData1.delete('prefijo_pais');
+      formData1.delete('telefono');
+
+      // Anexar el nuevo campo con el tel√©fono completo
+      formData1.append('telefono', telefonoCompleto);
+      const formData = new URLSearchParams(formData1);
 
       const response = await fetch('/registro_usuario', {
         method: 'POST',
@@ -238,23 +301,23 @@
       /*   mode: 'same-origin' */
       /* }); */
 
-      console.log('Respuesta recibida:', response);
+      // console.log('Respuesta recibida:', response);
       const data = await response.json();
-      console.log('JSON recibido:', data);
+      // console.log('JSON recibido:', data);
 
       if (!response.ok) throw data;
 
-      showToast('success', '…xito', data.message);
+      showToast('success', '√©xito', data.message);
 
       Array.from(form.getElementsByTagName('input')).forEach(input => input.disabled = true);
-      console.log('Redirigiendo a /login en 2 segundos...');
+      // console.log('Redirigiendo a /login en 2 segundos...');
       setTimeout(() => {
-        console.log('Redirigiendo ahora a /login');
+        // console.log('Redirigiendo ahora a /login');
         window.location.href = '/login';
       }, 2000);
 
     } catch (error) {
-      console.error('Error en el catch:', error);
+      // console.error('Error en el catch:', error);
       showToast('error', 'Error', error.message || 'Hubo un error al procesar la solicitud');
       boton.innerHTML = 'Registrarme';
       boton.disabled = false;
@@ -263,7 +326,7 @@
       submitButton.disabled = false;
       boton.innerHTML = 'Registrarme';
       boton.disabled = false;
-      console.log('FinalizÛ el submit');
+      // console.log('Finalizo el submit');
     }
   });
 
@@ -284,7 +347,7 @@
     }
   }
 
-  // Objeto para almacenar el estado de validaciÛn de cada campo
+  // Objeto para almacenar el estado de validaciÔøΩn de cada campo
   const estadoValidacionCampos = {
     nombre: false,
     apellido: false,
@@ -294,11 +357,11 @@
     telefono: false,
   };
 
-  // FunciÛn para verificar el estado general de validaciÛn
+  // FunciÔøΩn para verificar el estado general de validaciÔøΩn
   function verificarEstadoValidacionGeneral() {
     const todosValidos = Object.values(estadoValidacionCampos).every(val => val === true);
-    console.log('Estado de validaciÛn de campos:', estadoValidacionCampos);
-    console.log(todosValidos ? '? Todos los campos son v·lidos' : '? Algunos campos no son v·lidos');
+    // console.log('Estado de validaciÔøΩn de campos:', estadoValidacionCampos);
+    // console.log(todosValidos ? '? Todos los campos son vÔøΩlidos' : '? Algunos campos no son v√°lidos');
     if (todosValidos) {
       boton.disabled = false;
     }
@@ -310,7 +373,7 @@
 
   inputNombre.addEventListener('keyup', function() {
     const valor = this.value;
-    const esValido = /^[A-Za-z¡…Õ”⁄·ÈÌÛ˙—Ò ]{3,}$/.test(valor);
+    const esValido = /^[A-Za-z√Å√â√ç√ì√ö√°√©√≠√≥√∫√ë√± ]{3,}$/.test(valor);
     estadoValidacionCampos.nombre = esValido;
 
     if (valor.length === 0) {
@@ -334,7 +397,7 @@
 
   inputApellido.addEventListener('keyup', function() {
     const valor = this.value;
-    const esValido = /^[A-Za-z¡…Õ”⁄·ÈÌÛ˙—Ò ]{3,}$/.test(valor);
+    const esValido = /^[A-Za-z√Å√â√ç√ì√ö√°√©√≠√≥√∫√ë√± ]{3,}$/.test(valor);
     estadoValidacionCampos.apellido = esValido;
 
     if (valor.length === 0) {
@@ -358,7 +421,7 @@
 
   inputUbicacion.addEventListener('keyup', function() {
     const valor = this.value;
-    const esValido = /^[A-Za-z¡…Õ”⁄·ÈÌÛ˙—Ò0-9 ,.]{3,}$/.test(valor);
+    const esValido = /^[A-Za-z√Å√â√ç√ì√ö√°√©√≠√≥√∫√ë√±0-9 ,.]{3,}$/.test(valor);
     estadoValidacionCampos.ubicacion = esValido;
 
     if (valor.length === 0) {
@@ -382,7 +445,7 @@
 
   inputUsuario.addEventListener('keyup', function() {
     const valor = this.value;
-    const esValido = /^[A-Za-z¡…Õ”⁄·ÈÌÛ˙—Ò0-9_-]{3,}$/.test(valor);
+    const esValido = /^[A-Za-z√Å√â√ç√ì√ö√°√©√≠√≥√∫√ë√±0-9_-]{3,}$/.test(valor);
     estadoValidacionCampos.usuario = esValido;
 
     if (valor.length === 0) {
@@ -434,29 +497,50 @@
 
   const inputTelefono = document.getElementById('telefono_signup');
   const spanMsgTelefono = document.getElementById('telefono_signup_msg');
+  const prefijoPais = document.getElementById('prefijo_pais');
 
-  inputTelefono.addEventListener('keyup', function() {
-    const valor = this.value;
-    const esValido = /^\d{10,}$/.test(valor);
-    estadoValidacionCampos.telefono = esValido;
+  // Funci√≥n para validar tanto el prefijo como el n√∫mero de tel√©fono
+  function validarTelefonoCompleto() {
+    const valorTelefono = inputTelefono.value;
+    const prefijo = prefijoPais.value;
 
-    if (valor.length === 0) {
-      spanMsgTelefono.textContent = '';
-      spanMsgTelefono.removeAttribute('data-msg-key');
+    // Primero, valida el prefijo
+    if (prefijo === "") {
+      spanMsgTelefono.textContent = i18n.t('prefix_missing_error'); // Nuevo mensaje de error para prefijo vac√≠o
+      spanMsgTelefono.setAttribute('data-msg-key', 'prefix_missing_error');
       spanMsgTelefono.style.color = '#e53935';
-    } else if (!esValido) {
-      spanMsgTelefono.textContent = i18n.t('phone_validation');
-      spanMsgTelefono.setAttribute('data-msg-key', 'phone_validation');
+      estadoValidacionCampos.telefono = false; // Marcar como inv√°lido
+    } else if (valorTelefono.length === 0) {
+      // Si el prefijo est√° bien, pero el n√∫mero de tel√©fono est√° vac√≠o
+      spanMsgTelefono.textContent = i18n.t('phone_input_missing'); // Nuevo mensaje de error para input vac√≠o
+      spanMsgTelefono.setAttribute('data-msg-key', 'phone_input_missing');
       spanMsgTelefono.style.color = '#e53935';
+      estadoValidacionCampos.telefono = false; // Marcar como inv√°lido
     } else {
-      spanMsgTelefono.textContent = i18n.t('valid_phone');
-      spanMsgTelefono.setAttribute('data-msg-key', 'valid_phone');
-      spanMsgTelefono.style.color = '#43a047';
+      // Si ambos est√°n presentes, valida el formato del n√∫mero de tel√©fono
+      const esValido = /^\d{10,}$/.test(valorTelefono);
+
+      if (!esValido) {
+        spanMsgTelefono.textContent = i18n.t('phone_validation');
+        spanMsgTelefono.setAttribute('data-msg-key', 'phone_validation');
+        spanMsgTelefono.style.color = '#e53935';
+        estadoValidacionCampos.telefono = false;
+      } else {
+        spanMsgTelefono.textContent = i18n.t('valid_phone');
+        spanMsgTelefono.setAttribute('data-msg-key', 'valid_phone');
+        spanMsgTelefono.style.color = '#43a047';
+        estadoValidacionCampos.telefono = true;
+      }
     }
     verificarEstadoValidacionGeneral();
-  });
+  }
 
-  // FunciÛn para alternar visibilidad de la contraseÒa en el signup
+  // Agrega el mismo validador a ambos eventos
+  inputTelefono.addEventListener('keyup', validarTelefonoCompleto);
+  prefijoPais.addEventListener('change', validarTelefonoCompleto);
+
+
+  // Funci√≥n para alternar visibilidad de la contraseÔøΩa en el signup
   function togglePasswordVisibilitySignup() {
     const passwordInput = document.getElementById('password_signup');
     const icon = document.getElementById('icon-eye-signup');
@@ -471,7 +555,7 @@
     }
   }
 
-  // Actualizar mensajes de validaciÛn al cambiar el idioma
+  // Actualizar mensajes de validaciÔøΩn al cambiar el idioma
   document.addEventListener('DOMContentLoaded', () => {
     if (typeof i18n !== 'undefined') {
       const originalChangeLang = i18n.changeLang.bind(i18n);
@@ -485,7 +569,7 @@
         });
       };
     } else {
-      console.error('i18n no est· definido. Aseg˙rate de que el archivo i18n.js estÈ cargado correctamente.');
+      console.error('i18n no est√° definido. Aseg√∫rate de que el archivo i18n.js est√° cargado correctamente.');
     }
   });
 </script>
@@ -501,6 +585,52 @@
     right: 10px;
     top: 19%;
     cursor: pointer;
+  }
+
+  .select-hover-signup {
+    height: 60px;
+    border: 1px solid #2962ff;
+    background-color: var(--zefxa-white);
+    padding-left: 30px;
+    padding-right: 30px;
+    outline: none;
+    font-size: 14px;
+    color: var(--zefxa-gray);
+    display: block;
+    font-weight: 500;
+    line-height: 60px;
+    border-radius: 10px;
+  }
+
+  .contact-two__left-text {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+  }
+
+  .contact-two {
+    padding-bottom: 60px;
+  }
+
+  .contact-two__btn-box {
+    margin-top: 20px;
+  }
+
+  @media (max-width: 765px) {
+    .select-hover-signup {
+      width: 30%;
+    }
+
+    .contact-two {
+      padding: 0 0 50px;
+    }
+
+    .section-title__title {
+      font-size: 45px;
+      line-height: 36px;
+      margin-bottom: 25px;
+    }
+
   }
 </style>
 

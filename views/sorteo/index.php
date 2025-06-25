@@ -172,6 +172,7 @@
       <div class="payment-title">
         <i class="fas fa-money-bill"></i>
         <span data-i18n="payment_method">METODO DE PAGO</span>
+        <i class="fas fa-money-bill"></i>
       </div>
       <div class="payment-subtitle" data-i18n="payment_method_subtitle">Transferencia o depósito</div>
 
@@ -210,7 +211,7 @@
             <span id="mapr"></span>
           </div>
         </div>
-        <p class="exchange-rate" id="tasaEx" data-i18n="exchange_rate">Tasa de cambio: 1 USD = 1 USD</p>
+        <p class="exchange-rate" id="tasaEx" data-i18n="exchange_rate"> 1 USD = 1 USD</p>
         <div class="currency-option-conten" id="currency-option-conten">
           <-- carga dinamicamente -->
         </div>
@@ -404,10 +405,18 @@
             const nuevoBoleto = document.createElement('div');
             if (boleto.estado == "reservado" || boleto.estado == "vendido") {
               nuevoBoleto.classList.add('boleto', 'disabled');
+              boletosSeleccionados.delete(boleto.numero_boleto);
+
               comprados++;
             } else {
               nuevoBoleto.className = 'boleto';
               nuevoBoleto.onclick = () => toggleBoleto(nuevoBoleto, boleto.numero_boleto);
+              // resalta boletos que esten seleccionados 
+              Array.from(boletosSeleccionados).sort().forEach(numero => {
+                if (numero == boleto.numero_boleto) {
+                  toggleBoleto(nuevoBoleto, numero, true);
+                }
+              });
             }
             nuevoBoleto.dataset.numero = boleto.numero_boleto;
             nuevoBoleto.textContent = boleto.numero_boleto;
@@ -419,6 +428,7 @@
             animateProgressBar(boletos.length, comprados) //Llama a la función de animación con el total y el número de boletos comprados
           }, 1000);
 
+          boletosList.innerHTML = "";
           boletosList.appendChild(fragment);
 
         })
@@ -434,6 +444,10 @@
 
     // Cargar los primeros boletos
     await cargarMasBoletos();
+
+    setInterval(async () => {
+      await cargarMasBoletos();
+    }, 60000);
 
     // Inicializar el contador y total
     numeroBoletosSpan.textContent = cantidadSeleccion;
@@ -515,7 +529,7 @@
     }
 
     // Función para alternar selección de boleto
-    function toggleBoleto(elemento, numero) {
+    function toggleBoleto(elemento, numero, aut = false) {
       if (elemento.classList.contains('selected')) {
         elemento.classList.remove('selected');
         boletosSeleccionados.delete(numero);
@@ -523,12 +537,15 @@
         elemento.classList.add('selected');
         boletosSeleccionados.add(numero);
       }
-      toggleSelectedContainer();
 
       actualizarContador();
       actualizarTotal();
       actualizarChipsBoletos();
-      // Ejemplo de cómo usar la función después de obtener los datos del fetch:
+      // verifica si ya se apreto el boton de continuar para no mostrar constantemente el selectedContainer
+      if (aut == true) {
+        return;
+      }
+      toggleSelectedContainer();
     }
 
     // Función para elegir boletos al azar
@@ -671,41 +688,84 @@
         return;
       }
 
-      const inputMapr = document.getElementById('mapr');
-      const tasaEx = document.getElementById('tasaEx');
+      document.querySelector('.btn.btn-continuar').disabled = true;
 
-      // data de moneda
-      fetch('./api/exchange_rate') // Asumiendo que esta API te da las tasas
+      fetch('./api/session_verfication', {
+          method: 'POST',
+          header: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            boletos: Array.from(boletosSeleccionados)
+          })
+        })
         .then(response => response.json())
         .then(data => {
-          // Ajusta estas líneas según la estructura de la respuesta de tu API
-          const tasaBS = data.data.VES.precio;
-          const tasaCOP = data.data.COP.precio;
+          if (data.session) {
+            // data de moneda
+            const inputMapr = document.getElementById('mapr');
+            const tasaEx = document.getElementById('tasaEx');
 
-          const opcionesMonedaHTML = crearOpcionesMoneda(precioUnitarioUSD, tasaBS, tasaCOP, boletosSeleccionados.size);
+            fetch('./api/exchange_rate')
+              .then(response => response.json())
+              .then(data => {
+                const tasaBS = data.data.VES.precio;
+                const tasaCOP = data.data.COP.precio;
+                const opcionesMonedaHTML = crearOpcionesMoneda(precioUnitarioUSD, tasaBS, tasaCOP, boletosSeleccionados.size);
 
-          // Agrega la sección de opciones de moneda al elemento deseado en tu HTML
-          const contenedorOpciones = document.getElementById('currency-option-conten'); // Reemplaza con el ID de tu contenedor
-          if (contenedorOpciones) {
-            let dc = precioUnitarioUSD * boletosSeleccionados.size;
-            const valorConvertido = dc;
+                // Agrega la sección de opciones de moneda al elemento deseado en tu HTML
+                const contenedorOpciones = document.getElementById('currency-option-conten'); // Reemplaza con el ID de tu contenedor
+                if (contenedorOpciones) {
+                  let dc = precioUnitarioUSD * boletosSeleccionados.size;
+                  const valorConvertido = dc;
 
-            inputMapr.textContent = `${valorConvertido} $`;
-            tasaEx.textContent = `Tasa de cambio: 1 USD`;
-            contenedorOpciones.innerHTML = "";
-            contenedorOpciones.appendChild(opcionesMonedaHTML);
+                  inputMapr.textContent = `${valorConvertido} $`;
+                  tasaEx.textContent = `${i18n.t("exchange_rate")}  1 USD`;
+                  contenedorOpciones.innerHTML = "";
+                  contenedorOpciones.appendChild(opcionesMonedaHTML);
+                }
+              })
+              .catch(error => {
+                console.error('Error al obtener las tasas de cambio:', error);
+              });
+
+            document.getElementById('datosPersonales').style.display = 'block';
+            this.parentElement.style.display = 'none';
+
+          } else {
+            // Si no hay sesión, redirigir al login
+            let timerInterval;
+
+            let title = i18n.t('init_sesion');
+            let conten = `${i18n.t('redirex')} <b></b> milliseconds.`;
+
+            Swal.fire({
+              title: title,
+              html: conten,
+              timer: 5000,
+              timerProgressBar: true,
+              didOpen: () => {
+                Swal.showLoading();
+                const timer = Swal.getPopup().querySelector("b");
+                timerInterval = setInterval(() => {
+                  timer.textContent = `${Swal.getTimerLeft()}`;
+                }, 100);
+              },
+              willClose: () => {
+                clearInterval(timerInterval);
+                window.location.href = '/login';
+              }
+            }).then((result) => {
+              /* Read more about handling dismissals below */
+              if (result.dismiss === Swal.DismissReason.timer) {
+                console.log("I was closed by the timer");
+              }
+            });
           }
         })
         .catch(error => {
-          console.error('Error al obtener las tasas de cambio:', error);
+          console.error('Error al verificar sesión:', error);
         });
-
-      document.querySelector('.btn.btn-continuar').disabled = true;
-
-      document.getElementById('datosPersonales').style.display = 'block';
-      this.parentElement.style.display = 'none';
-
-      window.location.href = "#siguiente";
     };
 
     const getInputValue = (selector) => {
@@ -734,301 +794,419 @@
       btnConfirmar.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ${i18n.t('processing')}`; // Cambia el texto del botón con spinner
 
       try {
-        if (miniregist.value == "0") {
-          await fetch('./api/session_verfication?t=1', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
+        await fetch('./api/session_verfication?t=1', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+          .then(response => response.json())
+          .then(async data => {
+
+            if (!data.session) {
+              window.location.href = '/login';
+              return;
+            }
+
+            let value = data.user;
+
+            // Obtener valores de forma segura
+            const formData = {
+              nombre: value.nombre + ' ' + value.apellido,
+              telefono: value.telefono,
+              ubicacion: value.ubicacion,
+              id_usuario: value.id_usuario,
+              monto_pago: getInputValue('#monto_pagado'),
+              titular: getInputValue('#titular'),
+              referencia: getInputValue('#referencia'),
+              metodoPago: $('input[name="payment_method"]').val()
+            };
+
+            // Validar que todos los campos requeridos tengan valor
+            const camposRequeridos = [{
+                campo: 'titular',
+                mensaje: 'comprobante_titular'
+              },
+              {
+                campo: 'referencia',
+                mensaje: 'comprobante_referencia'
+              },
+              {
+                campo: 'metodoPago',
+                mensaje: 'comprobante_metodo'
               }
-            })
-            .then(response => response.json())
-            .then(async data => {
+            ];
 
-              if (!data.session) {
-                window.location.href = '/login';
-                return;
-              }
+            const camposFaltantes = camposRequeridos
+              .filter(({
+                campo
+              }) => !formData[campo])
+              .map(({
+                mensaje
+              }) => i18n.t(mensaje));
 
-              let value = data.user;
+            if (camposFaltantes.length > 0) {
+              showToast('warning', i18n.t('incomplete_fields'), i18n.t('incomplete_fields_text') + ':\n' + camposFaltantes.join('\n'));
+              return;
+            }
 
-              // Obtener valores de forma segura
-              const formData = {
-                nombre: value.nombre + ' ' + value.apellido,
-                telefono: value.telefono,
-                ubicacion: value.ubicacion,
-                id_usuario: value.id_usuario,
-                monto_pago: getInputValue('#monto_pagado'),
-                titular: getInputValue('#titular'),
-                referencia: getInputValue('#referencia'),
-                metodoPago: $('input[name="payment_method"]').val()
+            const boletosCargar = Array.from(boletosSeleccionados);
+
+            try {
+              // Preparar datos de la compra
+              const datosCompra = {
+                boletos: boletosCargar,
+                ...formData,
               };
 
-              // Validar que todos los campos requeridos tengan valor
-              const camposRequeridos = [{
-                  campo: 'titular',
-                  mensaje: 'comprobante_titular'
-                },
-                {
-                  campo: 'referencia',
-                  mensaje: 'comprobante_referencia'
-                },
-                {
-                  campo: 'metodoPago',
-                  mensaje: 'comprobante_metodo'
-                }
-              ];
-
-              const camposFaltantes = camposRequeridos
-                .filter(({
-                  campo
-                }) => !formData[campo])
-                .map(({
-                  mensaje
-                }) => i18n.t(mensaje));
-
-              if (camposFaltantes.length > 0) {
-                showToast('warning', i18n.t('incomplete_fields'), i18n.t('incomplete_fields_text') + ':\n' + camposFaltantes.join('\n'));
-                return;
-              }
-
-              const boletosCargar = Array.from(boletosSeleccionados);
-
-              try {
-                // Preparar datos de la compra
-                const datosCompra = {
-                  boletos: boletosCargar,
-                  ...formData,
-                };
-
-                await fetch('./api/process_purchase', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(datosCompra)
-                  })
-                  .then(response => response.json())
-                  .then(async dataCompra => {
-                    if (dataCompra.success) {
-                      generarEnlaceWhatsApp({
-                        nombre: formData.nombre,
-                        telefono: formData.telefono
-                      }, boletosCargar);
-
-                      Swal.fire({
-                        title: '¡Compra procesada correctamente!',
-                        icon: 'success',
-                        confirmButtonText: 'Clic aquí si no se abrio WhatsApp',
-                        denyButtonText: 'Salir', // Asegúrate de que el texto sea claro
-                        showDenyButton: true, // ¡Este es el cambio clave para mostrar el botón Salir!
-                      }).then((sid) => {
-                        if (sid.isConfirmed) {
-                          generarEnlaceWhatsApp({
-                            nombre: formData.nombre,
-                            telefono: formData.telefono
-                          }, boletosCargar);
-                        } else if (sid.isDenied) {
-                          window.location.href = '/sorteo';
-                        }
-                        window.location.href = '/sorteo';
-                      });
-                    } else {
-                      showToast('error', 'Error', dataCompra.error || 'Error al procesar la compra');
-                    }
-                  })
-                  .catch(error => {
-                    showToast('error', 'Error', 'Error al procesar la compra');
-                    console.error('Error al procesar la compra:', error);
-                  });
-
-              } catch (error) {
-                console.error('Error:', error);
-              }
-
-            })
-            .catch(error => {
-              console.error('Error al verificar sesión:', error);
-            });
-        } else {
-          // Unificar validación de campos de usuario y de pago
-          const campos = [{
-              nombre: 'nombre',
-              label: 'Nombre',
-              value: getInputValue('#nombre')
-            },
-            {
-              nombre: 'apellido',
-              label: 'Apellido',
-              value: getInputValue('#apellido')
-            },
-            {
-              nombre: 'prefijo_pais',
-              label: 'Prefijo de país',
-              value: getInputValue('#prefijo_pais')
-            },
-            {
-              nombre: 'telefono',
-              label: 'Teléfono',
-              value: getInputValue('#telefono')
-            },
-            {
-              nombre: 'monto_pagado',
-              label: 'Monto pagado',
-              value: getInputValue('#monto_pagado')
-            },
-            {
-              nombre: 'titular',
-              label: 'Titular',
-              value: getInputValue('#titular')
-            },
-            {
-              nombre: 'referencia',
-              label: 'Referencia',
-              value: getInputValue('#referencia')
-            },
-            {
-              nombre: 'metodoPago',
-              label: 'Método de pago',
-              value: $('input[name="payment_method"]').val()
-            }
-          ];
-
-          const camposFaltantes = campos.filter(c => !c.value).map(c => c.label);
-
-          /*   if (camposFaltantes.length > 0) {
-            Swal.close();
-            Swal.fire({
-          title: i18n.t('incomplete_fields'),
-          text: i18n.t('incomplete_fields_text') + ':\n' + camposFaltantes.join('\n'),
-          icon: 'warning',
-          confirmButtonText: i18n.t('incomplete_fields_confirm'),
-          customClass: {
-            confirmButton: 'swal2-confirm'
-          }
-            });
-            return;
-          } */
-
-          if (camposFaltantes.length > 0) {
-            showToast('warning', i18n.t('incomplete_fields'), i18n.t('incomplete_fields_text') + ':\n' + camposFaltantes.join('\n'));
-            return;
-          }
-
-          const initData = {
-            nombre: campos[0].value,
-            apellido: campos[1].value,
-            prefijo_pais: campos[2].value,
-            telefono: campos[3].value
-          };
-
-          // CREAR USUARIO DINAMICAMENTE
-          await fetch('./api/riffle_singup', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(initData)
-            })
-            .then(response => response.json())
-            .then(async data => {
-
-              if (!data.success) {
-                showToast('error', 'Error', "Error: response riffle sinup");
-                return;
-              }
-
-              let idrio = data.id_usuario;
-
-              await fetch('./api/riffle_verfication?t=1', {
+              await fetch('./api/process_purchase', {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json'
                   },
-                  body: JSON.stringify({
-                    id_usuario: idrio
-                  })
+                  body: JSON.stringify(datosCompra)
                 })
                 .then(response => response.json())
-                .then(async data => {
+                .then(async dataCompra => {
+                  if (dataCompra.success) {
+                    generarEnlaceWhatsApp({
+                      nombre: formData.nombre,
+                      telefono: formData.telefono
+                    }, boletosCargar);
 
-                  let value = data.user;
-
-                  // Obtener valores de forma segura
-                  const formData = {
-                    nombre: value.nombre + ' ' + value.apellido,
-                    telefono: value.telefono,
-                    ubicacion: value.ubicacion,
-                    id_usuario: value.id_usuario,
-                    monto_pago: getInputValue('#monto_pagado'),
-                    titular: getInputValue('#titular'),
-                    referencia: getInputValue('#referencia'),
-                    metodoPago: $('input[name="payment_method"]').val()
-                  };
-
-                  const boletosCargar = Array.from(boletosSeleccionados);
-
-                  try {
-                    // Preparar datos de la compra
-                    const datosCompra = {
-                      boletos: boletosCargar,
-                      ...formData,
-                    };
-
-                    await fetch('./api/process_purchase', {
-                        method: 'POST',
-                        headers: {
-                          'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(datosCompra)
-                      })
-                      .then(response => response.json())
-                      .then(async dataCompra => {
-                        if (dataCompra.success) {
-                          generarEnlaceWhatsApp({
-                            nombre: formData.nombre,
-                            telefono: formData.telefono
-                          }, boletosCargar);
-
-                          Swal.fire({
-                            title: '¡Compra procesada correctamente!',
-                            icon: 'success',
-                            confirmButtonText: 'Clic aquí si no se abrio WhatsApp',
-                            denyButtonText: 'Salir', // Asegúrate de que el texto sea claro
-                            showDenyButton: true, // ¡Este es el cambio clave para mostrar el botón Salir!
-                          }).then((sid) => {
-                            if (sid.isConfirmed) {
-                              generarEnlaceWhatsApp({
-                                nombre: formData.nombre,
-                                telefono: formData.telefono
-                              }, boletosCargar);
-                            } else if (sid.isDenied) {
-                              window.location.href = '/sorteo';
-                            }
-                            window.location.href = '/sorteo';
-                          });
-                        } else {
-                          showToast('error', 'Error', dataCompra.error || 'Error al procesar la compra');
-                        }
-                      })
-                      .catch(error => {
-                        showToast('error', 'Error', 'Error al procesar la compra');
-                        console.error('Error al procesar la compra:', error);
-                      });
-
-                  } catch (error) {
-                    console.error('Error:', error);
+                    Swal.fire({
+                      title: '¡Compra procesada correctamente!',
+                      icon: 'success',
+                      confirmButtonText: 'Clic aquí si no se abrio WhatsApp',
+                      denyButtonText: 'Salir', // Asegúrate de que el texto sea claro
+                      showDenyButton: true, // ¡Este es el cambio clave para mostrar el botón Salir!
+                    }).then((sid) => {
+                      if (sid.isConfirmed) {
+                        generarEnlaceWhatsApp({
+                          nombre: formData.nombre,
+                          telefono: formData.telefono
+                        }, boletosCargar);
+                      } else if (sid.isDenied) {
+                        window.location.href = '/sorteo';
+                      }
+                      window.location.href = '/sorteo';
+                    });
+                  } else {
+                    showToast('error', 'Error', dataCompra.error || 'Error al procesar la compra');
                   }
-
                 })
                 .catch(error => {
-                  console.error('Error al verificar sesión:', error);
+                  showToast('error', 'Error', 'Error al procesar la compra');
+                  console.error('Error al procesar la compra:', error);
                 });
 
-            })
-            .catch(error => {
-              console.error('Error al verificar sesión:', error);
-            });
-        }
+            } catch (error) {
+              console.error('Error:', error);
+            }
+
+          })
+          .catch(error => {
+            console.error('Error al verificar sesión:', error);
+          });
+
+        // ++++++++++++++++++++++++++++++++++
+        // RESGITRO ESTRUCTURADO
+
+        // if (miniregist.value == "0") {
+        //   await fetch('./api/session_verfication?t=1', {
+        //       method: 'POST',
+        //       headers: {
+        //         'Content-Type': 'application/json'
+        //       }
+        //     })
+        //     .then(response => response.json())
+        //     .then(async data => {
+
+        //       if (!data.session) {
+        //         window.location.href = '/login';
+        //         return;
+        //       }
+
+        //       let value = data.user;
+
+        //       // Obtener valores de forma segura
+        //       const formData = {
+        //         nombre: value.nombre + ' ' + value.apellido,
+        //         telefono: value.telefono,
+        //         ubicacion: value.ubicacion,
+        //         id_usuario: value.id_usuario,
+        //         monto_pago: getInputValue('#monto_pagado'),
+        //         titular: getInputValue('#titular'),
+        //         referencia: getInputValue('#referencia'),
+        //         metodoPago: $('input[name="payment_method"]').val()
+        //       };
+
+        //       // Validar que todos los campos requeridos tengan valor
+        //       const camposRequeridos = [{
+        //           campo: 'titular',
+        //           mensaje: 'comprobante_titular'
+        //         },
+        //         {
+        //           campo: 'referencia',
+        //           mensaje: 'comprobante_referencia'
+        //         },
+        //         {
+        //           campo: 'metodoPago',
+        //           mensaje: 'comprobante_metodo'
+        //         }
+        //       ];
+
+        //       const camposFaltantes = camposRequeridos
+        //         .filter(({
+        //           campo
+        //         }) => !formData[campo])
+        //         .map(({
+        //           mensaje
+        //         }) => i18n.t(mensaje));
+
+        //       if (camposFaltantes.length > 0) {
+        //         showToast('warning', i18n.t('incomplete_fields'), i18n.t('incomplete_fields_text') + ':\n' + camposFaltantes.join('\n'));
+        //         return;
+        //       }
+
+        //       const boletosCargar = Array.from(boletosSeleccionados);
+
+        //       try {
+        //         // Preparar datos de la compra
+        //         const datosCompra = {
+        //           boletos: boletosCargar,
+        //           ...formData,
+        //         };
+
+        //         await fetch('./api/process_purchase', {
+        //             method: 'POST',
+        //             headers: {
+        //               'Content-Type': 'application/json'
+        //             },
+        //             body: JSON.stringify(datosCompra)
+        //           })
+        //           .then(response => response.json())
+        //           .then(async dataCompra => {
+        //             if (dataCompra.success) {
+        //               generarEnlaceWhatsApp({
+        //                 nombre: formData.nombre,
+        //                 telefono: formData.telefono
+        //               }, boletosCargar);
+
+        //               Swal.fire({
+        //                 title: '¡Compra procesada correctamente!',
+        //                 icon: 'success',
+        //                 confirmButtonText: 'Clic aquí si no se abrio WhatsApp',
+        //                 denyButtonText: 'Salir', // Asegúrate de que el texto sea claro
+        //                 showDenyButton: true, // ¡Este es el cambio clave para mostrar el botón Salir!
+        //               }).then((sid) => {
+        //                 if (sid.isConfirmed) {
+        //                   generarEnlaceWhatsApp({
+        //                     nombre: formData.nombre,
+        //                     telefono: formData.telefono
+        //                   }, boletosCargar);
+        //                 } else if (sid.isDenied) {
+        //                   window.location.href = '/sorteo';
+        //                 }
+        //                 window.location.href = '/sorteo';
+        //               });
+        //             } else {
+        //               showToast('error', 'Error', dataCompra.error || 'Error al procesar la compra');
+        //             }
+        //           })
+        //           .catch(error => {
+        //             showToast('error', 'Error', 'Error al procesar la compra');
+        //             console.error('Error al procesar la compra:', error);
+        //           });
+
+        //       } catch (error) {
+        //         console.error('Error:', error);
+        //       }
+
+        //     })
+        //     .catch(error => {
+        //       console.error('Error al verificar sesión:', error);
+        //     });
+        // } else {
+        //   // Unificar validación de campos de usuario y de pago
+        //   const campos = [{
+        //       nombre: 'nombre',
+        //       label: 'Nombre',
+        //       value: getInputValue('#nombre')
+        //     },
+        //     {
+        //       nombre: 'apellido',
+        //       label: 'Apellido',
+        //       value: getInputValue('#apellido')
+        //     },
+        //     {
+        //       nombre: 'prefijo_pais',
+        //       label: 'Prefijo de país',
+        //       value: getInputValue('#prefijo_pais')
+        //     },
+        //     {
+        //       nombre: 'telefono',
+        //       label: 'Teléfono',
+        //       value: getInputValue('#telefono')
+        //     },
+        //     {
+        //       nombre: 'monto_pagado',
+        //       label: 'Monto pagado',
+        //       value: getInputValue('#monto_pagado')
+        //     },
+        //     {
+        //       nombre: 'titular',
+        //       label: 'Titular',
+        //       value: getInputValue('#titular')
+        //     },
+        //     {
+        //       nombre: 'referencia',
+        //       label: 'Referencia',
+        //       value: getInputValue('#referencia')
+        //     },
+        //     {
+        //       nombre: 'metodoPago',
+        //       label: 'Método de pago',
+        //       value: $('input[name="payment_method"]').val()
+        //     }
+        //   ];
+
+        //   const camposFaltantes = campos.filter(c => !c.value).map(c => c.label);
+
+        //   /*   if (camposFaltantes.length > 0) {
+        //     Swal.close();
+        //     Swal.fire({
+        //   title: i18n.t('incomplete_fields'),
+        //   text: i18n.t('incomplete_fields_text') + ':\n' + camposFaltantes.join('\n'),
+        //   icon: 'warning',
+        //   confirmButtonText: i18n.t('incomplete_fields_confirm'),
+        //   customClass: {
+        //     confirmButton: 'swal2-confirm'
+        //   }
+        //     });
+        //     return;
+        //   } */
+
+        //   if (camposFaltantes.length > 0) {
+        //     showToast('warning', i18n.t('incomplete_fields'), i18n.t('incomplete_fields_text') + ':\n' + camposFaltantes.join('\n'));
+        //     return;
+        //   }
+
+        //   const initData = {
+        //     nombre: campos[0].value,
+        //     apellido: campos[1].value,
+        //     prefijo_pais: campos[2].value,
+        //     telefono: campos[3].value
+        //   };
+
+        //   // CREAR USUARIO DINAMICAMENTE
+        //   await fetch('./api/riffle_singup', {
+        //       method: 'POST',
+        //       headers: {
+        //         'Content-Type': 'application/json'
+        //       },
+        //       body: JSON.stringify(initData)
+        //     })
+        //     .then(response => response.json())
+        //     .then(async data => {
+
+        //       if (!data.success) {
+        //         showToast('error', 'Error', "Error: response riffle sinup");
+        //         return;
+        //       }
+
+        //       let idrio = data.id_usuario;
+
+        //       await fetch('./api/riffle_verfication?t=1', {
+        //           method: 'POST',
+        //           headers: {
+        //             'Content-Type': 'application/json'
+        //           },
+        //           body: JSON.stringify({
+        //             id_usuario: idrio
+        //           })
+        //         })
+        //         .then(response => response.json())
+        //         .then(async data => {
+
+        //           let value = data.user;
+
+        //           // Obtener valores de forma segura
+        //           const formData = {
+        //             nombre: value.nombre + ' ' + value.apellido,
+        //             telefono: value.telefono,
+        //             ubicacion: value.ubicacion,
+        //             id_usuario: value.id_usuario,
+        //             monto_pago: getInputValue('#monto_pagado'),
+        //             titular: getInputValue('#titular'),
+        //             referencia: getInputValue('#referencia'),
+        //             metodoPago: $('input[name="payment_method"]').val()
+        //           };
+
+        //           const boletosCargar = Array.from(boletosSeleccionados);
+
+        //           try {
+        //             // Preparar datos de la compra
+        //             const datosCompra = {
+        //               boletos: boletosCargar,
+        //               ...formData,
+        //             };
+
+        //             await fetch('./api/process_purchase', {
+        //                 method: 'POST',
+        //                 headers: {
+        //                   'Content-Type': 'application/json'
+        //                 },
+        //                 body: JSON.stringify(datosCompra)
+        //               })
+        //               .then(response => response.json())
+        //               .then(async dataCompra => {
+        //                 if (dataCompra.success) {
+        //                   generarEnlaceWhatsApp({
+        //                     nombre: formData.nombre,
+        //                     telefono: formData.telefono
+        //                   }, boletosCargar);
+
+        //                   Swal.fire({
+        //                     title: '¡Compra procesada correctamente!',
+        //                     icon: 'success',
+        //                     confirmButtonText: 'Clic aquí si no se abrio WhatsApp',
+        //                     denyButtonText: 'Salir', // Asegúrate de que el texto sea claro
+        //                     showDenyButton: true, // ¡Este es el cambio clave para mostrar el botón Salir!
+        //                   }).then((sid) => {
+        //                     if (sid.isConfirmed) {
+        //                       generarEnlaceWhatsApp({
+        //                         nombre: formData.nombre,
+        //                         telefono: formData.telefono
+        //                       }, boletosCargar);
+        //                     } else if (sid.isDenied) {
+        //                       window.location.href = '/sorteo';
+        //                     }
+        //                     window.location.href = '/sorteo';
+        //                   });
+        //                 } else {
+        //                   showToast('error', 'Error', dataCompra.error || 'Error al procesar la compra');
+        //                 }
+        //               })
+        //               .catch(error => {
+        //                 showToast('error', 'Error', 'Error al procesar la compra');
+        //                 console.error('Error al procesar la compra:', error);
+        //               });
+
+        //           } catch (error) {
+        //             console.error('Error:', error);
+        //           }
+
+        //         })
+        //         .catch(error => {
+        //           console.error('Error al verificar sesión:', error);
+        //         });
+
+        //     })
+        //     .catch(error => {
+        //       console.error('Error al verificar sesión:', error);
+        //     });
+        // }
       } catch (err) {
         showToast('error', 'Error inesperado', 'Ha ocurrido un error inesperado. Intente de nuevo.');
         console.error('Error inesperado:', err);
@@ -1132,7 +1310,7 @@
     const valorConvertido = (dc * tasaCambio).toFixed(2);
 
     inputMapr.textContent = `${valorConvertido} ${moneda}`;
-    tasaEx.textContent = `Tasa de cambio: 1 USD = ${tasaCambio} ${moneda}`;
+    tasaEx.textContent = `${i18n.t("exchange_rate")} 1 USD = ${tasaCambio} ${moneda}`;
   }
 
   function showToast(type, title, message) {
@@ -1159,37 +1337,37 @@
       case 'zelle':
         paymentTitle.textContent = 'ZELLE';
         paymentDetails.innerHTML = `
-            <p class="subtitle">Datos de la cuenta</p>
-            <p>Número de teléfono: +1 4074287580</p>
+            <p class="subtitle">${i18n.t('date_account_pay')}</p>
+            <p>${i18n.t('phone_account_pay')}: +1 4074287580</p>
           `;
         break;
 
       case 'paypal':
         paymentTitle.textContent = 'PAYPAL';
         paymentDetails.innerHTML = `
-            <p class="subtitle">Datos de la cuenta</p>
-            <p>Nombre: Yorsin Cruz Osorio</p>
-            <p>Usuario: @Yorsin0506</p>
+            <p class="subtitle">${i18n.t('date_account_pay')}</p>
+            <p>${i18n.t('name_account_pay')}: Yorsin Cruz Osorio</p>
+            <p>${i18n.t('user_account_pay')}: @Yorsin0506</p>
           `;
         break;
 
       case 'banco_venezuela':
         paymentTitle.textContent = 'BANCO DE VENEZUELA';
         paymentDetails.innerHTML = `
-            <p class="subtitle">Datos de la cuenta</p>
-            <p>Nombre: Mailiny Cruz</p>
-            <p>Tipo de cuenta: Corriente</p>
-            <p>Cédula de identidad: V-28517267</p>
-            <p>Numero de cuenta: 0102-0317-11-0000757793</p>
+            <p class="subtitle">${i18n.t('date_account_pay')}</p>
+            <p>${i18n.t('name_account_pay')}: Mailiny Cruz</p>
+            <p>${i18n.t('type_account_pay')}: Corriente</p>
+            <p>${i18n.t('ci_account_pay')}: V-28517267</p>
+            <p>${i18n.t('number_account_pay')}: 0102-0317-11-0000757793</p>
           `;
         break
 
       case 'davivienda':
         paymentTitle.textContent = 'DAVIVIENDA COLOMBIA';
         paymentDetails.innerHTML = `
-            <p class="subtitle">Datos de la cuenta</p>
-            <p>Tipo de cuenta: Ahorros</p>
-            <p>Numero de cuenta: 4884 5018 1679</p>
+            <p class="subtitle">${i18n.t('date_account_pay')}</p>
+            <p>${i18n.t('type_account_pay')}: Ahorros</p>
+            <p>${i18n.t('number_account_pay')}: 4884 5018 1679</p>
 
           `;
         break;
@@ -1197,10 +1375,10 @@
       case 'pago_movil':
         paymentTitle.textContent = 'PAGO MOVIL';
         paymentDetails.innerHTML = `
-              <p class="subtitle">Datos de la cuenta</p>
-              <p>Número de teléfono: 04124124923</p>
-              <p>Cédula de identidad: V-28517267</p>
-              <p>Banco: 0102 - Banco de Venezuela</p>  
+              <p class="subtitle">${i18n.t('date_account_pay')}</p>
+              <p>${i18n.t('phone_account_pay')}: 04124124923</p>
+              <p>${i18n.t('ci_account_pay')}: V-28517267</p>
+              <p>${i18n.t('bank_account_pay')}: 0102 - Banco de Venezuela</p>  
             `;
         break;
       default:

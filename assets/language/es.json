@@ -12,7 +12,10 @@
   "username": "Nombre de usuario",
   "enter_username": "Cree un nombre de usuario",
   "password": "Contraseña",
+  "rest_password": "Restablecer Contraseña",
   "enter_password": "Cree una contraseña",
+  "enter_new_password": "Crea una nueva contraseña",
+  "enter_repeat_password": "Repita la contraseña",
   "phone": "Teléfono",
   "country": "País",
   "enter_phone": "Ingrese su número de teléfono",
@@ -31,8 +34,12 @@
   "location_validation": "La ubicación debe tener al menos 3 caracteres y puede contener letras, números, espacios, comas y puntos.",
   "username_validation": "El nombre de usuario debe tener al menos 3 caracteres y solo puede contener letras, números, guiones bajos (_) y guiones medios (-).",
   "password_validation": "La contraseña debe tener al menos 8 caracteres.",
-  "phone_validation": "El teléfono debe tener al menos 10 números y solo puede contener dígitos.",
+  "phone_validation": "El teléfono debe tener al menos 10 números y solo debe contener numeros.",
   "email_validation": "Por favor ingrese un correo electrónico válido.",
+  "phone_input_missing": "Por favor ingresese el numero de telefono",
+  "prefix_missing_error": "Por favor seleccione el codigo de pais",
+
+
   "valid_name": "¡Nombre válido!",
   "valid_lastname": "¡Apellido válido!",
   "valid_id": "¡Cédula válida!",
@@ -59,7 +66,17 @@
 
   "logout_btn": "Cerrar Sesión",
 
+  "btn_close": "Cerrar",
+  "btn_save": "Guardar",
+  "btn_cancel": "Cancelar",
+  "btn_accept": "Aceptar",
+  "btn_continue": "Continuar",
+  "btn_back": "Volver",
+  "btn_confirm": "Confirmar",
+  "btn_reject": "Rechazar",
+  "btn_verify": "Verificar",
   
+  "payment_confirm" :"Pago Confirmado",
   "payment_system": "Sistema de",
   "payment_system2" :"pagos",
   "payment_system3" :"seguro",
@@ -143,10 +160,13 @@
   "datatable_search": "Buscar:",
   "datatable_search_placeholder": "Buscar por aquí...",
   "datatable_no_data": "No hay datos disponibles...",
+  "datatable_no_records": "No se encontraron registros",
   "datatable_showing": "Mostrando",
   "datatable_to": "a",
   "datatable_of": "de",
   "datatable_entries": "registros",
+  "datatable_entries_total": "registros totales",
+  "datatable_filter": "filtrado de",
   "datatable_first": "Primero",
   "datatable_previous": "Anterior",
   "datatable_next": "Siguiente",
@@ -160,11 +180,13 @@
   "slide_down_to_continue": "deslice hacia abajo para continuar",
   "payment_method": "METODO DE PAGO",
   "payment_method_subtitle": "Transferencia o depósito",
-  "exchange_rate": "Tasa de cambio: 1 USD = 1 USD",
+  "exchange_rate": "Tasa de cambio: ",
   "comprobante_title": "COMPROBANTE DE PAGO",
 
+  "comprobante_titular_title": "Titular del pago",
   "comprobante_titular": "Titular del pago (Telefono del titular del pago, si es Pago Movil)",
   "comprobante_referencia": "Referencia del pago",
+  "comprobante_amonto": "Monto a Pagar",
   "comprobante_monto": "Monto Pagado",
   "comprobante_metodo": "Método de pago",
   "ingrese_sus_datos": "INGRESE SUS DATOS",
@@ -181,111 +203,49 @@
   "empty_field": "Campo vacío",
 
   "login_success_redirect": "Inicio de sesión exitoso, redirigiendo.",
-"no_account_found": "No se encontró ninguna cuenta asociada a este usuario. Por favor, verifica el usuario ingresado.",
-"invalid_password": "La contraseña ingresada es incorrecta. Por favor, inténtalo nuevamente.",
-"database_error": "Hubo un error al procesar tu solicitud. Por favor, verifica tu conexión a internet e intenta nuevamente.",
-"unexpected_error": "Ocurrió un error inesperado. Por favor, intenta nuevamente más tarde o contacta al soporte técnico.",
-"all_fields_required": "Todos los campos son requeridos",
+  "no_account_found": "No se encontró ninguna cuenta asociada a este usuario. Por favor, verifica el usuario ingresado.",
+  "invalid_password": "La contraseña ingresada es incorrecta. Por favor, inténtalo nuevamente.",
+  "database_error": "Hubo un error al procesar tu solicitud. Por favor, verifica tu conexión a internet e intenta nuevamente.",
+  "unexpected_error": "Ocurrió un error inesperado. Por favor, intenta nuevamente más tarde o contacta al soporte técnico.",
+  "all_fields_required": "Todos los campos son requeridos",
+  "reset_success": "Restablecimiento de contraseña exitoso",
 
-"username_already_exists": "El nombre de usuario ya existe",
-"user_registration_success": "Usuario registrado exitosamente",
-"user_registration_error": "Error al registrar el usuario",
-"user_registration_success_redirect": "Registro exitoso, redirigiendo.",
-"user_registration_error_redirect": "Error al registrar el usuario, redirigiendo."
-,
-"user_registration_success_redirect_title": "Registro exitoso",
-"user_registration_error_redirect_title": "Error al registrar el usuario",
+  "username_already_exists": "El nombre de usuario ya existe",
+  "user_registration_success": "Usuario registrado exitosamente",
+  "user_registration_error": "Error al registrar el usuario",
+  "user_registration_success_redirect": "Registro exitoso, redirigiendo.",
+  "user_registration_error_redirect": "Error al registrar el usuario, redirigiendo."
+  ,
+  "user_registration_success_redirect_title": "Registro exitoso",
+  "user_registration_error_redirect_title": "Error al registrar el usuario",
 
-"incomplete_fields": "Campos incompletos",
-"incomplete_fields_text": "Por favor complete los siguientes campos:",
-"incomplete_fields_confirm": "Aceptar",
-"confirm": "CONFIRMAR",
+  "incomplete_fields": "Campos incompletos",
+  "incomplete_fields_text": "Por favor complete los siguientes campos:",
+  "incomplete_fields_confirm": "Aceptar",
+  "confirm": "CONFIRMAR",
 
-"processing_purchase": "Procesando compra",
-"processing_purchase_text": "Por favor espere...",
-"processing_purchase_confirm": "Confirmar",
+  "processing_purchase": "Procesando compra",
+  "processing_purchase_text": "Por favor espere...",
+  "processing_purchase_confirm": "Confirmar",
 
-"processing": "Procesando",
-"please_wait": "Por favor, espera mientras se completa la operación...",
-
-
-"verify_tickets": "Verificar Boletos",
-"verify_tickets_button": "Verificar",
-"verify_tickets_placeholder": "ej: 0001",
-
-"purchased_tickets": "Boletos Comprados",
-"purchased_tickets_desc": "Gestión de Boletos de Rifa",
-
-"paid": "Pagado",
-"pending": "Pendiente",
-"rejected": "Rechazado",
-
-"loading_tickets": "Cargando boletos...",
-
-"loading_tickets_text": "Cargando boletos...",
+  "processing": "Procesando",
+  "please_wait": "Por favor, espera mientras se completa la operación...",
 
 
+  "verify_tickets": "Verificar Boletos",
+  "verify_tickets_button": "Verificar",
+  "verify_tickets_placeholder": "ej: 0001",
 
+  "purchased_tickets": "Boletos Comprados",
+  "purchased_tickets_desc": "Gestión de Boletos de Rifa",
 
+  "paid": "Pagado",
+  "pending": "Pendiente",
+  "rejected": "Rechazado",
 
+  "loading_tickets": "Cargando boletos...",
 
-
-
-
-"config_sorteo_title": "Configuración del Sorteo",
-"create_new_raffle": "Crear Nuevo Sorteo",
-
-"banner_sorteo": "Banner del Sorteo",
-"banner_sorteo_desc": "Sin archivos seleccionados",
-"banner_sorteo_help": "(Opcional, PNG o JPG, máximo 5MB)",
-
-"title_sorteo": "Título del Sorteo",
-"title_sorteo_desc": "🎉 ¡POR EL SUPER GANA! 🎉",
-"title_sorteo_required": "Título del sorteo es requerido",
-
-"fecha_inicio": "Fecha de Inicio",
-"fecha_inicio_desc": "dd/mm/aaaa",
-"fecha_inicio_required": "Fecha de inicio es requerida",
-
-"fecha_final": "Fecha de Finalización", 
-"fecha_final_desc": "dd/mm/aaaa",
-"fecha_final_required": "Fecha de finalización es requerida",
-
-"precio_boleto": "Precio del Boleto ($)",
-"precio_boleto_desc": "3",
-"precio_boleto_required": "Precio del boleto es requerido",
-
-"compra_minima": "Compra Mínima de Boletos",
-"compra_minima_desc": "2",
-"compra_minima_required": "Compra mínima es requerida",
-
-"compra_maxima": "Compra Máxima de Boletos", 
-"compra_maxima_desc": "500",
-"compra_maxima_required": "Compra máxima es requerida",
-
-"premios": "Premios",
-"nombre_premio": "Nombre del Premio",
-"descripcion_premio": "Descripción del Premio",
-"premio_required": "Nombre y descripción del premio son requeridos",
-
-"contacto_numero": "Número de Contacto",
-"contact_support_number": "Número de soporte",
-"contacto_numero_desc": "407-428-7580",
-"contacto_numero_required": "Número de contacto es requerido",
-
-"url_loteria": "URL de la Lotería",
-"url_loteria_desc": "https://tripletachira.com/",
-"url_loteria_required": "URL de la lotería es requerida",
-
-"texto_ejemplo": "Texto de Ejemplo",
-"texto_ejemplo_desc": "Si compras 10 boletos, participas automáticamente en el sorteo de $100 cuando se alcance el 30% de los números vendidos. El día se anunciará públicamente.",
-
-"ganador_sorteo": "Ganador del Sorteo",
-"ganador_sorteo_desc": "Ganador del sorteo",
-"ganador_sorteo_required": "Ganador del sorteo es requerido",
-"ganador_sorteo_placeholder": "ej: 0001",
-"ganador_sorteo_button": "Guardar",
-"ganador_sorteo_success": "Ganador del sorteo guardado exitosamente",
+  "loading_tickets_text": "Cargando boletos...",
 
 
 
@@ -293,38 +253,116 @@
 
 
 
-"create_raffle_success": "¡Sorteo creado exitosamente!",
-"create_raffle_success_redirect": "redireccionando en <b></b> milisegundos.",
+
+
+  "config_sorteo_title": "Configuración del Sorteo",
+  "create_new_raffle": "Crear Nuevo Sorteo",
+
+  "banner_sorteo": "Banner del Sorteo",
+  "banner_sorteo_desc": "Sin archivos seleccionados",
+  "banner_sorteo_help": "(Opcional, PNG o JPG, máximo 5MB)",
+
+  "title_sorteo": "Título del Sorteo",
+  "title_sorteo_desc": "🎉 ¡POR EL SUPER GANA! 🎉",
+  "title_sorteo_required": "Título del sorteo es requerido",
+
+  "fecha_inicio": "Fecha de Inicio",
+  "fecha_inicio_desc": "dd/mm/aaaa",
+  "fecha_inicio_required": "Fecha de inicio es requerida",
+
+  "fecha_final": "Fecha de Finalización", 
+  "fecha_final_desc": "dd/mm/aaaa",
+  "fecha_final_required": "Fecha de finalización es requerida",
+
+  "precio_boleto": "Precio del Boleto ($)",
+  "precio_boleto_desc": "3",
+  "precio_boleto_required": "Precio del boleto es requerido",
+
+  "compra_minima": "Compra Mínima de Boletos",
+  "compra_minima_desc": "2",
+  "compra_minima_required": "Compra mínima es requerida",
+
+  "compra_maxima": "Compra Máxima de Boletos", 
+  "compra_maxima_desc": "500",
+  "compra_maxima_required": "Compra máxima es requerida",
+
+  "premios": "Premios",
+  "nombre_premio": "Nombre del Premio",
+  "descripcion_premio": "Descripción del Premio",
+  "premio_required": "Nombre y descripción del premio son requeridos",
+
+  "contacto_numero": "Número de Contacto",
+  "contact_support_number": "Número de soporte",
+  "contacto_numero_desc": "407-428-7580",
+  "contacto_numero_required": "Número de contacto es requerido",
+
+  "url_loteria": "URL de la Lotería",
+  "url_loteria_desc": "https://tripletachira.com/",
+  "url_loteria_required": "URL de la lotería es requerida",
+
+  "texto_ejemplo": "Texto de Ejemplo",
+  "texto_ejemplo_desc": "Si compras 10 boletos, participas automáticamente en el sorteo de $100 cuando se alcance el 30% de los números vendidos. El día se anunciará públicamente.",
+
+  "ganador_sorteo": "Ganador del Sorteo",
+  "ganador_sorteo_desc": "Ganador del sorteo",
+  "ganador_sorteo_required": "Ganador del sorteo es requerido",
+  "ganador_sorteo_placeholder": "ej: 0001",
+  "ganador_sorteo_button": "Guardar",
+  "ganador_sorteo_success": "Ganador del sorteo guardado exitosamente",
 
 
 
 
 
-"admin_raffles": "Administración de Sorteos",
-"admin_raffles_desc": "- Gestión de Sorteos activar/finalizar -",
 
 
-"fecha_creacion": "FECHA DE CREACION",
-"titulo": "TITULO",
-"id_sorteo": "ID SORTEO",
-"boletos_maximos": "BOLETOS MAXIMOS",
-"precio_boleto_2": "PRECIO BOLETO",
-"estado": "ESTADO",
-"acciones": "ACCIONES",
-"activo": "ACTIVO",
-"finalizado": "FINALIZADO",
-"desactivado": "DESACTIVADO",
+  "create_raffle_success": "¡Sorteo creado exitosamente!",
+  "create_raffle_success_redirect": "redireccionando en <b></b> milisegundos.",
 
 
 
 
-"for_raffles": "para rifas",
-"m_raffle":"facilmente.",
-"easy_an_safe": "y grandes oportunidades.",
-"ur_tickets": "sobre tus boletos.",
-"ticket_name": "nombre",
-"ticket_phone": "telefono",
-"ticket_price":"precio",
-"ticket_state":"estado"
 
-}
+  "admin_raffles": "Administración de Sorteos",
+  "admin_raffles_desc": "- Gestión de Sorteos activar/finalizar -",
+
+
+  "fecha_creacion": "FECHA DE CREACION",
+  "titulo": "TITULO",
+  "id_sorteo": "ID SORTEO",
+  "boletos_maximos": "BOLETOS MAXIMOS",
+  "precio_boleto_2": "PRECIO BOLETO",
+  "estado": "ESTADO",
+  "acciones": "ACCIONES",
+  "activo": "ACTIVO",
+  "finalizado": "FINALIZADO",
+  "desactivado": "DESACTIVADO",
+
+
+
+
+  "for_raffles": "para rifas",
+  "m_raffle":"facilmente.",
+  "easy_an_safe": "y grandes oportunidades.",
+  "ur_tickets": "sobre tus boletos.",
+  "ticket_name": "nombre",
+  "ticket_phone": "telefono",
+  "ticket_price":"precio",
+  "ticket_state":"estado",
+
+  "init_sesion":"¡Inicia sesion para continuar!",
+  "redirex": "redireccionando en",
+
+
+  "date_account_pay": "datos de la cuenta",
+  "name_account_pay": "Nombre",
+  "phone_account_pay": "Telefono",
+  "ci_account_pay": "cédula de identidad",
+  "user_account_pay": "usuario",
+  "type_account_pay": "tipo de cuenta",
+  "number_account_pay": "número de cuenta",
+  "bank_account_pay": "banco"
+
+
+
+} 
