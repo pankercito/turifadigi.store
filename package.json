@@ -6,12 +6,6 @@
   "directories": {
     "doc": "docs"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "minify": "node assets/js/minify.js",
-    "minify:css": "cleancss -o assets/css/custom.min.css assets/css/custom.css && cleancss -o assets/css/custom_responsive.min.css assets/css/custom_responsive.css",
-    "minify:all": "npm run minify && npm run minify:css"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/victorx2/turifadigi.git"
@@ -25,14 +19,21 @@
   },
   "homepage": "https://github.com/victorx2/turifadigi#readme",
   "devDependencies": {
+    "animate.css": "^4.1.1",
     "clean-css-cli": "^5.6.3",
     "cssnano": "^7.0.6",
+    "jquery": "^3.7.1",
+    "jquery-ui": "^1.14.1",
     "postcss": "^8.5.3",
     "terser": "^5.39.0"
   },
   "dependencies": {
     "easyqrcodejs": "^4.6.2",
+    "jarallax": "^2.2.1",
     "jsbarcode": "^3.11.6",
-    "toastify-js": "^1.12.0"
+    "lax.js": "^2.0.3",
+    "toastify-js": "^1.12.0",
+    "wow": "^0.0.7",
+    "wow.js": "^1.2.2"
   }
 }

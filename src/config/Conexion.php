@@ -20,8 +20,8 @@ class Conexion
 
     $this->dbname = 'turifadigi';
     $this->servidor = 'localhost';
-    $this->usuario = 'turif';
-    $this->password = 'Viki321.';
+    $this->usuario = 'root';
+    $this->password = '';
     try {
       $this->conexion = new PDO("mysql:host=$this->servidor;dbname=$this->dbname;charset=utf8mb4", $this->usuario, $this->password);
       $this->conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
