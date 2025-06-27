@@ -132,22 +132,22 @@
                     container.innerHTML = "";
                     renderBoleto({
                         items: {
-                            [`${i18n.t("ticket_name")}`]: boleto?.cliente != null ? boleto.cliente + " " + boleto.a_cliente : i18n.t("no_purchases"),
-                            [`${i18n.t("ticket_phone")}`]: boleto?.telefono != null ? boleto.telefono : i18n.t("no_purchases"),
-                            [`${i18n.t("ticket_price")}`]: boleto?.precio_boleto != null ? boleto.precio_boleto + "$" : i18n.t("no_purchases"),
-                            [`${i18n.t("ticket_state")}`]: boleto?.estado != null ? boleto.estado : i18n.t("no_purchases"),
+                            [`${i18n.t("ticket_name")}`]: boleto.cliente != null ? boleto.cliente + " " + boleto.a_cliente : i18n.t("no_purchases"),
+                            [`${i18n.t("ticket_phone")}`]: boleto.telefono != null ? boleto.telefono : i18n.t("no_purchases"),
+                            [`${i18n.t("ticket_price")}`]: boleto.precio_boleto != null ? boleto.precio_boleto + "$" : i18n.t("no_purchases"),
+                            [`${i18n.t("ticket_state")}`]: boleto.estado != null ? boleto.estado : i18n.t("no_purchases"),
                         },
-                        fecha_compra: boleto?.fecha_compra ? boleto.fecha_compra : i18n.t("no_purchases"),
-                        numero: boleto?.numero_boleto ? boleto.numero_boleto : "0000",
-                        id_boleto: boleto?.id_boleto ? boleto.id_boleto : "0000",
-                        id_rifa: boleto?.id_rifa ? boleto.id_rifa : "0000",
-                        ganador: boleto?.boleto_es ? boleto.boleto_es : "0000",
+                        fecha_compra: boleto.fecha_compra ? boleto.fecha_compra : i18n.t("no_purchases"),
+                        numero: boleto.numero_boleto ? boleto.numero_boleto : "0000",
+                        id_boleto: boleto.id_boleto ? boleto.id_boleto : "0000",
+                        id_rifa: boleto.id_rifa ? boleto.id_rifa : "0000",
+                        ganador: boleto.boleto_es ? boleto.boleto_es : "0000",
                     });
                 } else if (data.data && data.data.length > 0) {
                     // Si buscas todos los boletos de la rifa, puedes listarlos aquí
                     container.innerHTML = data.data.map(boleto => `
-                <div>${boleto.numero_boleto} - ${boleto.estado_boleto}</div>
-            `).join('');
+                    <div>${boleto.numero_boleto} - ${boleto.estado_boleto}</div>
+                    `).join('');
                 }
             }, 400);
 

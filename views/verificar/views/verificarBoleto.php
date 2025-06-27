@@ -55,7 +55,7 @@
         Verificar Boletos
     </div>
     <form class="verificar-form" method="post" id="verificarForm">
-        <select class="input-boleto" name="id_rifa" required>
+        <select class="input-boleto d-none" name="id_rifa" required>
             <option value="1" selected>Rifa actual</option>
         </select>
         <input class="input-boleto" type="text" name="numero_boleto" placeholder="ej: 0001" required>
@@ -129,7 +129,7 @@
                 aviso.style.display = 'block';
                 aviso.style.textAlign = 'center';
                 aviso.style.marginTop = '10px';
-                aviso.innerHTML = '⚠️ Este boleto es solo un ejemplo. No se recibieron datos reales del servidor.';
+                aviso.innerHTML = `${i18n.t("ticket_example_notice")}`;
                 container.appendChild(aviso);
                 return;
             }
@@ -146,7 +146,7 @@
                         [`${i18n.t("ticket_price")}`]: boleto.precio_boleto != null ? boleto.precio_boleto + "$" : i18n.t("no_purchases"),
                         [`${i18n.t("ticket_state")}`]: boleto.estado != null ? boleto.estado : i18n.t("no_purchases"),
                     },
-                    fecha_compra: boleto.fecha_compra ? boleto.fecha_compras : i18n.t("no_purchases"),
+                    fecha_compra: boleto.fecha_compra ? boleto.fecha_compra : i18n.t("no_purchases"),
                     numero: boleto.numero_boleto ? boleto.numero_boleto : "",
                     id_boleto: boleto.id_boleto ? boleto.id_boleto : "",
                     id_rifa: boleto.id_rifa ? boleto.id_rifa : "",
@@ -156,7 +156,7 @@
                 // Si buscas todos los boletos de la rifa, puedes listarlos aquí
                 container.innerHTML = data.data.map(boleto => `
                 <div>${boleto.numero_boleto} - ${boleto.estado_boleto}</div>
-            `).join('');
+                `).join('');
             }
         } catch (err) {
             container.innerHTML = '<div style="color:red;">Error de conexión con el servidor.</div>';
