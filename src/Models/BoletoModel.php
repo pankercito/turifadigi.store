@@ -265,7 +265,7 @@ class BoletoModel
   {
     try {
       // Optimizamos la consulta para mejor rendimiento
-      $sql = "SELECT b.id_boleto, b.id_rifa, b.numero_boleto, b.estado AS estado, c.estado AS rifa_estado, r.id_rifa FROM boletos b INNER JOIN rifas r ON r.id_rifa = b.id_rifa INNER JOIN configuracion c ON c.id_configuracion = r.id_configuracion WHERE c.estado = 1 ORDER BY b.id_boleto ASC";
+      $sql = "SELECT b.id_boleto, b.id_rifa, b.numero_boleto, b.estado AS estado, c.estado AS rifa_estado, r.id_rifa FROM boletos b INNER JOIN rifas r ON r.id_rifa = b.id_rifa INNER JOIN configuracion c ON c.id_configuracion = r.id_configuracion WHERE c.estado = 1 ORDER BY b.numero_boleto ASC";
 
       $boletos = $this->db->consultar($sql, []);
 
