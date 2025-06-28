@@ -13,7 +13,7 @@ use App\Controllers\MonedaController;
 // TU CLAVE DE API (la has omitido por seguridad, asegúrate de que sea correcta)
 $api_key = '97646d87748b27bb76ec3773';
 $COP_URL = "https://v6.exchangerate-api.com/v6/{$api_key}/pair/USD/COP/1";
-$VES_URL = "https://v6.exchangerate-api.com/v6/{$api_key}/pair/USD/VES/1";
+$VES_URL = "https://v6.exchangerate-api.com/v6/{$api_key}/pair/EUR/VES/1";
 $responsecop_json = file_get_contents($COP_URL);
 $responseves_json = file_get_contents($VES_URL);
 
