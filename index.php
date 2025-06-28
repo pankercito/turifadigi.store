@@ -121,7 +121,7 @@ switch (strtok($route, '?')) {
             header("Location: /login");
             exit;
         }
-        if ($_SESSION['rol_usuario'] != 2 || $_SESSION['rol_usuario'] != 3) {
+        if ($_SESSION['rol_usuario'] != 2 && $_SESSION['rol_usuario'] != 3) {
             header("Location: /");
             exit;
         }
@@ -133,7 +133,7 @@ switch (strtok($route, '?')) {
             header("Location: /login");
             exit;
         }
-        if ($_SESSION['rol_usuario'] != 2 || $_SESSION['rol_usuario'] != 3) {
+        if ($_SESSION['rol_usuario'] != 2 && $_SESSION['rol_usuario'] != 3) {
             header("Location: /");
             exit;
         }
@@ -145,7 +145,7 @@ switch (strtok($route, '?')) {
             header("Location: /login");
             exit;
         }
-        if ($_SESSION['rol_usuario'] != 2 || $_SESSION['rol_usuario'] != 3) {
+        if ($_SESSION['rol_usuario'] != 2 && $_SESSION['rol_usuario'] != 3) {
             header("Location: /");
             exit;
         }
@@ -158,7 +158,7 @@ switch (strtok($route, '?')) {
             header("Location: /login");
             exit;
         }
-        if ($_SESSION['rol_usuario'] != 2 || $_SESSION['rol_usuario'] != 3) {
+        if ($_SESSION['rol_usuario'] != 2 && $_SESSION['rol_usuario'] != 3) {
             header("Location: /");
             exit;
         }
