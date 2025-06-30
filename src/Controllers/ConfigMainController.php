@@ -252,4 +252,11 @@ class ConfigMainController
     $info = pathinfo($name);
     return $info['extension'] ?? 'no_espesificado';
   }
+
+  public function getRifaActiva()
+  {
+      $rifa = $this->model->obtenerRifaActiva();
+
+      return $rifa[0];
+  }
 }

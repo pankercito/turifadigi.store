@@ -13,6 +13,9 @@ try {
 
 	$data = null;
 	if ($idboleto !== null) {
+		$data = [
+			'id_rifa' => $id_rifa
+		];
 		$controller->obtenerBoletos($wn, $data, $idboleto);
 		exit;
 	}

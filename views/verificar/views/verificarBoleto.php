@@ -1,3 +1,14 @@
+<?php
+
+use App\Controllers\ConfigMainController;
+
+$controller = new ConfigMainController();
+
+@$data = $controller->getRifaActiva();
+
+@$idRifa = $data['id_rifa'] ?? 0;
+?>
+
 <style>
     .container-fluid {
         margin-top: 100px;
@@ -56,7 +67,7 @@
     </div>
     <form class="verificar-form" method="post" id="verificarForm">
         <select class="input-boleto d-none" name="id_rifa" required>
-            <option value="1" selected>Rifa actual</option>
+            <option value="<?php echo $idRifa?>" selected>Rifa actual</option>
         </select>
         <input class="input-boleto" type="text" name="numero_boleto" placeholder="ej: 0001" required>
         <button class="btn-verificar" type="submit" data-i18n="verify_tickets_button">Verificar</button>

@@ -205,7 +205,7 @@ class BoletoController
     if ($id_bol !== null) {
       try {
         // Selecciona el método según el valor de $peticion
-        $boletos = $this->model->obtenerBoletosBy($id_bol);
+        $boletos = $this->model->obtenerBoletosBy($id_bol, $array['id_rifa']);
 
         if (empty($boletos) || !isset($boletos['success']) || $boletos['success'] == false) {
           echo json_encode([

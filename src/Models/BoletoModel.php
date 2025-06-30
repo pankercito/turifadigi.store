@@ -288,115 +288,162 @@ class BoletoModel
 
 
   // Método para obtener boletos filtrados por id_rifa y/o estado
-  public function obtenerBoletosBy($id_boleto = null, $estado = null)
+  public function obtenerBoletosBy($id_boleto, $id_rifa)
   {
     try {
-      $sql = "SELECT
-          cb.id_compra,
-          b.id_rifa,
-          b.id_boleto,
-          b.estado as boleto_es,
-          c.precio_boleto,
-          b.numero_boleto,
-          dc.nom_comprador AS cliente,
-          dc.ape_comprador AS a_cliente,
-          dc.telefono_comprador AS telefono,
-          cb.total_compra,
-          cb.estado,
-          cb.fecha_compra
-          FROM
-            boletos b
-          INNER JOIN
-            rifas r ON r.id_rifa = b.id_rifa
-          INNER JOIN
-            configuracion c ON c.id_configuracion = r.id_configuracion
-          LEFT JOIN -- Primero une detalle_compras, ya que depende de 'b'
-            detalle_compras dc ON  b.id_boleto=dc.id_boleto
-          LEFT JOIN -- Luego une compras_boletos, ya que depende de 'dc'
-            compras_boletos cb ON cb.id_compra = dc.id_compra
-          LEFT JOIN -- Usa LEFT JOIN para usuarios
-            usuarios u ON b.id_usuario = u.id_usuario ";
-      $params = [];
+            $sql = "WITH SelectedPurchase AS (
+                SELECT
+                    dc.id_boleto,
+                    cb.id_compra,
+                    cb.estado AS purchase_status,
+                    dc.nom_comprador,
+                    dc.ape_comprador,
+                    dc.telefono_comprador,
+                    dc.precio_unitario,
+                    cb.total_compra,
+                    cb.fecha_compra,
+                    ROW_NUMBER() OVER (
+                        PARTITION BY dc.id_boleto
+                        ORDER BY
+                            CASE WHEN cb.estado = 'aprobado' THEN 1 ELSE 2 END,
+                            cb.fecha_compra DESC
+                    ) as rn
+                FROM
+                    detalle_compras dc
+                INNER JOIN
+                    compras_boletos cb ON dc.id_compra = cb.id_compra
+                WHERE
+                    -- Filtramos en la CTE solo por el id_boleto específico
+                    dc.id_boleto = :id_boleto_cte
+            )
+            SELECT
+                b.id_rifa,
+                b.id_boleto,
+                b.numero_boleto,
+                b.estado AS boleto_es,
+                c.precio_boleto,
+                -- Columnas de compra/comprador que serán NULL si la compra seleccionada no es 'aprobado' o no existe
+                CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.id_compra END AS id_compra,
+                CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.nom_comprador END AS cliente,
+                CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.ape_comprador END AS a_cliente,
+                CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.telefono_comprador END AS telefono,
+                CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.precio_unitario END AS precio_boleto_compra,
+                CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.total_compra END AS total_compra,
+                CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.purchase_status END AS estado_compra,
+                CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.fecha_compra END AS fecha_compra
+            FROM
+                boletos b
+            INNER JOIN
+                rifas r ON r.id_rifa = b.id_rifa
+            INNER JOIN
+                configuracion c ON c.id_configuracion = r.id_configuracion
+            LEFT JOIN
+                SelectedPurchase sp ON b.id_boleto = sp.id_boleto AND sp.rn = 1
+            LEFT JOIN
+                usuarios u ON b.id_usuario = u.id_usuario
+            WHERE
+                b.id_boleto = :id_boleto_main AND b.id_rifa = :id_rifa_main
+            LIMIT 1; -- Aseguramos que solo se devuelva una fila de la consulta principal (aunque la lógica de la CTE ya lo debería garantizar para un boleto único)
+            ";
 
-      if ($id_boleto !== null) {
-        $sql .= "WHERE b.id_boleto = :id_boleto";
-        $params[':id_boleto'] = $id_boleto;
-      }
-      if ($estado !== null) {
-        $sql .= " AND b.estado = :estado";
-        $params[':estado'] = $estado;
-      }
+            $params = [
+                ':id_boleto_cte' => $id_boleto, // Parámetro para la CTE
+                ':id_boleto_main' => $id_boleto, // Parámetro para la WHERE principal
+                ':id_rifa_main' => $id_rifa    // Parámetro para la WHERE principal
+            ];
 
-      $boletos = $this->db->consultar($sql, $params);
+            $boletos = $this->db->consultar($sql, $params);
 
-      if (count($boletos) == 0) {
-        return [
-          'success' => false,
-          'data' => [],
-          'total' => 0
-        ];
-      }
+            // Si no se encuentra el boleto, devuelve un resultado de "no éxito"
+            if (empty($boletos)) {
+                return [
+                    'success' => false,
+                    'message' => 'Boleto no encontrado o no pertenece a la rifa especificada.',
+                    'data' => null // Devolvemos null para el dato en caso de no éxito
+                ];
+            }
 
-      foreach ($boletos as $boleto) {
-        $data[] = [
-          'id_compra' => $boleto['id_compra'] ?? null,
-          'id_rifa' => $boleto['id_rifa'],
-          'id_boleto' => $boleto['id_boleto'],
-          'numero_boleto' => $boleto['numero_boleto'],
-          'cliente' => !empty($boleto['cliente']) ? ucwords(strtolower($boleto['cliente'])) : null,
-          'a_cliente' => !empty($boleto['a_cliente']) ? ucwords(strtolower($boleto['a_cliente'])) : null,
-          'telefono' => !empty($boleto['telefono']) ? substr($boleto['telefono'], 0, 4) . '****' . substr($boleto['telefono'], -2) : null,
-          'precio_boleto' => $boleto['precio_boleto'],
-          'total_compra' => $boleto['total_compra'] ?? null,
-          'estado' => $boleto['estado'] ?? null,
-          'boleto_es' => $boleto['boleto_es'] ?? null,
-          'fecha_compra' => $boleto['fecha_compra'] ?? null,
-        ];
-      }
+            // Procesar el único resultado encontrado
+            $boleto = $boletos[0]; // Como esperamos un solo resultado, tomamos el primero
 
-      return [
-        'success' => true,
-        'data' => $data[0],
-        'total' => count($boletos)
-      ];
-    } catch (Exception $e) {
-      throw new Exception("Error al obtener boletos: " . $e->getMessage());
-    }
+            $data = [
+                'id_compra' => $boleto['id_compra'] ?? null,
+                'id_rifa' => $boleto['id_rifa'],
+                'id_boleto' => $boleto['id_boleto'],
+                'numero_boleto' => $boleto['numero_boleto'],
+                'cliente' => !empty($boleto['cliente']) ? ucwords(strtolower($boleto['cliente'])) : null,
+                'a_cliente' => !empty($boleto['a_cliente']) ? ucwords(strtolower($boleto['a_cliente'])) : null,
+                'telefono' => !empty($boleto['telefono']) ? substr($boleto['telefono'], 0, 4) . '****' . substr($boleto['telefono'], -2) : null,
+                'precio_boleto' => $boleto['precio_boleto'],
+                'precio_boleto_compra' => $boleto['precio_boleto_compra'] ?? null,
+                'total_compra' => $boleto['total_compra'] ?? null,
+                'estado_compra' => $boleto['estado_compra'] ?? null,
+                'boleto_es' => $boleto['boleto_es'],
+                'fecha_compra' => $boleto['fecha_compra'] ?? null,
+            ];
+
+            return [
+                'success' => true,
+                'data' => $data,
+                'total' => 1 // Siempre será 1 si success es true
+            ];
+        } catch (Exception $e) {
+            // Es buena práctica registrar el error completo para depuración
+            error_log("Error al obtener boleto único: " . $e->getMessage() . " - SQL: " . $sql);
+            throw new Exception("Error al obtener el boleto: " . $e->getMessage());
+        }
+    
   }
 
   public function obtenerBoletosGandores()
   {
     try {
-      $sql = "SELECT
-          cb.id_compra,
-          b.id_rifa,
-          b.id_boleto,
-          b.estado as boleto_es,
-          c.precio_boleto,
-          b.numero_boleto,
-          dc.nom_comprador AS cliente,
-          dc.ape_comprador AS a_cliente,
-          dc.telefono_comprador AS telefono,
-          cb.total_compra,
-          cb.estado,
-          cb.fecha_compra
-          FROM
-            boletos b
-          INNER JOIN
-            rifas r ON r.id_rifa = b.id_rifa
-          INNER JOIN
-            configuracion c ON c.id_configuracion = r.id_configuracion
-          LEFT JOIN -- Primero une detalle_compras, ya que depende de 'b'
-            detalle_compras dc ON  b.id_boleto=dc.id_boleto
-          LEFT JOIN -- Luego une compras_boletos, ya que depende de 'dc'
-            compras_boletos cb ON cb.id_compra = dc.id_compra
-          LEFT JOIN -- Usa LEFT JOIN para usuarios
-            usuarios u ON b.id_usuario = u.id_usuario
-          WHERE
-            c.estado = 2
-            AND b.estado NOT IN ('disponible', 'pendiente', 'vendido', 'reservado')
-          ORDER BY
-            b.id_boleto ASC;";
+      $sql = "WITH CompraAprobadaPorBoleto AS (
+                  SELECT
+                      dc.id_boleto,
+                      MAX(cb.id_compra) AS id_compra_valida -- Usamos MAX para elegir una si hay múltiples aprobadas
+                  FROM
+                      detalle_compras dc
+                  INNER JOIN
+                      compras_boletos cb ON dc.id_compra = cb.id_compra
+                  WHERE
+                      cb.estado = 'aprobado'
+                  GROUP BY
+                      dc.id_boleto
+              )
+              SELECT
+                  b.id_rifa,
+                  b.id_boleto,
+                  b.numero_boleto,
+                  b.estado AS boleto_es,
+                  c.precio_boleto, -- Este precio es del boleto en sí, no de la compra
+                  -- Columnas de compra/comprador que serán NULL si no hay una compra aprobada
+                  capb.id_compra_valida AS id_compra, -- Será NULL si no se encontró una compra aprobada
+                  dc.nom_comprador AS cliente,
+                  dc.ape_comprador AS a_cliente,
+                  dc.telefono_comprador AS telefono,
+                  cb.total_compra,
+                  cb.estado, -- Este campo mostrará 'aprobado' o NULL
+                  cb.fecha_compra
+              FROM
+                  boletos b
+              INNER JOIN
+                  rifas r ON r.id_rifa = b.id_rifa
+              INNER JOIN
+                  configuracion c ON c.id_configuracion = r.id_configuracion
+              LEFT JOIN
+                  CompraAprobadaPorBoleto capb ON b.id_boleto = capb.id_boleto -- Unimos para obtener el ID de la compra aprobada
+              LEFT JOIN
+                  detalle_compras dc ON capb.id_compra_valida = dc.id_compra AND b.id_boleto = dc.id_boleto -- Unimos detalle_compras usando el ID de la compra aprobada
+              LEFT JOIN
+                  compras_boletos cb ON capb.id_compra_valida = cb.id_compra -- Unimos compras_boletos usando el ID de la compra aprobada
+              LEFT JOIN
+                  usuarios u ON b.id_usuario = u.id_usuario -- Se mantiene este JOIN, aunque no se seleccionan columnas de 'u'
+              WHERE
+                  c.estado = 2
+                  AND b.estado NOT IN ('disponible', 'pendiente', 'vendido', 'reservado')
+              ORDER BY
+                  r.fecha_creacion DESC;";
 
       $boletos = $this->db->consultar($sql, []);
 
@@ -442,41 +489,64 @@ class BoletoModel
 
       // Validar que los parámetros existan y no estén vacíos
       if (empty($id_rifa) || empty($boleto)) {
-        throw new Exception("Faltan parámetros requeridos: id_rifa o boleto.");
+        throw new Exception("Faltan parámetros requeridos o rifa inactiva");
       }
 
       $id_rifa = htmlspecialchars(strip_tags($id_rifa), ENT_QUOTES, 'UTF-8');
       $boleto = htmlspecialchars(strip_tags($boleto), ENT_QUOTES, 'UTF-8');
 
-      $sql = "SELECT
-          b.id_rifa,
-          b.id_boleto,
-          b.numero_boleto,
-          cb.id_compra,
-          dc.nom_comprador AS cliente,
-          dc.ape_comprador AS a_cliente,
-          dc.telefono_comprador AS telefono,
-          dc.precio_unitario AS precio_boleto,
-          cb.total_compra,
-          cb.estado,
-          cb.fecha_compra
-          FROM
-            boletos b
-            INNER JOIN
-            rifas r ON r.id_rifa = b.id_rifa
-            INNER JOIN
-            configuracion c ON c.id_configuracion = r.id_configuracion
-            LEFT JOIN -- Primero une detalle_compras, ya que depende de 'b'
-            detalle_compras dc ON  b.id_boleto=dc.id_boleto
-            LEFT JOIN -- Luego une compras_boletos, ya que depende de 'dc'
-            compras_boletos cb ON cb.id_compra = dc.id_compra
-            LEFT JOIN -- Usa LEFT JOIN para usuarios
-            usuarios u ON b.id_usuario = u.id_usuario
-          WHERE
-            b.id_rifa = :id_rifa
-            AND b.numero_boleto = :boleto
-          ORDER BY
-            b.id_boleto ASC;";
+      $sql = "WITH SelectedPurchase AS (
+                  SELECT
+                      dc.id_boleto,
+                      cb.id_compra,
+                      cb.estado AS purchase_status, -- Renombramos para evitar conflicto con b.estado
+                      dc.nom_comprador,
+                      dc.ape_comprador,
+                      dc.telefono_comprador,
+                      dc.precio_unitario,
+                      cb.total_compra,
+                      cb.fecha_compra,
+                      ROW_NUMBER() OVER (
+                          PARTITION BY dc.id_boleto
+                          ORDER BY
+                              CASE WHEN cb.estado = 'aprobado' THEN 1 ELSE 2 END, -- Prioriza las compras 'aprobado'
+                              cb.fecha_compra DESC -- Luego, la más reciente si hay empate o si no hay aprobadas
+                      ) as rn
+                  FROM
+                      detalle_compras dc
+                  INNER JOIN
+                      compras_boletos cb ON dc.id_compra = cb.id_compra
+                  WHERE
+                      dc.id_boleto = (SELECT id_boleto FROM boletos WHERE id_rifa = :id_rifa AND numero_boleto = :boleto LIMIT 1)
+              )
+              SELECT
+                  b.id_rifa,
+                  b.id_boleto,
+                  b.numero_boleto,
+                  b.estado AS boleto_es,
+                  c.precio_boleto, -- Este es el precio del boleto de la tabla configuracion
+                  -- Columnas de compra/comprador que serán NULL si la compra seleccionada no es 'aprobado' o no existe
+                  CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.id_compra END AS id_compra,
+                  CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.nom_comprador END AS cliente,
+                  CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.ape_comprador END AS a_cliente,
+                  CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.telefono_comprador END AS telefono,
+                  CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.precio_unitario END AS precio_boleto_compra, -- Renombrado para evitar conflicto
+                  CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.total_compra END AS total_compra,
+                  CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.purchase_status END AS estado_compra, -- Renombrado para evitar conflicto
+                  CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.fecha_compra END AS fecha_compra
+              FROM
+                  boletos b
+              INNER JOIN
+                  rifas r ON r.id_rifa = b.id_rifa
+              INNER JOIN
+                  configuracion c ON c.id_configuracion = r.id_configuracion
+              LEFT JOIN
+                  SelectedPurchase sp ON b.id_boleto = sp.id_boleto AND sp.rn = 1 -- Unimos solo con la mejor compra
+              LEFT JOIN
+                  usuarios u ON b.id_usuario = u.id_usuario -- Se mantiene este JOIN, aunque no seleccionas columnas de 'u'
+              WHERE
+                  b.id_rifa = :id_rifa
+                  AND b.numero_boleto = :boleto; -- Ya no necesitamos ORDER BY y LIMIT aquí";
 
       $boletos = $this->db->consultar($sql, [
         ":id_rifa" => $id_rifa,

@@ -79,7 +79,7 @@ class ConfigMain
   {
     $sql = "SELECT * FROM rifas r INNER JOIN configuracion c ON c.id_configuracion = r.id_configuracion WHERE c.estado = 1";
     $result = $this->db->consultar($sql, []);
-    return $result ? $result[0] : null;
+    return $result;
   }
 
   public function actualizarRifa($id_rifa, $estado)
