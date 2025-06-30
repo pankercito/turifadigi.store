@@ -291,7 +291,7 @@ class BoletoModel
   public function obtenerBoletosBy($id_boleto, $id_rifa)
   {
     try {
-            $sql = "WITH SelectedPurchase AS (
+      $sql = "WITH SelectedPurchase AS (
                 SELECT
                     dc.id_boleto,
                     cb.id_compra,
@@ -346,53 +346,52 @@ class BoletoModel
             LIMIT 1; -- Aseguramos que solo se devuelva una fila de la consulta principal (aunque la lógica de la CTE ya lo debería garantizar para un boleto único)
             ";
 
-            $params = [
-                ':id_boleto_cte' => $id_boleto, // Parámetro para la CTE
-                ':id_boleto_main' => $id_boleto, // Parámetro para la WHERE principal
-                ':id_rifa_main' => $id_rifa    // Parámetro para la WHERE principal
-            ];
+      $params = [
+        ':id_boleto_cte' => $id_boleto, // Parámetro para la CTE
+        ':id_boleto_main' => $id_boleto, // Parámetro para la WHERE principal
+        ':id_rifa_main' => $id_rifa    // Parámetro para la WHERE principal
+      ];
 
-            $boletos = $this->db->consultar($sql, $params);
+      $boletos = $this->db->consultar($sql, $params);
 
-            // Si no se encuentra el boleto, devuelve un resultado de "no éxito"
-            if (empty($boletos)) {
-                return [
-                    'success' => false,
-                    'message' => 'Boleto no encontrado o no pertenece a la rifa especificada.',
-                    'data' => null // Devolvemos null para el dato en caso de no éxito
-                ];
-            }
+      // Si no se encuentra el boleto, devuelve un resultado de "no éxito"
+      if (empty($boletos)) {
+        return [
+          'success' => false,
+          'message' => 'Boleto no encontrado o no pertenece a la rifa especificada.',
+          'data' => null // Devolvemos null para el dato en caso de no éxito
+        ];
+      }
 
-            // Procesar el único resultado encontrado
-            $boleto = $boletos[0]; // Como esperamos un solo resultado, tomamos el primero
+      // Procesar el único resultado encontrado
+      $boleto = $boletos[0]; // Como esperamos un solo resultado, tomamos el primero
 
-            $data = [
-                'id_compra' => $boleto['id_compra'] ?? null,
-                'id_rifa' => $boleto['id_rifa'],
-                'id_boleto' => $boleto['id_boleto'],
-                'numero_boleto' => $boleto['numero_boleto'],
-                'cliente' => !empty($boleto['cliente']) ? ucwords(strtolower($boleto['cliente'])) : null,
-                'a_cliente' => !empty($boleto['a_cliente']) ? ucwords(strtolower($boleto['a_cliente'])) : null,
-                'telefono' => !empty($boleto['telefono']) ? substr($boleto['telefono'], 0, 4) . '****' . substr($boleto['telefono'], -2) : null,
-                'precio_boleto' => $boleto['precio_boleto'],
-                'precio_boleto_compra' => $boleto['precio_boleto_compra'] ?? null,
-                'total_compra' => $boleto['total_compra'] ?? null,
-                'estado_compra' => $boleto['estado_compra'] ?? null,
-                'boleto_es' => $boleto['boleto_es'],
-                'fecha_compra' => $boleto['fecha_compra'] ?? null,
-            ];
+      $data = [
+        'id_compra' => $boleto['id_compra'] ?? null,
+        'id_rifa' => $boleto['id_rifa'],
+        'id_boleto' => $boleto['id_boleto'],
+        'numero_boleto' => $boleto['numero_boleto'],
+        'cliente' => !empty($boleto['cliente']) ? ucwords(strtolower($boleto['cliente'])) : null,
+        'a_cliente' => !empty($boleto['a_cliente']) ? ucwords(strtolower($boleto['a_cliente'])) : null,
+        'telefono' => !empty($boleto['telefono']) ? substr($boleto['telefono'], 0, 4) . '****' . substr($boleto['telefono'], -2) : null,
+        'precio_boleto' => $boleto['precio_boleto'],
+        'precio_boleto_compra' => $boleto['precio_boleto_compra'] ?? null,
+        'total_compra' => $boleto['total_compra'] ?? null,
+        'estado_compra' => $boleto['estado_compra'] ?? null,
+        'boleto_es' => $boleto['boleto_es'],
+        'fecha_compra' => $boleto['fecha_compra'] ?? null,
+      ];
 
-            return [
-                'success' => true,
-                'data' => $data,
-                'total' => 1 // Siempre será 1 si success es true
-            ];
-        } catch (Exception $e) {
-            // Es buena práctica registrar el error completo para depuración
-            error_log("Error al obtener boleto único: " . $e->getMessage() . " - SQL: " . $sql);
-            throw new Exception("Error al obtener el boleto: " . $e->getMessage());
-        }
-    
+      return [
+        'success' => true,
+        'data' => $data,
+        'total' => 1 // Siempre será 1 si success es true
+      ];
+    } catch (Exception $e) {
+      // Es buena práctica registrar el error completo para depuración
+      error_log("Error al obtener boleto único: " . $e->getMessage() . " - SQL: " . $sql);
+      throw new Exception("Error al obtener el boleto: " . $e->getMessage());
+    }
   }
 
   public function obtenerBoletosGandores()
@@ -483,56 +482,63 @@ class BoletoModel
     }
   }
 
-  public function verificarBoletosXCompra($id_rifa, $boleto)
+  public function verificarBoletosXCompra($id_rifa, $numero_boleto)
   {
     try {
-
-      // Validar que los parámetros existan y no estén vacíos
-      if (empty($id_rifa) || empty($boleto)) {
-        throw new Exception("Faltan parámetros requeridos o rifa inactiva");
+      // **Validación de parámetros (mejorada):**
+      // Los type hints 'int' en la firma de la función ya fuerzan que sean enteros.
+      // Si llegan como null o no-enteros, PHP generará un TypeError antes de esta línea.
+      // La validación de 'empty' ahora es menos crítica, pero puedes mantenerla si prefieres
+      // un control más explícito para strings vacíos o ceros si no son válidos.
+      if (empty($id_rifa) || empty($numero_boleto)) {
+        throw new Exception("Faltan parámetros requeridos: ID de rifa o número de boleto.");
       }
 
-      $id_rifa = htmlspecialchars(strip_tags($id_rifa), ENT_QUOTES, 'UTF-8');
-      $boleto = htmlspecialchars(strip_tags($boleto), ENT_QUOTES, 'UTF-8');
+      // Sanitización: Generalmente, si usas sentencias preparadas con PDO/MySQLi,
+      // no necesitas htmlspecialchars/strip_tags para los parámetros numéricos de la consulta SQL.
+      // Es útil si los datos van a ser mostrados en HTML.
+      // $id_rifa = htmlspecialchars(strip_tags($id_rifa), ENT_QUOTES, 'UTF-8');
+      // $numero_boleto = htmlspecialchars(strip_tags($numero_boleto), ENT_QUOTES, 'UTF-8');
 
       $sql = "WITH SelectedPurchase AS (
-                  SELECT
-                      dc.id_boleto,
-                      cb.id_compra,
-                      cb.estado AS purchase_status, -- Renombramos para evitar conflicto con b.estado
-                      dc.nom_comprador,
-                      dc.ape_comprador,
-                      dc.telefono_comprador,
-                      dc.precio_unitario,
-                      cb.total_compra,
-                      cb.fecha_compra,
-                      ROW_NUMBER() OVER (
-                          PARTITION BY dc.id_boleto
-                          ORDER BY
-                              CASE WHEN cb.estado = 'aprobado' THEN 1 ELSE 2 END, -- Prioriza las compras 'aprobado'
-                              cb.fecha_compra DESC -- Luego, la más reciente si hay empate o si no hay aprobadas
-                      ) as rn
-                  FROM
-                      detalle_compras dc
-                  INNER JOIN
-                      compras_boletos cb ON dc.id_compra = cb.id_compra
-                  WHERE
-                      dc.id_boleto = (SELECT id_boleto FROM boletos WHERE id_rifa = :id_rifa AND numero_boleto = :boleto LIMIT 1)
+                SELECT
+                    dc.id_boleto,
+                    cb.id_compra,
+                    cb.estado AS purchase_status, -- Estado de la compra
+                    dc.nom_comprador,
+                    dc.ape_comprador,
+                    dc.telefono_comprador,
+                    dc.precio_unitario,
+                    cb.total_compra,
+                    cb.fecha_compra,
+                    ROW_NUMBER() OVER (
+                        PARTITION BY dc.id_boleto
+                        ORDER BY
+                            CASE WHEN cb.estado = 'aprobado' THEN 1 ELSE 2 END, -- Prioriza las aprobadas
+                            cb.fecha_compra DESC -- Luego la más reciente
+                    ) as rn
+                FROM
+                    detalle_compras dc
+                INNER JOIN
+                    compras_boletos cb ON dc.id_compra = cb.id_compra
+                WHERE
+                    -- Filtramos en la CTE solo por el id_boleto específico, que obtenemos de la tabla boletos
+                    dc.id_boleto = (SELECT b_inner.id_boleto FROM boletos b_inner WHERE b_inner.id_rifa = :id_rifa_cte AND b_inner.numero_boleto = :numero_boleto_cte LIMIT 1)
               )
               SELECT
                   b.id_rifa,
                   b.id_boleto,
                   b.numero_boleto,
-                  b.estado AS boleto_es,
-                  c.precio_boleto, -- Este es el precio del boleto de la tabla configuracion
+                  b.estado AS boleto_es, -- Estado del boleto
+                  c.precio_boleto, -- Precio base del boleto desde la configuración
                   -- Columnas de compra/comprador que serán NULL si la compra seleccionada no es 'aprobado' o no existe
                   CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.id_compra END AS id_compra,
                   CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.nom_comprador END AS cliente,
                   CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.ape_comprador END AS a_cliente,
                   CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.telefono_comprador END AS telefono,
-                  CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.precio_unitario END AS precio_boleto_compra, -- Renombrado para evitar conflicto
+                  CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.precio_unitario END AS precio_boleto_compra, -- Precio unitario de la compra
                   CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.total_compra END AS total_compra,
-                  CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.purchase_status END AS estado_compra, -- Renombrado para evitar conflicto
+                  CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.purchase_status END AS estado_compra, -- Estado de la compra
                   CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.fecha_compra END AS fecha_compra
               FROM
                   boletos b
@@ -541,50 +547,62 @@ class BoletoModel
               INNER JOIN
                   configuracion c ON c.id_configuracion = r.id_configuracion
               LEFT JOIN
-                  SelectedPurchase sp ON b.id_boleto = sp.id_boleto AND sp.rn = 1 -- Unimos solo con la mejor compra
+                  SelectedPurchase sp ON b.id_boleto = sp.id_boleto AND sp.rn = 1 -- Unimos con la mejor compra para el boleto
               LEFT JOIN
-                  usuarios u ON b.id_usuario = u.id_usuario -- Se mantiene este JOIN, aunque no seleccionas columnas de 'u'
+                  usuarios u ON b.id_usuario = u.id_usuario
               WHERE
-                  b.id_rifa = :id_rifa
-                  AND b.numero_boleto = :boleto; -- Ya no necesitamos ORDER BY y LIMIT aquí";
+                  b.id_rifa = :id_rifa_main
+                  AND b.numero_boleto = :numero_boleto_main
+              LIMIT 1; -- Aseguramos que la consulta principal devuelva una sola fila
+            ";
 
-      $boletos = $this->db->consultar($sql, [
-        ":id_rifa" => $id_rifa,
-        ":boleto" => $boleto
-      ]);
+      $params = [
+        ":id_rifa_cte" => $id_rifa,
+        ":numero_boleto_cte" => $numero_boleto,
+        ":id_rifa_main" => $id_rifa,
+        ":numero_boleto_main" => $numero_boleto
+      ];
 
-      if (!$boletos) {
+      $boletos = $this->db->consultar($sql, $params);
+
+      // **Manejo de resultados para un solo item:**
+      if (empty($boletos)) {
         return [
           'success' => false,
-          'data' => ["comprados" => "0"],
-          'total' => 0,
+          'message' => 'Boleto no encontrado para la rifa y número especificados.',
+          'data' => null // Devolvemos null para el dato si no hay resultado
         ];
       }
 
-      $data = [];
-      foreach ($boletos as $boleto) {
-        $data[] = [
-          'id_compra' => $boleto['id_compra'] ?? null,
-          'id_rifa' => $boleto['id_rifa'],
-          'id_boleto' => $boleto['id_boleto'],
-          'numero_boleto' => $boleto['numero_boleto'],
-          'cliente' => !empty($boleto['cliente']) ? ucwords(strtolower($boleto['cliente'])) : null,
-          'a_cliente' => !empty($boleto['a_cliente']) ? ucwords(strtolower($boleto['a_cliente'])) : null,
-          'telefono' => !empty($boleto['telefono']) ? substr($boleto['telefono'], 0, 4) . '****' . substr($boleto['telefono'], -2) : null,
-          'precio_boleto' => $boleto['precio_boleto'],
-          'total_compra' => $boleto['total_compra'],
-          'estado' => $boleto['estado'],
-          'fecha_compra' => $boleto['fecha_compra'] ?? null,
-        ];
-      }
+      // Si hay resultados, esperamos solo uno, así que tomamos el primer elemento.
+      $boleto = $boletos[0];
+
+      $data[0] = [
+        'id_compra' => $boleto['id_compra'] ?? null,
+        'id_rifa' => $boleto['id_rifa'],
+        'id_boleto' => $boleto['id_boleto'],
+        'numero_boleto' => $boleto['numero_boleto'],
+        'cliente' => !empty($boleto['cliente']) ? ucwords(strtolower($boleto['cliente'])) : null,
+        'a_cliente' => !empty($boleto['a_cliente']) ? ucwords(strtolower($boleto['a_cliente'])) : null,
+        'telefono' => !empty($boleto['telefono']) ? substr($boleto['telefono'], 0, 4) . '****' . substr($boleto['telefono'], -2) : null,
+        'precio_boleto' => $boleto['precio_boleto'],
+        'precio_boleto_compra' => $boleto['precio_boleto_compra'] ?? null, // Usamos el nombre renombrado
+        'total_compra' => $boleto['total_compra'] ?? null,
+        'estado_compra' => $boleto['estado_compra'] ?? null, // Usamos el nombre renombrado
+        'boleto_es' => $boleto['boleto_es'],
+        'fecha_compra' => $boleto['fecha_compra'] ?? null,
+      ];
+
       return [
         'success' => true,
         'data' => $data,
-        'marco' => ["comprados" => "0"],
-        'total' => count($boletos)
+        'total' => 1, // Siempre es 1 cuando se encuentra un boleto
+        'marco' => ["comprados" => "0"], // Mantengo este campo si es parte de tu respuesta esperada
       ];
     } catch (Exception $e) {
-      throw new Exception("Error al obtener boletos: " . $e->getMessage());
+      // Es buena práctica registrar el error completo para depuración
+      error_log("Error al verificar boleto por compra: " . $e->getMessage());
+      throw new Exception("Error al verificar boleto: " . $e->getMessage());
     }
   }
 
