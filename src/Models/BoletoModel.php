@@ -323,14 +323,14 @@ class BoletoModel
                 b.estado AS boleto_es,
                 c.precio_boleto,
                 -- Columnas de compra/comprador que serán NULL si la compra seleccionada no es 'aprobado' o no existe
-                CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.id_compra END AS id_compra,
-                CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.nom_comprador END AS cliente,
-                CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.ape_comprador END AS a_cliente,
-                CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.telefono_comprador END AS telefono,
-                CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.precio_unitario END AS precio_boleto_compra,
-                CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.total_compra END AS total_compra,
-                CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.purchase_status END AS estado_compra,
-                CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.fecha_compra END AS fecha_compra
+                CASE WHEN sp.purchase_status NOT IN ('aprobado', 'pendiente') THEN NULL ELSE sp.id_compra END AS id_compra,
+                CASE WHEN sp.purchase_status NOT IN ('aprobado', 'pendiente') THEN NULL ELSE sp.nom_comprador END AS cliente,
+                CASE WHEN sp.purchase_status NOT IN ('aprobado', 'pendiente') THEN NULL ELSE sp.ape_comprador END AS a_cliente,
+                CASE WHEN sp.purchase_status NOT IN ('aprobado', 'pendiente') THEN NULL ELSE sp.telefono_comprador END AS telefono,
+                CASE WHEN sp.purchase_status NOT IN ('aprobado', 'pendiente') THEN NULL ELSE sp.precio_unitario END AS precio_boleto_compra,
+                CASE WHEN sp.purchase_status NOT IN ('aprobado', 'pendiente') THEN NULL ELSE sp.total_compra END AS total_compra,
+                CASE WHEN sp.purchase_status NOT IN ('aprobado', 'pendiente') THEN NULL ELSE sp.purchase_status END AS estado_compra,
+                CASE WHEN sp.purchase_status NOT IN ('aprobado', 'pendiente') THEN NULL ELSE sp.fecha_compra END AS fecha_compra
             FROM
                 boletos b
             INNER JOIN
@@ -377,7 +377,7 @@ class BoletoModel
         'precio_boleto' => $boleto['precio_boleto'],
         'precio_boleto_compra' => $boleto['precio_boleto_compra'] ?? null,
         'total_compra' => $boleto['total_compra'] ?? null,
-        'estado_compra' => $boleto['estado_compra'] ?? null,
+        'estado' => $boleto['estado_compra'] ?? null,
         'boleto_es' => $boleto['boleto_es'],
         'fecha_compra' => $boleto['fecha_compra'] ?? null,
       ];
@@ -532,14 +532,14 @@ class BoletoModel
                   b.estado AS boleto_es, -- Estado del boleto
                   c.precio_boleto, -- Precio base del boleto desde la configuración
                   -- Columnas de compra/comprador que serán NULL si la compra seleccionada no es 'aprobado' o no existe
-                  CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.id_compra END AS id_compra,
-                  CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.nom_comprador END AS cliente,
-                  CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.ape_comprador END AS a_cliente,
-                  CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.telefono_comprador END AS telefono,
-                  CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.precio_unitario END AS precio_boleto_compra, -- Precio unitario de la compra
-                  CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.total_compra END AS total_compra,
-                  CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.purchase_status END AS estado_compra, -- Estado de la compra
-                  CASE WHEN sp.purchase_status <> 'aprobado' THEN NULL ELSE sp.fecha_compra END AS fecha_compra
+                  CASE WHEN sp.purchase_status NOT IN ('aprobado', 'pendiente') THEN NULL ELSE sp.id_compra END AS id_compra,
+                  CASE WHEN sp.purchase_status NOT IN ('aprobado', 'pendiente') THEN NULL ELSE sp.nom_comprador END AS cliente,
+                  CASE WHEN sp.purchase_status NOT IN ('aprobado', 'pendiente') THEN NULL ELSE sp.ape_comprador END AS a_cliente,
+                  CASE WHEN sp.purchase_status NOT IN ('aprobado', 'pendiente') THEN NULL ELSE sp.telefono_comprador END AS telefono,
+                  CASE WHEN sp.purchase_status NOT IN ('aprobado', 'pendiente') THEN NULL ELSE sp.precio_unitario END AS precio_boleto_compra,
+                  CASE WHEN sp.purchase_status NOT IN ('aprobado', 'pendiente') THEN NULL ELSE sp.total_compra END AS total_compra,
+                  CASE WHEN sp.purchase_status NOT IN ('aprobado', 'pendiente') THEN NULL ELSE sp.purchase_status END AS estado_compra,
+                  CASE WHEN sp.purchase_status NOT IN ('aprobado', 'pendiente') THEN NULL ELSE sp.fecha_compra END AS fecha_compra
               FROM
                   boletos b
               INNER JOIN
@@ -588,7 +588,7 @@ class BoletoModel
         'precio_boleto' => $boleto['precio_boleto'],
         'precio_boleto_compra' => $boleto['precio_boleto_compra'] ?? null, // Usamos el nombre renombrado
         'total_compra' => $boleto['total_compra'] ?? null,
-        'estado_compra' => $boleto['estado_compra'] ?? null, // Usamos el nombre renombrado
+        'estado' => $boleto['estado_compra'] ?? null, // Usamos el nombre renombrado
         'boleto_es' => $boleto['boleto_es'],
         'fecha_compra' => $boleto['fecha_compra'] ?? null,
       ];
